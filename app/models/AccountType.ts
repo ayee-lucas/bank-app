@@ -1,19 +1,20 @@
 import { Document, Schema, model, models } from "mongoose";
 
-// Interface for BankOperation document
-export interface IOperationType extends Document {
-  operationName: string;
+// Interface for AccountType document
+export interface IAccountType extends Document {
+  name: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-// Mongoose schema for BankOperation
-const OperationTypeSchema = new Schema<IOperationType>(
+// Mongoose schema for AccountType
+const accountTypeSchema = new Schema<IAccountType>(
   {
-    operationName: {
+    name: {
       type: String,
       required: true,
+      unique: true,
     },
     description: {
       type: String,
@@ -34,7 +35,7 @@ const OperationTypeSchema = new Schema<IOperationType>(
   }
 );
 
-// Create and export the BankOperation model
-const OperationType = models.BankOperation || model<IOperationType>("OperationType", OperationTypeSchema);
+// Create and export the AccountType model
+const AccountType = models.AccountType || model<IAccountType>("AccountType", accountTypeSchema);
 
-export default OperationType;
+export default AccountType;

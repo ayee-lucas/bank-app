@@ -2,7 +2,6 @@ import { Document, Schema, model, models } from "mongoose";
 
 // Interface for User document
 export interface IUser extends Document {
-  accNumber: string;
   name: string;
   username: string;
   email: string;
@@ -12,7 +11,6 @@ export interface IUser extends Document {
   phone: string;
   work: string;
   salary: string;
-  role: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,12 +18,6 @@ export interface IUser extends Document {
 // Mongoose schema for User
 const userSchema = new Schema<IUser>(
   {
-    accNumber: {
-      type: String,
-      required: true,
-      unique: true,
-      default: generateRandomAccountNumber,
-    },
     name: {
       type: String,
       required: true
@@ -73,10 +65,6 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    role: {
-      type: String,
-      default: "user",
-    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -92,11 +80,6 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-// Function to generate a random account number
-function generateRandomAccountNumber(): string {
-  const accountNumber = Math.floor(Math.random() * 100000000).toString().padStart(8, "0");
-  return accountNumber;
-}
 
 // Create and export the User model
 const User = models.User || model<IUser>("User", userSchema);

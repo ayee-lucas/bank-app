@@ -2,42 +2,37 @@ import { Document, Schema, model, models } from "mongoose";
 import { IUser } from "./User";
 import { IAccountType } from "./AccountType";
 
-export interface ICuentaBancaria extends Document {
+export interface IBankAccount extends Document {
   accNumber: string;
-  cliente: IUser["_id"];
-  numeroCuenta: string;
+  client: IUser["_id"];
   currency: string;
-  saldo: number;
-  tipoCuenta: IAccountType["_id"];
+  balance: number;
+  accountType: IAccountType["_id"];
   // Otros campos específicos de la cuenta bancaria
 }
 
-const cuentaBancariaSchema = new Schema<ICuentaBancaria>(
+const bankAccountSchema = new Schema<IBankAccount>(
   {
     accNumber: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
       default: generateRandomAccountNumber,
     },
-    cliente: {
+    client: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Usuario es requerido."],
-    },
-    numeroCuenta: {
-      type: String,
-      required: [true, "Número de cuenta es requerido."],
     },
     currency: {
       type: String,
       required: true,
     },
-    saldo: {
+    balance: {
       type: Number,
       required: [true, "Saldo es requerido."],
     },
-    tipoCuenta: {
+    accountType: {
       type: Schema.Types.ObjectId,
       ref: "AccountType",
       required: [true, "Tipo de cuenta es requerido."],
@@ -58,6 +53,5 @@ function generateRandomAccountNumber(): string {
   return accountNumber;
 }
 
-export const CuentaBancaria =
-  models.CuentaBancaria ||
-  model<ICuentaBancaria>("CuentaBancaria", cuentaBancariaSchema);
+export const BankAccount =
+  models.BankAccount || model<IBankAccount>("BankAccount", bankAccountSchema);

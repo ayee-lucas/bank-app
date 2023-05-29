@@ -35,6 +35,8 @@ const OperationTypeSchema = new Schema<IOperationType>(
 );
 
 // Create and export the BankOperation model
-const OperationType = models.BankOperation || model<IOperationType>("OperationType", OperationTypeSchema);
+const OperationType =
+  models.OperationType ||
+  model<IOperationType>("OperationType", OperationTypeSchema);
 
 export default OperationType;

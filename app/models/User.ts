@@ -2,21 +2,33 @@ import { Document, Schema, model, models } from "mongoose";
 
 // Interface for User document
 export interface IUser extends Document {
+  accNumber: string;
   name: string;
+  username: string;
   email: string;
   password: string;
-  username: string;
+  dpi: string;
+  address: string;
+  phone: string;
+  work: string;
+  salary: string;
+  role: string;
   createdAt: Date;
   updatedAt: Date;
-  role: String;
-  profilePicture?: string;
 }
 
 // Mongoose schema for User
 const userSchema = new Schema<IUser>(
   {
+    accNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      default: generateRandomAccountNumber,
+    },
     name: {
       type: String,
+      required: true
     },
     username: {
       type: String,
@@ -39,13 +51,31 @@ const userSchema = new Schema<IUser>(
       required: true,
       minlength: 6,
     },
-    role: {
+    dpi: {
       type: String,
       required: true,
-      default: "user"
+      minlength: 13,
+      maxlength: 13,
     },
-    profilePicture: {
+    address: {
       type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    work: {
+      type: String,
+      required: true,
+    },
+    salary: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      default: "user",
     },
     createdAt: {
       type: Date,
@@ -61,6 +91,12 @@ const userSchema = new Schema<IUser>(
     versionKey: false,
   }
 );
+
+// Function to generate a random account number
+function generateRandomAccountNumber(): string {
+  const accountNumber = Math.floor(Math.random() * 100000000).toString().padStart(8, "0");
+  return accountNumber;
+}
 
 // Create and export the User model
 const User = models.User || model<IUser>("User", userSchema);

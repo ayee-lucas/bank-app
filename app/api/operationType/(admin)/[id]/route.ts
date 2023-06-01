@@ -1,26 +1,32 @@
 import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
 import OperationType from "@/app/models/OperationType";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 dbConnect();
 
-interface params extends Request {
+interface Params extends NextRequest {
   params: {
     id: string;
   };
 }
 
-export async function GET(request: NextRequest, params: params) {
+export async function GET(request: NextRequest, params: Params) {
   const id = params.params.id;
 
   try {
+    const session = await getServerSession(authOptions);
+    // Verify if the user is authenticated and is an admin
+    if (!session?.user || session.user.role !== "admin") {
+      return new NextResponse("Unauthorized", {
+        status: 401,
+      });
+    }
+
     const operationType = await OperationType.findById(id);
 
-    const data = {
-      operationType,
-    };
-
-    // Validar si no se encontró la notificación
+    // Validate if the operation type was not found
     if (!operationType) {
       return new NextResponse("Account not found", {
         status: 404,
@@ -38,16 +44,24 @@ export async function GET(request: NextRequest, params: params) {
   }
 }
 
-export async function PUT(request: Request, params: params) {
+export async function PUT(request: NextRequest, params: Params) {
   const id = params.params.id;
   const data = await request.json();
 
   try {
+    const session = await getServerSession(authOptions);
+    // Verify if the user is authenticated and is an admin
+    if (!session?.user || session.user.role !== "admin") {
+      return new NextResponse("Unauthorized", {
+        status: 401,
+      });
+    }
+
     const operationType = await OperationType.findByIdAndUpdate(id, data, {
       new: true,
     });
 
-    // Validar si no se encontró la notificación
+    // Validate if the operation type was not found
     if (!operationType) {
       return new NextResponse("Account not found", {
         status: 404,
@@ -66,13 +80,21 @@ export async function PUT(request: Request, params: params) {
   }
 }
 
-export async function DELETE(request: Request, params: params) {
+export async function DELETE(request: NextRequest, params: Params) {
   const id = params.params.id;
 
   try {
+    const session = await getServerSession(authOptions);
+    // Verify if the user is authenticated and is an admin
+    if (!session?.user || session.user.role !== "admin") {
+      return new NextResponse("Unauthorized", {
+        status: 401,
+      });
+    }
+
     const operationType = await OperationType.findByIdAndDelete(id);
 
-    // Validar si no se encontró la notificación
+    // Validate if the operation type was not found
     if (!operationType) {
       return new NextResponse("Account not found", {
         status: 404,

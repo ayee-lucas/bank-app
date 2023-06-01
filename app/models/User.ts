@@ -11,6 +11,7 @@ export interface IUser extends Document {
   phone: string;
   work: string;
   salary: string;
+  role: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,7 +21,7 @@ const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     username: {
       type: String,
@@ -65,6 +66,11 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -79,7 +85,6 @@ const userSchema = new Schema<IUser>(
     versionKey: false,
   }
 );
-
 
 // Create and export the User model
 const User = models.User || model<IUser>("User", userSchema);

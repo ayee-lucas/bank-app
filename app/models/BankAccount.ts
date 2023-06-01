@@ -53,5 +53,18 @@ function generateRandomAccountNumber(): string {
   return accountNumber;
 }
 
+// Function to generate a unique random account number
+async function generateUniqueAccountNumber(): Promise<string> {
+  let accountNumber = generateRandomAccountNumber();
+  const BankAccountModel =
+    models.BankAccount || model<IBankAccount>("BankAccount", bankAccountSchema);
+  let exists = await BankAccountModel.exists({ accNumber: accountNumber });
+  while (exists) {
+    accountNumber = generateRandomAccountNumber();
+    exists = await BankAccountModel.exists({ accNumber: accountNumber });
+  }
+  return accountNumber;
+}
+
 export const BankAccount =
   models.BankAccount || model<IBankAccount>("BankAccount", bankAccountSchema);

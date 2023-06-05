@@ -13,22 +13,14 @@ export async function GET(request: NextRequest) {
 
     const operations = await Operation.find()
       .populate({
-        path: "operationType",
-        select: "operationName description",
+     path: "operationType",
+     model:  OperationType
       })
       .populate({
         path: "senderAccount",
-        populate: {
-          path: "client",
-          select: "name username email dpi address phone",
-        },
       })
       .populate({
         path: "receiverAccount",
-        populate: {
-          path: "client",
-          select: "name username email dpi address phone",
-        },
       });
 
     const data = {

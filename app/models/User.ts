@@ -1,4 +1,5 @@
 import { Document, Schema, model, models } from "mongoose";
+import { IBankAccount } from "./BankAccount";
 
 // Interface for User document
 export interface IUser extends Document {
@@ -12,6 +13,7 @@ export interface IUser extends Document {
   work: string;
   salary: string;
   role: string;
+  accounts?: IBankAccount[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -71,6 +73,12 @@ const userSchema = new Schema<IUser>(
       enum: ["user", "admin"],
       default: "user",
     },
+    accounts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "BankAccount",
+      },
+    ],
     createdAt: {
       type: Date,
       default: Date.now,

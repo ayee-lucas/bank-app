@@ -66,5 +66,16 @@ async function generateUniqueAccountNumber(): Promise<string> {
   return accountNumber;
 }
 
+bankAccountSchema.pre<IBankAccount>("save", async function (next) {
+  const user = await models.User.findById(this.client);
+
+  if (user) {
+    user.accounts.push(this._id);
+    await user.save();
+  }
+
+  next();
+});
+
 export const BankAccount =
   models.BankAccount || model<IBankAccount>("BankAccount", bankAccountSchema);

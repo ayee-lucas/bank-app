@@ -46,13 +46,13 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    /*const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
     if (!session?.user || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
-    }
+    }*/
 
     // Parse the request body as JSON
     const json = await request.json();

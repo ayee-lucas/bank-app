@@ -1,8 +1,7 @@
 export default async function HomePage() {
 
   return (
-    <div className="w-full h-screen dark:bg-black dark:text-white">
-      Home
-    </div>
+    <section className="w-full h-screen dark:dark:bg-violet-950 dark:text-white">
+    </section>
   );
 }

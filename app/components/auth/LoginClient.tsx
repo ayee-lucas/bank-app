@@ -52,10 +52,10 @@ const LoginClient = () => {
                 </label>
                 <input
                   type="text"
-                  name="email"
-                  id="email"
+                  name="username"
+                  id="username"
                   onChange={(e) => (inputUsername.current = e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 dark:focus:border-primary-100 block w-full p-2.5 dark:bg-[#190a37]"
                   placeholder="Your username"
                 />
               </div>
@@ -72,7 +72,7 @@ const LoginClient = () => {
                   id="password"
                   placeholder="••••••••"
                   onChange={(e) => (inputPassword.current = e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="bg-gray-50 border border-gray-300 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 dark:focus:border-primary-100 block w-full p-2.5 dark:bg-[#190a37]"
                 />
               </div>
               <button

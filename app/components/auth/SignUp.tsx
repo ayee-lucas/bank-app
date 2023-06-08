@@ -24,13 +24,13 @@ export const SignUp = () => {
 
           <div className="w-full h-full p-4">
             <SignUpForm />
-            <h1 className="text-sm py-4 text-gray-400 dark:text-gray-200">
+            <h1 className="text-sm py-4 pl-5 text-gray-600 dark:text-gray-300">
               Already have an account?
               {' '}
               <Link
                     href="/auth/Login"
                     type="button"
-                    className=" hover:underline font-medium text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-gray-200"
+                    className=" hover:underline font-medium text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
                 >
                 Login
               </Link>

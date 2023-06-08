@@ -43,7 +43,7 @@ function SignUpForm() {
       className="w-full h-full min-h-[200px] p-2"
     >
 
-    <h1 className="text-2xl text-center pb-4 font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">Create your own Account</h1>
+    <h1 className="text-2xl text-center pb-4 font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">Create an Account</h1>
 
       {responseError !== '' ? (
         <h1 className="text-red-600 text-sm px-2 font-medium italic">
@@ -100,7 +100,7 @@ function SignUpForm() {
         <button
           type="submit"
           disabled={!validPassword}
-          className="text-white ml-3 w-full bg-violet-700 hover:bg-violet-600 rounded-lg py-2 px-6 disabled:hover:bg-transparent disabled:text-gray-400 disabled:bg-gray-200 dark:disabled:text-gray-200 dark:disabled:bg-gray-600 dark:disabled:hover:bg-gray-600  disabled:border-black"
+          className="text-white ml-3 w-full bg-violet-700 hover:bg-violet-600 rounded-lg py-2 px-6 disabled:hover:bg-transparent disabled:text-gray-400 disabled:bg-gray-200 disabled:hover:bg-gray-200  disabled:border-black dark:disabled:text-gray-200 dark:disabled:bg-gray-600 dark:disabled:hover:bg-gray-600"
           onClick={(e) => onClick(e)}
         >
           Sign Up

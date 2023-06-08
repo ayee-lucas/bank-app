@@ -33,7 +33,7 @@ const FormInput: FC<Props> = ({
       className={
           !error
             ? 'w-full my-1 border transition-all border-red-700 p-2 placeholder:text-sm focus:outline-none focus:ring-1 focus:ring-red-700 dark:empty:dark:bg-[#190a37] rounded-lg'
-            : 'w-full my-1 border transition-all border-violet-700 p-2 placeholder:text-sm  font-light  focus:outline-none focus:ring-1 dark:bg-[#190a37] rounded-lg dark:text-white'
+            : 'w-full my-1 border border-gray-300 p-2 placeholder:text-sm  font-light bg-gray-50 dark:bg-[#190a37] rounded-lg dark:text-white'
         }
     />
   </div>

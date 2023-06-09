@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import FormInput from './FormInput';
+import { SignUpAction } from '@/app/api/register/Actions';
 
 function SignUpForm() {
 
@@ -22,7 +23,19 @@ function SignUpForm() {
 
   const onClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    router.push('/Home');
+    
+    const response:any = await SignUpAction(data)
+    console.log(response);
+
+    if(response.message === "success" ){
+      setResponseError("");
+      router.push('/auth/Login');
+    }else{
+      setDefaultError(false);
+      setResponseError(`${response.message}`)
+    }
+
+
   };
 
   useEffect(() => {

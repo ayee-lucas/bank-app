@@ -1,7 +1,7 @@
 import SignUpForm from './SignUpForm'
 import Link from 'next/link'
 import Image from 'next/image'
-import logo from "../../../public/Images/Logos/NovarisLogo.png"
+import logo from "../../../../public/Images/Logos/NovarisLogo.png"
 
 export const SignUp = () => {
   return (

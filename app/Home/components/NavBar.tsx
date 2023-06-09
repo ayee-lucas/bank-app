@@ -17,7 +17,7 @@ export const NavBar = () => {
   return (
     <>
       <div className="fixed w-full z-10">
-        <nav className="bg-violet-700 dark:bg-violet-900 border-b border-violet-200 dark:border-violet-400">
+        <nav className="bg-violet-800 dark:bg-violet-900 border-b border-violet-200 dark:border-violet-400">
           <div className="min-h-[70px] flex flex-wrap items-center justify-between mx-auto p-2 px-6">
 
             <div

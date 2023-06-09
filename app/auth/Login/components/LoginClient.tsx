@@ -4,7 +4,7 @@ import React, { MouseEvent, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../../public/Images/Logos/NovarisLogo.png"
+import logo from "../../../../public/Images/Logos/NovarisLogo.png"
 
 const LoginClient = () => {
   const inputUsername = useRef("");

@@ -5,15 +5,18 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/Images/Logos/NovarisLogoWhite.png";
 import SideBar from "./SideBar";
+import DropDown from "./DropDown";
+import { AiOutlineDatabase } from "react-icons/ai";
 
 export const NavBar = () => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [theme, setTheme] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
 
   return (
     <>
-      <div className="fixed w-full">
+      <div className="fixed w-full z-10">
         <nav className="bg-violet-700 dark:bg-violet-900 border-b border-violet-200 dark:border-violet-400">
           <div className="min-h-[70px] flex flex-wrap items-center justify-between mx-auto p-2 px-6">
 
@@ -28,19 +31,74 @@ export const NavBar = () => {
               </Link>
             </div>
 
-            <ul className="text-white flex flex-row font-medium bg-violet-700 dark:bg-violet-900 space-x-2 dark:border-gray-700 max-sm:hidden">
+            <ul className="text-white flex flex-row font-medium bg-violet-700 dark:bg-violet-900 space-x-2 dark:border-gray-700 max-sm:hidden z-10">
               <li>
-                <a href="#" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Home</a>
+                <a href="/Home" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Home</a>
               </li>
               <li>
-                <a href="#" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+                <a href="/Home/About" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
               </li>
               <li>
-                <a href="#" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
+                <a href="/Home/Contact" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
               </li>
-              <li>
-                <a href="#" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-              </li>
+              <div>
+                <li>
+                  <button
+                    className="flex p-2 rounded-lg"
+                    onClick={() => setDropdown(!dropdown)}
+                  >
+                    <span className="flex-1 ml-3 text-left whitespace-nowrap">
+                      Services
+                    </span>
+                    <svg
+                      className="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+
+                </li>
+
+                <div className={`absolute justify-center ml-1 transition bg-violet-700 rounded-lg top-[80px] w-[100px] -z-10
+                    ${dropdown ? "translate-y-0" : "-translate-y-44"}`}>
+                    <div>
+                      <li>
+                        <Link
+                          href="/Home/Transfer"
+                          className="flex rounded-lg py-2 pl-3"
+                        >
+                          <span className="flex whitespace-nowrap">Transfer</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/Home/Deposit"
+                          className="flex rounded-lg pl-3"
+                        >
+                          <span className="flex whitespace-nowrap">Deposit</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/Home/Buy"
+                          className="flex rounded-lg py-2 pl-3"
+                        >
+                          <span className="flex whitespace-nowrap">Buy</span>
+                        </Link>
+                      </li>
+                    </div>
+                    
+                </div>
+              </div>
+
+              
             </ul>
 
             {/*User Menu*/}
@@ -121,7 +179,7 @@ export const NavBar = () => {
         </nav>
       </div>
 
-      <div className={`fixed sm:hidden top-0 right-0 w-[50%] max-xsm:w-[70%] h-full transition duration-500 border-l border-violet-200 dark:border-zinc-800 
+      <div className={`fixed z-20 sm:hidden top-0 right-0 w-[50%] max-xsm:w-[70%] h-full transition duration-500 border-l border-violet-200 dark:border-zinc-800 
           ${open ? 'max-sm:translate-x-0' : 'max-sm:translate-x-[650px]'}`}
         >
           <SideBar close={() => setOpen(false)}/>

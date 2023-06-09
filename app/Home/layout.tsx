@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../components/Home/NavBar';
+import NavBar from './components/NavBar';
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from 'next/navigation';

@@ -31,7 +31,7 @@ export const NavBar = () => {
               </Link>
             </div>
 
-            <ul className="text-white flex flex-row font-medium bg-violet-700 dark:bg-violet-900 space-x-2 dark:border-gray-700 max-sm:hidden z-10">
+            <ul className="text-white flex flex-row font-medium bg-violet-800 dark:bg-violet-900 space-x-2 dark:border-gray-700 max-sm:hidden z-10">
               <li>
                 <a href="/Home" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Home</a>
               </li>
@@ -66,7 +66,7 @@ export const NavBar = () => {
 
                 </li>
 
-                <div className={`absolute justify-center ml-1 transition bg-violet-700 rounded-lg top-[80px] w-[100px] -z-10
+                <div className={`absolute justify-center ml-1 transition bg-violet-800 rounded-lg top-[80px] w-[100px] -z-10
                     ${dropdown ? "translate-y-0" : "-translate-y-44"}`}>
                     <div>
                       <li>

@@ -6,8 +6,8 @@ export default async function Home() {
 
   console.log(session?.user);
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className="w-full h-full">
+      Dashboard
     </div>
   );
 }

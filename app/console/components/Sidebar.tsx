@@ -19,7 +19,7 @@ const Sidebar = () => {
   const [dropdown, setDropdown] = useState(false);
 
   return (
-    <div className="z-20 min-w-fit h-screen border-l border-violet-200 dark:border-zinc-800">
+    <div className="z-20 min-w-fit h-screen border-r border-violet-200 dark:border-zinc-800">
       <div className="text-white h-full pt-6 bg-violet-950 dark:bg-violet-950 z-50">
         <div className="flex pb-5 px-7">
           <button type="button" className="rounded-full">

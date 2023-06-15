@@ -1,5 +1,6 @@
 import React, {useTransition} from 'react'
 import { AiOutlineClose, AiOutlineDelete } from 'react-icons/ai'
+import { deleteAccount } from '../AccountType/action'
 
 const DeletePopUp = ({isOpen, setIsOpen, id}: {isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>, id:any}) => {
 
@@ -7,12 +8,14 @@ const DeletePopUp = ({isOpen, setIsOpen, id}: {isOpen: boolean, setIsOpen: React
 
     return (
         <div
-            className={`fixed top-0 left-0 bg-black bg-opacity-20 right-0 z-50 overflow-x-hidden overflow-y-auto md:inset-0 h-full ${isOpen ? '' : 'hidden'}`}
+            className={`fixed top-0 left-0 bg-black bg-opacity-10 right-0 z-50 md:inset-0 h-full ${isOpen ? '' : 'hidden'}`}
         >
             <div className="absolute top-1/3 left-1/3 w-full max-w-md max-h-full">
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <div className="flex justify-end pt-6 pr-6">
-                        <AiOutlineClose />
+                    <div className='flex justify-end pt-6 pr-6 '>
+                        <button onClick={() => setIsOpen(false)} className="hover:text-gray-400">
+                            <AiOutlineClose className="w-7 h-7"/>
+                        </button>
                     </div>
                     <div className="px-6 pb-6 text-center">
                         <div className="flex font-normal justify-center pb-2 text-gray-900">

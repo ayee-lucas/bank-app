@@ -3,7 +3,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import TableRow from "../components/TableRow";
 import { IAccountType } from "@/app/models/AccountType";
-import DeletePopUp from "./DeletePopUp";
 
 export interface TableViewContextType {
   setAccount?: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -34,7 +33,6 @@ const TableView = () => {
 
   return (
     <div className="overflow-y overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[420px]">
-      {/*<DeletePopUp isOpen={isOpen} setIsOpen={setIsOpen} id={acc} />*/}
       <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
         <thead className="bg-gray-50">
           <tr>
@@ -52,6 +50,7 @@ const TableView = () => {
               description={account.description}
               createdAt={account.createdAt}
               updatedAt={account.updatedAt}
+              isOpen={isOpen}
               setIsOpen={setIsOpen}
               key={key} />
           ))}

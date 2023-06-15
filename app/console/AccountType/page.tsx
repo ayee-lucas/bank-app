@@ -9,8 +9,7 @@ export default async function AccountType() {
 
       <button className="mx-6 px-4 py-2 text-md font-semibold text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-600">Add Account Type</button>
 
-      
-        <TableView/>
+      <TableView/>
 
     </div>
   );

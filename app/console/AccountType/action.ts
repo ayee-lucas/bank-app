@@ -1,4 +1,4 @@
-'user server'
+'use server'
 import dbConnect from "@/app/db/connection"
 import AccountType from "@/app/models/AccountType";
 import { revalidatePath } from "next/cache";

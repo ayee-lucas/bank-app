@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import { AiOutlineUser, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
@@ -6,6 +8,7 @@ export interface IAccountType {
   description: string;
   createdAt: Date;
   updatedAt: Date;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const TableRow: React.FC<IAccountType> = ({
@@ -13,6 +16,7 @@ const TableRow: React.FC<IAccountType> = ({
   description,
   createdAt,
   updatedAt,
+  setIsOpen,
 }) => {
   return (
     <tr className="hover:bg-gray-100">
@@ -30,7 +34,9 @@ const TableRow: React.FC<IAccountType> = ({
           <button className="flex justify-center items-center w-10 h-10 hover:text-blue-500">
             <AiOutlineEdit className="w-6 h-6" />
           </button>
-          <button className="flex justify-center items-center w-10 h-10 hover:text-red-500">
+          <button className="flex justify-center items-center w-10 h-10 hover:text-red-500 "
+          onClick={() => setIsOpen(true)}
+          >
             <AiOutlineDelete className="w-6 h-6" />
           </button>
         </div>

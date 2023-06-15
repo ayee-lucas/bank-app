@@ -23,7 +23,6 @@ const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
-      required: true,
     },
     username: {
       type: String,
@@ -48,25 +47,20 @@ const userSchema = new Schema<IUser>(
     },
     dpi: {
       type: String,
-      required: true,
       minlength: 13,
       maxlength: 13,
     },
     address: {
-      type: String,
-      required: true,
+      type: String
     },
     phone: {
-      type: String,
-      required: true,
+      type: String
     },
     work: {
-      type: String,
-      required: true,
+      type: String
     },
     salary: {
-      type: String,
-      required: true,
+      type: String
     },
     role: {
       type: String,

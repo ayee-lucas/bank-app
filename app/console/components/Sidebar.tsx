@@ -7,7 +7,7 @@ import DropDown from "@/app/Home/components/DropDown";
 
 import {
   AiOutlineHome,
-  AiOutlineBook,
+  AiOutlineUser,
   AiOutlineDatabase,
   AiOutlinePhone,
   AiOutlineFall,
@@ -46,9 +46,9 @@ const Sidebar = () => {
             name="Dashboard"
           />
           <SideBarOptions
-            href="/console/About"
-            icon={AiOutlineBook}
-            name="About"
+            href="/console/AccountType"
+            icon={AiOutlineUser}
+            name="AccountType"
           />
           <SideBarOptions
             href="/console/Contact"

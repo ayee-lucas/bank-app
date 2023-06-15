@@ -9,7 +9,7 @@ export default async function RootLayout({
     <section >
       <div className="flex h-screen">
         <Sidebar/>
-        <div className="bg-violet-50 w-screen ">{children}</div>
+        <div className="bg-violet-50 w-screen p-2">{children}</div>
       </div>
     </section>
   );

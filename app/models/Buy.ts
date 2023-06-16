@@ -1,5 +1,5 @@
 import { Document, Schema, model, models } from "mongoose";
-import { IBankAccount } from "./BankAccount";
+import { BankAccount, IBankAccount } from "./BankAccount";
 
 export interface IBuy extends Document {
   amount: number;
@@ -43,6 +43,28 @@ const BuySchema = new Schema<IBuy>(
     versionKey: false,
   }
 );
+
+BuySchema.pre<IBuy>("save", async function (next: Function) {
+  try {
+    const senderAccountId = this.senderAccount;
+    const amount = this.amount;
+
+    // Fetch the sender account
+    const senderAccount = await BankAccount.findById(senderAccountId);
+
+    // Subtract the purchase amount from the sender's account balance
+    if (senderAccount) {
+      senderAccount.balance -= amount;
+      await senderAccount.save();
+    } else {
+      throw new Error("Sender account not found");
+    }
+
+    return next();
+  } catch (error: any) {
+    return next(error);
+  }
+});
 
 const Buy = models.Buy || model<IBuy>("Buy", BuySchema);
 

@@ -1,6 +1,6 @@
 import { Document, Schema, model, models } from "mongoose";
 import { IUser } from "./User";
-import { IBankAccount } from "./BankAccount";
+import { BankAccount, IBankAccount } from "./BankAccount";
 
 export interface IDeposit extends Document {
   amount: number;
@@ -34,6 +34,28 @@ const DepositSchema = new Schema<IDeposit>(
     versionKey: false,
   }
 );
+
+DepositSchema.pre<IDeposit>("save", async function (next: Function) {
+  try {
+    const accountId = this.account;
+    const amount = this.amount;
+
+    // Fetch the sender account
+    const account = await BankAccount.findById(accountId);
+
+    // Subtract the purchase amount from the sender's account balance
+    if (account) {
+      account.balance += amount;
+      await account.save();
+    } else {
+      throw new Error("Sender account not found");
+    }
+
+    return next();
+  } catch (error: any) {
+    return next(error);
+  }
+});
 
 const Deposit = models.Deposit || model<IDeposit>("Deposit", DepositSchema);
 

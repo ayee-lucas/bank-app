@@ -1,5 +1,5 @@
 import { Document, Schema, model, models } from "mongoose";
-import { IUser } from "./User";
+import User, { IUser } from "./User";
 import { IAccountType } from "./AccountType";
 
 export interface IBankAccount extends Document {
@@ -67,7 +67,7 @@ async function generateUniqueAccountNumber(): Promise<string> {
 }
 
 bankAccountSchema.pre<IBankAccount>("save", async function (next) {
-  const user = await models.User.findById(this.client);
+  const user = await User.findById(this.client);
 
   if (user) {
     user.accounts.push(this._id);

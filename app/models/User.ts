@@ -51,16 +51,16 @@ const userSchema = new Schema<IUser>(
       maxlength: 13,
     },
     address: {
-      type: String
+      type: String,
     },
     phone: {
-      type: String
+      type: String,
     },
     work: {
-      type: String
+      type: String,
     },
     salary: {
-      type: String
+      type: String,
     },
     role: {
       type: String,

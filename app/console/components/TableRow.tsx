@@ -1,8 +1,10 @@
 "use client";
 
-import React from "react";
+import React, {useState} from "react";
 import { AiOutlineUser, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Link from "next/link";
+import {formatDate, updatedDate} from "@/app/tools/datesFormatter"
+
 interface Prop {
   _id: any;
   name: string;
@@ -27,9 +29,11 @@ const TableRow: React.FC<Prop> = ({
     setId(_id)
     setIsOpen(true)
   }
-  return (
-    <>
 
+  const formattedCreatedAt = formatDate(createdAt);
+  const formattedUpdatedAt = updatedDate(updatedAt);
+
+  return (
       <tr className="hover:bg-gray-100">
         <th className="flex gap-3 px-5 py-4 font-normal text-gray-900">
           <AiOutlineUser className="w-8 h-8" />
@@ -38,8 +42,8 @@ const TableRow: React.FC<Prop> = ({
           </div>
         </th>
         <td className="px-6 py-4">{description}</td>
-        <td className="px-6 py-4">{createdAt.toString()}</td>
-        <td className="px-6 py-4">{updatedAt.toString()}</td>
+        <td className="px-6 py-4">{`${formattedCreatedAt.formatedTime} ${formattedCreatedAt.formatedDate}`}</td>
+        <td className="px-6 py-4">{`${formattedUpdatedAt.formatedUpdateTime} ${formattedUpdatedAt.formatedUpdateDate}`}</td>
         <td className="px-6 py-4 w-10">
           <div className="flex justify-evenly gap-4">
             <Link
@@ -53,11 +57,10 @@ const TableRow: React.FC<Prop> = ({
               onClick={(e) => handleClick(e)}
             > 
               <AiOutlineDelete className="w-6 h-6 transition duration-700 hover:w-7 hover:h-7" />
-            </button>
+          </button>
           </div>
         </td>
       </tr>
-    </>
   );
 };
 

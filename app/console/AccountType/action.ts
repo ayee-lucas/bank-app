@@ -24,7 +24,7 @@ export async function deleteAccountType(_id: any) {
 }
 
 export async function getAccountTypes() {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/accountType`, {
+  const res = await fetch(`http://localhost:3000/api/accountType`, {
     method: "GET",
     cache: 'no-store',
   });
@@ -33,7 +33,27 @@ export async function getAccountTypes() {
 
   const accounts: IAccountType[] = await res.json();
 
-  console.log('Request DONE!!!!')
+  console.log(accounts)
 
   return accounts;
+}
+
+export async function getAccountById(_id: any) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/Posts/post/${_id}`, {
+      method: 'GET',
+      next: { revalidate: 100 },
+    });
+
+    if (!res.ok) {
+      throw new Error('Something went wrong');
+    }
+
+    const account = await res.json();
+
+    return account.createdAt;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
 }

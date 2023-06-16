@@ -9,7 +9,6 @@ const TableView = ({accounts}: {accounts: IAccountType[]}) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
-
   return (
     <div className="overflow-y overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[490px]">
       <DeletePopUp isOpen={isOpen} setIsOpen={setIsOpen} _id={id} />

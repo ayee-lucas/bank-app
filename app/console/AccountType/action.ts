@@ -1,28 +1,39 @@
-'use server'
-import dbConnect from "@/app/db/connection"
-import AccountType from "@/app/models/AccountType";
-import { redirect } from 'next/navigation';
+"use server";
+import dbConnect from "@/app/db/connection";
+import AccountType, { IAccountType } from "@/app/models/AccountType";
+import { revalidatePath } from "next/cache";
 
-export async function reload(){
-    redirect("/console/AccountType")
+export async function deleteAccountType(_id: any) {
+  console.log({ serverID: _id });
+  try {
+    dbConnect();
+    const account = await AccountType.findById(_id);
+
+    if (!account) {
+      return new Error("No user found");
+    }
+
+    const deletedUser = await AccountType.findByIdAndDelete(_id);
+
+    console.log({ ACCOUNT_TYPE_DELETED: deletedUser });
+
+    revalidatePath("/console/AccountType");
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-export async function deleteAccount(_id:any){
-    try {
-    dbConnect();
-        window.location.reload()
-        const account = await AccountType.findById(_id)
+export async function getAccountTypes() {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/accountType`, {
+    method: "GET",
+    cache: 'no-store',
+  });
 
-        if(!account) {
-            return new Error('No user found')
-        }
+  if (!res.ok) throw new Error(res.statusText);
 
-        const deletedUser = await AccountType.findByIdAndDelete(_id)
-        console.log(deletedUser)
-        
-        
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+  const accounts: IAccountType[] = await res.json();
+
+  console.log('Request DONE!!!!')
+
+  return accounts;
 }

@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import TableRow from "../components/TableRow";
-import { IAccountTypeBase } from "@/app/models/AccountType";
+import { IAccountType } from "@/app/models/AccountType";
 
 const TableView = () => {
 
-  const [accounts, setAccounts] = useState<IAccountTypeBase[]>([]);
+  const [accounts, setAccounts] = useState<IAccountType[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const TableView = () => {
 
       if (!res.ok) throw new Error(res.statusText);
 
-      const accounts: IAccountTypeBase[] = await res.json();
+      const accounts: IAccountType[] = await res.json();
       setAccounts(accounts);
       console.log(accounts);
     }
@@ -39,7 +39,7 @@ const TableView = () => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {accounts.map((account: IAccountTypeBase, key) => (
+          {accounts.map((account: IAccountType, key) => (
             <TableRow 
               _id={account._id}
               name={account.name}

@@ -3,13 +3,18 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Form from "@/app/console/components/Form";
-import { IAccountTypePOST } from "@/app/models/AccountType";
+
+interface AccountType {
+  name: string;
+  description: string;
+}
 
 export default function Page({ params }: { params: { id: string } }) {
-
   const [name, setName] = useState("");
+  const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [description, setDescription] = useState("");
-  const [account, setAccount] = useState<IAccountTypePOST[]>([]);
+  const [account, setAccount] = useState<AccountType>();
 
   useEffect(() => {
     async function getAccountType() {
@@ -17,21 +22,23 @@ export default function Page({ params }: { params: { id: string } }) {
         next: { revalidate: 100 },
       });
 
-      console.log("get BY ID")
-      
+      console.log("get BY ID");
 
-      if (!res.ok) throw new Error(res.statusText);
+      if (!res.ok) {
+        setError(true);
+      }
 
-      const account: IAccountTypePOST[] = await res.json();
+      const account: AccountType = await res.json();
       setAccount(account);
-      console.log(account)
+      setLoading(false);
+      console.log(account);
     }
 
     getAccountType();
   }, []);
 
   const handleSave = async () => {
-    const newAccountType: IAccountTypePOST = {
+    const newAccountType: AccountType = {
       name,
       description,
     };
@@ -51,6 +58,15 @@ export default function Page({ params }: { params: { id: string } }) {
     }
   };
 
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+
+  if (error) {
+    return <div>An error has occurred</div>;
+  }
+
   return (
     <div className="w-full h-full">
       <div className="p-6 text-3xl font-semibold text-violet-900">
@@ -65,27 +81,22 @@ export default function Page({ params }: { params: { id: string } }) {
             </h2>
 
             <form>
-              {account.map((account: IAccountTypePOST, key) => (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
-                  <Form
-                    name={"Name"}
-                    type={"text"}
-                    placeholder={"Insert Name"}
-                    defaultValue={account.name}
-                    onChange={(e) => setName(e.target.value)}
-                    key={key}
-                  />
-                  <Form
-                    name={"Description"}
-                    type={"text"}
-                    placeholder={"Insert Description"}
-                    defaultValue={account.description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    key={key}
-                  />
-                </div>
-              ))}
-
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
+                <Form
+                  name={"Name"}
+                  type={"text"}
+                  placeholder={"Insert Name"}
+                  defaultValue={account?.name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Form
+                  name={"Description"}
+                  type={"text"}
+                  placeholder={"Insert Description"}
+                  defaultValue={account?.description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
               <div className="flex justify-between mt-5">
                 <Link
                   href="/console/AccountType"

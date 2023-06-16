@@ -4,8 +4,7 @@ import React from "react";
 import { AiOutlineUser, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Link from "next/link";
 import DeletePopUp from "./DeletePopUp";
-
-export interface IAccountType {
+interface Prop {
   _id: any;
   name: string;
   description: string;
@@ -15,7 +14,7 @@ export interface IAccountType {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TableRow: React.FC<IAccountType> = ({
+const TableRow: React.FC<Prop> = ({
   _id,
   name,
   description,

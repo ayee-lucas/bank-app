@@ -7,6 +7,7 @@ import logo from "../../../public/Images/Logos/NovarisLogoWhite.png";
 import SideBar from "./SideBar";
 import DropDown from "./DropDown";
 import { AiOutlineDatabase } from "react-icons/ai";
+import { signOut } from "next-auth/react";
 
 export const NavBar = () => {
 
@@ -167,6 +168,7 @@ export const NavBar = () => {
                       <Link
                         href="/Home"
                         className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        onClick={() => signOut()}
                       >
                         Sign out
                       </Link>

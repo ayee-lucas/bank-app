@@ -4,15 +4,6 @@ import { Document, Schema, model, models } from "mongoose";
 export interface IAccountType extends Document {
   name: string;
   description: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-// Interfaces for AccountType in Frontend
-export interface IAccountTypeBase {
-  _id: any;
-  name: string;
-  description: string;
   createdAt: Date;
   updatedAt: Date;
 }

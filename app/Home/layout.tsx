@@ -18,7 +18,7 @@ export default async function HomeLayout({
     redirect("/auth/Login")
   }
 
-  if(session?.user?.role != "admin"){
+  if(session?.user?.role != "user"){
     redirect("/console")
   }
 

@@ -1,20 +1,25 @@
 'use server'
 import dbConnect from "@/app/db/connection"
 import AccountType from "@/app/models/AccountType";
-import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation';
 
-export async function deleteAccount(id:any){
+export async function reload(){
+    redirect("/console/AccountType")
+}
+
+export async function deleteAccount(_id:any){
     try {
     dbConnect();
-        const account = await AccountType.findById(id)
+        window.location.reload()
+        const account = await AccountType.findById(_id)
 
         if(!account) {
             return new Error('No user found')
         }
 
-        const deletedUser = await AccountType.findByIdAndDelete(id)
-
-        revalidatePath('/console/AccountType')
+        const deletedUser = await AccountType.findByIdAndDelete(_id)
+        console.log(deletedUser)
+        
         
     } catch (err) {
         console.log(err)

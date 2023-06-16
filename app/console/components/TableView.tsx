@@ -1,18 +1,12 @@
 "use client"
 
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import TableRow from "../components/TableRow";
-import { IAccountType } from "@/app/models/AccountType";
-
-export interface TableViewContextType {
-  setAccount?: React.Dispatch<React.SetStateAction<string | undefined>>;
-  handleMenu?: (selectedAccount: string) => void;
-}
+import { IAccountTypeBase } from "@/app/models/AccountType";
 
 const TableView = () => {
 
-  const [accounts, setAccounts] = useState<IAccountType[]>([]);
-
+  const [accounts, setAccounts] = useState<IAccountTypeBase[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,7 +17,7 @@ const TableView = () => {
 
       if (!res.ok) throw new Error(res.statusText);
 
-      const accounts: IAccountType[] = await res.json();
+      const accounts: IAccountTypeBase[] = await res.json();
       setAccounts(accounts);
       console.log(accounts);
     }
@@ -32,9 +26,10 @@ const TableView = () => {
   }, []);
 
   return (
-    <div className="overflow-y overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[420px]">
-      <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
-        <thead className="bg-gray-50">
+    <div className="overflow-y overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[490px]">
+      <table className="relative w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
+        
+        <thead className=" bg-gray-50">
           <tr>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Name</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Description</th>
@@ -44,8 +39,9 @@ const TableView = () => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-          {accounts.map((account: IAccountType, key) => (
+          {accounts.map((account: IAccountTypeBase, key) => (
             <TableRow 
+              _id={account._id}
               name={account.name}
               description={account.description}
               createdAt={account.createdAt}
@@ -57,6 +53,7 @@ const TableView = () => {
         </tbody>
       </table>
     </div>
+    
   )
 }
 

@@ -1,10 +1,7 @@
-import React, {useTransition} from 'react'
+import React from 'react'
 import { AiOutlineClose, AiOutlineDelete } from 'react-icons/ai'
-import { deleteAccount } from '../AccountType/action'
 
-const DeletePopUp = ({isOpen, setIsOpen, id}: {isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>, id:any}) => {
-
-
+const DeletePopUp = ({isOpen, setIsOpen, _id}: {isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>, _id:any}) => {
 
     return (
         <div
@@ -26,6 +23,7 @@ const DeletePopUp = ({isOpen, setIsOpen, id}: {isOpen: boolean, setIsOpen: React
                         </h3>
                         <button
                             type="button"
+                            onClick={()=> window.location.reload()}
                             className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
                         >
                             Yes, I'm sure

@@ -11,7 +11,10 @@ export default async function HomeLayout({
 }) {
   const session = await getServerSession(authOptions);
 
+  console.log(session?.user)
+
   if(!session?.user?.username){
+    
     redirect("/auth/Login")
   }
 

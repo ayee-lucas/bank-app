@@ -3,30 +3,16 @@
 import React, { useState, useEffect } from "react";
 import TableRow from "../components/TableRow";
 import { IAccountType } from "@/app/models/AccountType";
+import DeletePopUp from "./DeletePopUp";
 
-const TableView = () => {
+const TableView = ({accounts}: {accounts: IAccountType[]}) => {
 
-  const [accounts, setAccounts] = useState<IAccountType[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    async function getAccountTypes() {
-      const res = await fetch(`/api/accountType`, {
-        next: { revalidate: 100 },
-      });
-
-      if (!res.ok) throw new Error(res.statusText);
-
-      const accounts: IAccountType[] = await res.json();
-      setAccounts(accounts);
-      console.log(accounts);
-    }
-
-    getAccountTypes();
-  }, []);
+  const [id, setId] = useState<string>("");
 
   return (
     <div className="overflow-y overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[490px]">
+      <DeletePopUp isOpen={isOpen} setIsOpen={setIsOpen} _id={id} />
       <table className="relative w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
         
         <thead className=" bg-gray-50">
@@ -46,9 +32,9 @@ const TableView = () => {
               description={account.description}
               createdAt={account.createdAt}
               updatedAt={account.updatedAt}
-              isOpen={isOpen}
               setIsOpen={setIsOpen}
-              key={key} />
+              key={key} 
+              setId={setId} />
           ))}
         </tbody>
       </table>

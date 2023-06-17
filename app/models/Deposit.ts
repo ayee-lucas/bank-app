@@ -4,7 +4,7 @@ import { BankAccount, IBankAccount } from "./BankAccount";
 
 export interface IDeposit extends Document {
   amount: number;
-  account: IBankAccount["_id"];
+  account: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,8 +16,7 @@ const DepositSchema = new Schema<IDeposit>(
       required: true,
     },
     account: {
-      type: Schema.Types.ObjectId,
-      ref: "BankAccount",
+      type: String,
       required: [true, "Cuenta es requerida."],
     },
     createdAt: {
@@ -37,18 +36,18 @@ const DepositSchema = new Schema<IDeposit>(
 
 DepositSchema.pre<IDeposit>("save", async function (next: Function) {
   try {
-    const accountId = this.account;
+    const accountNumber = this.account;
     const amount = this.amount;
 
-    // Fetch the sender account
-    const account = await BankAccount.findById(accountId);
+    // Fetch the account
+    const account = await BankAccount.findOne({ accNumber: accountNumber });
 
-    // Subtract the purchase amount from the sender's account balance
+    // Add the deposit amount to the account balance
     if (account) {
       account.balance += amount;
       await account.save();
     } else {
-      throw new Error("Sender account not found");
+      throw new Error("Account not found");
     }
 
     return next();

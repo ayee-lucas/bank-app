@@ -1,11 +1,11 @@
 import { Document, Schema, model, models } from "mongoose";
 import { IUser } from "./User";
-import { IBankAccount } from "./BankAccount";
+import { BankAccount, IBankAccount } from "./BankAccount";
 
 export interface ITransfer extends Document {
   amount: number;
-  senderAccount: IBankAccount["_id"];
-  receiverAccount: IBankAccount["_id"];
+  senderAccount: string;
+  receiverAccount: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,14 +17,12 @@ const TransferSchema = new Schema<ITransfer>(
       required: true,
     },
     senderAccount: {
-      type: Schema.Types.ObjectId,
-      ref: "BankAccount",
-      required: [true, "Cuenta de envio es requerido."],
+      type: String,
+      required: [true, "Cuenta de envío es requerida."],
     },
     receiverAccount: {
-      type: Schema.Types.ObjectId,
-      ref: "BankAccount",
-      required: [true, "Cuenta de destino es requerido."],
+      type: String,
+      required: [true, "Cuenta de destino es requerida."],
     },
     createdAt: {
       type: Date,
@@ -40,6 +38,36 @@ const TransferSchema = new Schema<ITransfer>(
     versionKey: false,
   }
 );
+
+TransferSchema.pre<ITransfer>("save", async function (next: Function) {
+  try {
+    const senderAccountNumber = this.senderAccount;
+    const receiverAccountNumber = this.receiverAccount;
+    const amount = this.amount;
+
+    // Fetch the sender account
+    const senderAccount = await BankAccount.findOne({
+      accNumber: senderAccountNumber,
+    });
+    const receiverAccount = await BankAccount.findOne({
+      accNumber: receiverAccountNumber,
+    });
+
+    // Subtract and add the transfer amount from the sender's and receiver's account balance
+    if (senderAccount && receiverAccount) {
+      senderAccount.balance -= amount;
+      receiverAccount.balance += amount;
+      await senderAccount.save();
+      await receiverAccount.save();
+    } else {
+      throw new Error("Sender account not found");
+    }
+
+    return next();
+  } catch (error: any) {
+    return next(error);
+  }
+});
 
 const Transfer =
   models.Transfer || model<ITransfer>("Transfer", TransferSchema);

@@ -3,14 +3,9 @@ import Link from "next/link";
 import { getAccountTypes } from "./action";
 import { IAccountType } from "@/app/models/AccountType";
 
-
-
-
 export default async function AccountType() {
 
   const accounts:IAccountType[] = await getAccountTypes();
-
-
 
   return (
     <div className="w-full h-full">

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TableRow from "../components/TableRow";
 import { IAccountType } from "@/app/models/AccountType";
 import DeletePopUp from "./DeletePopUp";

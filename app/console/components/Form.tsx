@@ -11,7 +11,7 @@ interface Props {
 const Form: React.FC<Props> = ({name, type, placeholder,defaultValue, onChange}) => {
   return (
     <div>
-      <label className="text-gray-700 dark:text-gray-300" htmlFor="username">
+      <label className="text-gray-700 dark:text-gray-300">
         {name}
       </label>
       <input

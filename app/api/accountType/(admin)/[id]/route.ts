@@ -19,11 +19,11 @@ export async function GET(request: NextRequest, params: Params) {
   try {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
-    /*if (!session?.user || session.user.role !== "admin") {
+    if (!session?.user || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
-    }*/
+    }
 
     const accountType = await AccountType.findById(id);
 
@@ -52,18 +52,18 @@ export async function PUT(request: NextRequest, params: Params) {
   try {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
-    /*if (!session?.user || session.user.role !== "admin") {
+    if (!session?.user || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
-    }*/
+    }
 
     // Validate if the request body is empty
-    /*if (Object.keys(data).length === 0) {
+    if (Object.keys(data).length === 0) {
       return new NextResponse("Empty request body", {
         status: 400,
       });
-    }*/
+    }
 
     const accountType = await AccountType.findByIdAndUpdate(id, data, {
       new: true,

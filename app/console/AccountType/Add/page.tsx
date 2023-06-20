@@ -58,23 +58,23 @@ const AddAccountType = () => {
                   name={"Name"}
                   type={"text"}
                   placeholder={"Insert Name"}
-                  onChange={(e: any) => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                 />
                 <Form
                   name={"Description"}
                   type={"text"}
                   placeholder={"Insert Description"}
-                  onChange={(e: any) => setDescription(e.target.value)}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
 
               <div className="flex justify-between mt-5">
-                <Link
+                <a
                   href="/console/AccountType"
                   className=" px-4 py-2 text-md font-normal text-white-900 bg-red-600 text-white rounded-xl max-w-fit hover:bg-red-500"
                 >
                   Cancel
-                </Link>
+                </a>
                 <button
                   onClick={(e) => handleSave(e)}
                   className="ml-2 px-4 py-2 text-md font-normal text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-700"

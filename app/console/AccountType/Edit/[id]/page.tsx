@@ -3,17 +3,21 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Form from "@/app/console/components/Form";
+import { updatedDate } from "@/app/tools/datesFormatter";
+import AccountType from "../../page";
 
 interface AccountType {
   name: string;
   description: string;
+  updatedAt: Date;
 }
 
 export default function Page({ params }: { params: { id: string } }) {
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [updatedAt, setUpdatedAt] = useState(new Date(Date.now()));
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [description, setDescription] = useState("");
   const [account, setAccount] = useState<AccountType>();
 
   useEffect(() => {
@@ -22,8 +26,6 @@ export default function Page({ params }: { params: { id: string } }) {
         next: { revalidate: 100 },
       });
 
-      console.log("get BY ID");
-
       if (!res.ok) {
         setError(true);
       }
@@ -31,17 +33,25 @@ export default function Page({ params }: { params: { id: string } }) {
       const account: AccountType = await res.json();
       setAccount(account);
       setLoading(false);
-      console.log(account);
     }
 
     getAccountType();
   }, []);
 
   const handleSave = async () => {
+
+    //Change updatedAd to the actual Date
+    setUpdatedAt(updatedAt)
+    updatedDate(updatedAt);
+
     const newAccountType: AccountType = {
       name,
       description,
+      updatedAt
     };
+
+    if(newAccountType.name == "") newAccountType.name = `${account?.name}`
+    if(newAccountType.description == "") newAccountType.description = `${account?.description}`
 
     try {
       const res = await fetch(`/api/accountType/${params.id}`, {
@@ -104,13 +114,13 @@ export default function Page({ params }: { params: { id: string } }) {
                 >
                   Cancel
                 </Link>
-                <Link
+                <a
                   href="/console/AccountType"
                   className="ml-2 px-4 py-2 text-md font-normal text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-700"
                   onClick={() => handleSave()}
                 >
                   Save
-                </Link>
+                </a>
               </div>
             </form>
           </div>

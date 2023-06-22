@@ -1,10 +1,10 @@
 import { Document, Schema, model, models } from "mongoose";
 import { IUser } from "./User";
-import { IBankAccount } from "./BankAccount";
+import { BankAccount, IBankAccount } from "./BankAccount";
 
 export interface IDeposit extends Document {
   amount: number;
-  account: IBankAccount["_id"];
+  account: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,8 +16,7 @@ const DepositSchema = new Schema<IDeposit>(
       required: true,
     },
     account: {
-      type: Schema.Types.ObjectId,
-      ref: "BankAccount",
+      type: String,
       required: [true, "Cuenta es requerida."],
     },
     createdAt: {
@@ -34,6 +33,28 @@ const DepositSchema = new Schema<IDeposit>(
     versionKey: false,
   }
 );
+
+DepositSchema.pre<IDeposit>("save", async function (next: Function) {
+  try {
+    const accountNumber = this.account;
+    const amount = this.amount;
+
+    // Fetch the account
+    const account = await BankAccount.findOne({ accNumber: accountNumber });
+
+    // Add the deposit amount to the account balance
+    if (account) {
+      account.balance += amount;
+      await account.save();
+    } else {
+      throw new Error("Account not found");
+    }
+
+    return next();
+  } catch (error: any) {
+    return next(error);
+  }
+});
 
 const Deposit = models.Deposit || model<IDeposit>("Deposit", DepositSchema);
 

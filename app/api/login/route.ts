@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import User, {IUser} from "@/app/models/User"
+import User, { IUser } from "@/app/models/User";
 import { comparePassword } from "@/app/tools/encrypt";
 import { JWT } from "@/app/tools/jwt";
 import dbConnect from "@/app/db/connection";
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (credentials.password.length < 8) {
+    if (credentials.password.length < 6) {
       return new NextResponse(
         JSON.stringify({ message: "Password too short" }),
         { status: 400 }

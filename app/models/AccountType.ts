@@ -42,6 +42,7 @@ const accountTypeSchema = new Schema<IAccountType>(
 );
 
 // Create and export the AccountType model
-const AccountType = models.AccountType || model<IAccountType>("AccountType", accountTypeSchema);
+const AccountType =
+  models.AccountType || model<IAccountType>("AccountType", accountTypeSchema);
 
 export default AccountType;

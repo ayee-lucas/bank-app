@@ -6,8 +6,8 @@ import Link from "next/link";
 import { formatDate, updatedDate } from "@/app/tools/datesFormatter";
 
 interface Prop {
-  _id: any;
-  account: Object;
+  _id: string;
+  account: string;
   amount: number;
   createdAt: Date;
   updatedAt: Date;
@@ -41,13 +41,13 @@ const TableRow: React.FC<Prop> = ({
           {account}
         </div>
       </th>
-      <td className="px-6 py-4">{amount}</td>
+      <td className="px-6 py-4">{`Q${amount}`}</td>
       <td className="px-6 py-4">{`${formattedCreatedAt.formatedTime} ${formattedCreatedAt.formatedDate}`}</td>
       <td className="px-6 py-4">{`${formattedUpdatedAt.formatedUpdateTime} ${formattedUpdatedAt.formatedUpdateDate}`}</td>
       <td className="px-6 py-4 w-10">
         <div className="flex justify-evenly gap-4">
           <Link
-            href={`/console/AccountType/Edit/${_id}`}
+            href={`/console/Deposit/Edit/${_id}`}
             className="flex justify-center items-center w-7 h-7 mx-2"
           >
             <AiOutlineEdit className="w-6 h-6 transition duration-500 hover:w-7 hover:h-7 hover:text-blue-500" />

@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useState } from "react";
-import TableRow from "./TableRow";
+import TableRow from "./TableRow"
+import DeletePopUp from "./DeletePopUp";
 import { IAccountType } from "@/app/models/AccountType";
-import DeletePopUp from "../../components/DeletePopUp";
 
 const TableView = ({accounts}: {accounts: IAccountType[]}) => {
 

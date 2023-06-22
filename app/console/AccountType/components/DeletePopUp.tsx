@@ -2,7 +2,7 @@
 
 import React, { useTransition } from "react";
 import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
-import { deleteAccountType } from "../AccountType/action";
+import { deleteAccountType } from "../action";
 
 const DeletePopUp = ({
   isOpen,

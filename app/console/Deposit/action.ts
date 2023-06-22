@@ -3,19 +3,19 @@ import dbConnect from "@/app/db/connection";
 import Deposit, { IDeposit } from "@/app/models/Deposit";
 import { revalidatePath } from "next/cache";
 
-export async function deleteDeposit(_id: any) {
+export async function deleteDeposit(_id: string) {
   console.log({ serverID: _id });
   try {
     dbConnect();
     const deposit = await Deposit.findById(_id);
 
     if (!deposit) {
-      return new Error("No user found");
+      return new Error("No deposit found");
     }
 
     const deletedDeposit = await Deposit.findByIdAndDelete(_id);
 
-    console.log({ DEPOSIT_DELETED: deletedDeposit });
+    console.log({DEPOSIT_DELETED: deletedDeposit });
 
     revalidatePath("/console/Deposit");
   } catch (err) {

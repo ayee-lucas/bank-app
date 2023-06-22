@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DeletePopUp from "../../components/DeletePopUp";
+import DeletePopUp from "../../AccountType/components/DeletePopUp";
 import { IDeposit } from "@/app/models/Deposit";
 import TableRow from "./TableRow";
 

@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Form from "../../components/Form";
 import { IAccountTypePOST } from "@/app/models/AccountType";
 import { useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 const AddAccountType = () => {
   const [name, setName] = useState("");

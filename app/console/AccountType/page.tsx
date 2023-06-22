@@ -1,4 +1,4 @@
-import TableView from "../components/TableView";
+import TableView from "./components/TableView";
 import Link from "next/link";
 import { getAccountTypes } from "./action";
 import { IAccountType } from "@/app/models/AccountType";

@@ -15,6 +15,12 @@ const BuySchema = new Schema<IBuy>(
     amount: {
       type: Number,
       required: true,
+      validate: {
+        validator: function (value: number) {
+          return value <= 10000;
+        },
+        message: "El monto máximo permitido es de 10000.",
+      },
     },
     senderAccount: {
       type: String,
@@ -64,6 +70,28 @@ BuySchema.pre<IBuy>("save", async function (next: Function) {
     return next();
   } catch (error: any) {
     return next(error);
+  }
+});
+
+BuySchema.post("findOneAndDelete", async function (doc: IBuy) {
+  try {
+    const senderAccountNumber = doc.senderAccount;
+    const amount = doc.amount;
+
+    // Fetch the sender account
+    const senderAccount = await BankAccount.findOne({
+      accNumber: senderAccountNumber,
+    });
+
+    // Revert the purchase amount to the sender's account balance
+    if (senderAccount) {
+      senderAccount.balance += amount;
+      await senderAccount.save();
+    } else {
+      throw new Error("Sender account not found");
+    }
+  } catch (error: any) {
+    console.log(error);
   }
 });
 

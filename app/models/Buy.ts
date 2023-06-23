@@ -62,6 +62,7 @@ BuySchema.pre<IBuy>("save", async function (next: Function) {
     // Subtract the purchase amount from the sender's account balance
     if (senderAccount) {
       senderAccount.balance -= amount;
+      senderAccount.buys.push(this._id); // Add the buy to the buys array
       await senderAccount.save();
     } else {
       throw new Error("Sender account not found");

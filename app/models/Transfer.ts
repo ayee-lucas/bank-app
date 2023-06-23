@@ -63,6 +63,8 @@ TransferSchema.pre<ITransfer>("save", async function (next: Function) {
     if (senderAccount && receiverAccount) {
       senderAccount.balance -= amount;
       receiverAccount.balance += amount;
+      senderAccount.transfers.push(this._id);
+      receiverAccount.transfers.push(this._id);
       await senderAccount.save();
       await receiverAccount.save();
     } else {
@@ -93,6 +95,14 @@ TransferSchema.post("findOneAndDelete", async function (doc: ITransfer) {
     if (senderAccount && receiverAccount) {
       senderAccount.balance += amount;
       receiverAccount.balance -= amount;
+      const transferIndex = senderAccount.transfers.indexOf(doc._id);
+      if (transferIndex !== -1) {
+        senderAccount.transfers.splice(transferIndex, 1);
+      }
+      const receiverIndex = receiverAccount.transfers.indexOf(doc._id);
+      if (receiverIndex !== -1) {
+        receiverAccount.transfers.splice(receiverIndex, 1);
+      }
       await senderAccount.save();
       await receiverAccount.save();
     } else {

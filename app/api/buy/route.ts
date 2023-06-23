@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
       });
     }*/
 
-    // Get all account types with related data
+    // Get all buys with related data
     const buy = await Buy.find();
     const data = buy;
 

@@ -5,31 +5,37 @@ import User from "@/app/models/User";
 import AccountType from "@/app/models/AccountType";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Buy from "@/app/models/Buy";
+import Deposit from "@/app/models/Deposit";
+import Transfer from "@/app/models/Transfer";
 
 dbConnect();
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    /*const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
     if (!session?.user || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
-    }
+    }*/
 
     const users = await User.find();
     const accountTypes = await AccountType.find();
+    const buys = await Buy.find();
+    const deposits = await Deposit.find();
+    const transfer = await Transfer.find();
 
     // Retrieve all bank accounts
     const bankAccounts = await BankAccount.find()
       .populate("client", "name username email dpi address phone work")
-      .populate("accountType", "name description");
+      .populate("accountType", "name description")
+      .populate("buys", "amount recipient description")
+      .populate("deposits", "amount")
+      .populate("transfers", "amount senderAccount receiverAccount");
 
-    const data = {
-      bankAccounts,
-    };
-
+    const data = bankAccounts;
     if (bankAccounts.length === 0) {
       return new NextResponse(
         JSON.stringify({ message: "No bank accounts registered" }),

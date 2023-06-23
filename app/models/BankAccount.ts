@@ -1,6 +1,9 @@
 import { Document, Schema, model, models } from "mongoose";
 import User, { IUser } from "./User";
 import { IAccountType } from "./AccountType";
+import { IBuy } from "./Buy";
+import { IDeposit } from "./Deposit";
+import { ITransfer } from "./Transfer";
 
 export interface IBankAccount extends Document {
   accNumber: string;
@@ -8,6 +11,9 @@ export interface IBankAccount extends Document {
   currency: string;
   balance: number;
   accountType: IAccountType["_id"];
+  buys?: IBuy[];
+  deposits?: IDeposit[];
+  transfers?: ITransfer[];
   // Otros campos específicos de la cuenta bancaria
 }
 
@@ -37,6 +43,24 @@ const bankAccountSchema = new Schema<IBankAccount>(
       ref: "AccountType",
       required: [true, "Tipo de cuenta es requerido."],
     },
+    buys: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Buy",
+      },
+    ],
+    deposits: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Deposit",
+      },
+    ],
+    transfers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Transfer",
+      },
+    ],
     // Otros campos específicos de la cuenta bancaria
   },
   {

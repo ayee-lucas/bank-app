@@ -51,6 +51,7 @@ DepositSchema.pre<IDeposit>("save", async function (next: Function) {
     // Add the deposit amount to the account balance
     if (account) {
       account.balance += amount;
+      account.deposits.push(this._id); // Add the deposit to the deposits array
       await account.save();
     } else {
       throw new Error("Account not found");

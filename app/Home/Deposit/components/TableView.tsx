@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DeletePopUp from "../../AccountType/components/DeletePopUp";
+import DeletePopUp from "./DeletePopUp";
 import { IDeposit } from "@/app/models/Deposit";
 import TableRow from "./TableRow";
 
@@ -25,9 +25,6 @@ const TableView = ({ deposits }: { deposits: IDeposit[] }) => {
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">
               Created At
             </th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">
-              Updated At
-            </th>
             <th
               scope="col"
               className="px-5 py-4 font-medium text-gray-900 text-center"
@@ -43,7 +40,6 @@ const TableView = ({ deposits }: { deposits: IDeposit[] }) => {
               account={deposits.account}
               amount={deposits.amount}
               createdAt={deposits.createdAt}
-              updatedAt={deposits.updatedAt}
               setIsOpen={setIsOpen}
               key={key}
               setId={setId}

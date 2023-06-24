@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Form from "../../components/Form";
 import { IAccountTypePOST } from "@/app/models/AccountType";
 import { useRouter } from "next/navigation";
+import Form from "@/app/console/components/Form";
 
 interface IDeposit{
     account: string
@@ -37,14 +37,14 @@ export default function AddDepositPage() {
       if (!res.ok) throw new Error(res.statusText);
 
       console.log("Deposit Saved Successfully");
-      router.push("/console/Deposit");
+      router.push("/Home/Deposit");
     } catch (error) {
       console.error("Error saving Deposit:", error);
     }
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full fixed top-[70px]">
       <div className="p-6 text-3xl font-semibold text-violet-900">
         Add Deposit
       </div>
@@ -74,7 +74,7 @@ export default function AddDepositPage() {
 
               <div className="flex justify-between mt-5">
                 <a
-                  href="/console/Deposit"
+                  href="/Home/Deposit"
                   className=" px-4 py-2 text-md font-normal text-white-900 bg-red-600 text-white rounded-xl max-w-fit hover:bg-red-500"
                 >
                   Cancel

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import TableView from "./components/TableView";
+import TableView from "../../Home/Deposit/components/TableView";
 import { IDeposit } from "@/app/models/Deposit";
-import { getDeposits } from "./action";
+import { getDeposits } from "../../Home/Deposit/action";
 
 export default async function DepositPage() {
 

@@ -10,7 +10,7 @@ interface Props {
 
 export const SideBarOptions: FC<Props> = ({ href, icon: Icon, name }) => {
   return (
-    <li>
+    <li className=' bg-violet-300 rounded-xl'>
         <Link
             href={href}
             className="flex p-2 rounded-lg hover:underline hover:underline-offset-8"

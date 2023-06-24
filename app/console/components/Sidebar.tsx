@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import SideBarOptions from "@/app/Home/components/SideBarOptions";
 import DropDown from "@/app/Home/components/DropDown";
+import { useSession } from "next-auth/react";
 
 import {
   AiOutlineHome,
@@ -18,9 +19,11 @@ import { BsArrowLeftRight, BsCurrencyDollar } from "react-icons/bs";
 const Sidebar = () => {
   const [dropdown, setDropdown] = useState(false);
 
+  const { data: session } = useSession();
+
   return (
-    <div className="z-20 min-w-fit h-screen border-r border-violet-200 dark:border-zinc-800">
-      <div className="text-white h-full pt-6 bg-violet-950 dark:bg-violet-950 z-50">
+    <div className="z-20 min-w-fit w-[25rem] h-screen border-r border-violet-200 dark:border-zinc-800">
+      <div className="text-white h-full pt-6 bg-violet-200 dark:bg-violet-950 z-50">
         <div className="flex pb-5 px-7">
           <button type="button" className="rounded-full">
             <Image
@@ -33,9 +36,9 @@ const Sidebar = () => {
               alt="user photo"
             />
           </button>
-          <div className="ml-4 text-sm dark:text-white">
-            <p>username</p>
-            <p>email@gmail.com</p>
+          <div className="ml-4 text-sm text-violet-700 font-semibold">
+            <p>{session?.user.username}</p>
+            <p>{session?.user.email}</p>
           </div>
         </div>
 

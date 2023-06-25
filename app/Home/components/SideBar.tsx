@@ -13,7 +13,7 @@ import {
   AiOutlineClose,
   AiOutlineFall,
   AiOutlineUp,
-  AiOutlineSetting,
+  AiOutlineUserDelete,
 } from "react-icons/ai";
 
 import {
@@ -22,12 +22,15 @@ import {
   BsArrowLeftRight,
   BsCurrencyDollar,
 } from "react-icons/bs";
+import { signOut, useSession } from "next-auth/react";
 
 interface Props {
   close: () => void;
 }
 
 export const SideBar: FC<Props> = ({ close }) => {
+
+  const { data: session } = useSession();
 
   const [theme, setTheme] = useState(true);
   const [dropdown, setDropdown] = useState(false);
@@ -42,8 +45,8 @@ export const SideBar: FC<Props> = ({ close }) => {
 
         <div className="flex pr-5">
           <div className="mr-3 text-right text-md dark:text-white">
-            <p>username</p>
-            <p>email@gmail.com</p>
+            <p>{session?.user.username}</p>
+            <p>{session?.user.email}</p>
           </div>
 
           <button type="button" className="max-xsm:hidden rounded-full">
@@ -109,7 +112,11 @@ export const SideBar: FC<Props> = ({ close }) => {
               icon={AiOutlineFall}
               name="Deposit"
             />
-            <DropDown href="/Home/Buy" icon={BsCurrencyDollar} name="Buy" />
+            <DropDown 
+              href="/Home/Buy"
+              icon={BsCurrencyDollar} 
+              name="Buy" 
+            />
           </div>
         ) : null}
       </ul>
@@ -126,13 +133,12 @@ export const SideBar: FC<Props> = ({ close }) => {
         <div>
             <button
               className="flex p-2"
-              onClick={() => setDropUp(!dropUp)}
+              onClick={() => signOut()}
             >
-              <AiOutlineSetting className="text-xl"/>
+              <AiOutlineUserDelete className="text-xl"/>
               <span className="flex mx-3 text-left whitespace-nowrap">
-                Settings
+                Sign Out
               </span>
-              <AiOutlineUp/>
             </button>
 
           <div
@@ -153,27 +159,6 @@ export const SideBar: FC<Props> = ({ close }) => {
                   <span className="flex whitespace-nowrap">Deposit</span>
                 </Link>
               </li>
-              {theme ? (
-                <button
-                  type="button"
-                  onClick={() => setTheme(!theme)}
-                  className="flex p-2 rounded-lg text-white"
-                >
-                  <BsMoon className="w-6 h-6" />
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Dark Theme
-                  </span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setTheme(!theme)}
-                  className="flex p-2 rounded-lg text-white"
-                >
-                  <BsSun className="w-6 h-6" />
-                  <span className="ml-3 whitespace-nowrap">Light Theme</span>
-                </button>
-              )}
             </div>
           </div>
         </div>

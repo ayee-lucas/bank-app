@@ -5,14 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/Images/Logos/NovarisLogoWhite.png";
 import SideBar from "./SideBar";
-import DropDown from "./DropDown";
-import { AiOutlineDatabase } from "react-icons/ai";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export const NavBar = () => {
 
+  const { data: session } = useSession();
+
   const [open, setOpen] = useState<boolean>(false);
-  const [theme, setTheme] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
   return (
@@ -128,10 +127,10 @@ export const NavBar = () => {
                 >
                   <div className="px-4 py-3">
                     <span className="block text-xs text-gray-900 dark:text-white">
-                      Username
+                      {session?.user.username}
                     </span>
                     <span className="block text-xs  text-gray-500 truncate dark:text-gray-400">
-                      email@gmail.com
+                    {session?.user.email}
                     </span>
                   </div>
                   <ul className="py-2">
@@ -143,27 +142,6 @@ export const NavBar = () => {
                         Notifications
                       </Link>
                     </li>
-                    {theme ? (
-                      <li>
-                        <button
-                          type="button"
-                          onClick={() => setTheme(!theme)}
-                          className="w-full text-left block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Light Theme
-                        </button>
-                      </li>
-                    ) : (
-                      <li>
-                        <button
-                          type="button"
-                          onClick={() => setTheme(!theme)}
-                          className="w-full text-left block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Dark Theme
-                        </button>
-                      </li>
-                    )}
                     <li>
                       <Link
                         href="/Home"

@@ -10,7 +10,7 @@ const TableView = ({ deposits }: { deposits: IDeposit[] }) => {
   const [id, setId] = useState<string>("");
 
   return (
-    <div className="overflow-y overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[490px]">
+    <div className="flex items-center overflow-y lg:overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[490px]">
       <DeletePopUp isOpen={isOpen} setIsOpen={setIsOpen} _id={id} />
 
       <table className="relative w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">

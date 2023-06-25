@@ -16,6 +16,7 @@ import {
 
 import { BsArrowLeftRight, BsCurrencyDollar } from "react-icons/bs";
 import { getUserById } from "../actions";
+import Link from "next/link";
 
 interface IUserclient {
   name: string;
@@ -49,7 +50,7 @@ const Sidebar = () => {
 
   const handleMouseOut = () => {
     setOpen(false);
-
+    setDropdown(false);
     setShadow("opacity-0 hidden");
   };
 
@@ -151,49 +152,45 @@ const Sidebar = () => {
               isHovering={open}
             />
 
-            <li>
-              <button
-                className="flex p-2 rounded-lg"
-                onClick={() => setDropdown(!dropdown)}
-              >
-                <AiOutlineDatabase className="w-6 h-6" />
-                <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                  Services
-                </span>
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-            </li>
+                <li className="bg-violet-200 rounded-xl text-violet-500 mb-2">
+                  <button
+                    onMouseOver={handleMouseOver}
+                    onClick={() => setDropdown(!dropdown)}
+                    className="w-full relative flex py-4 px-2 rounded-lg hover:underline hover:underline-offset-8"
+                  >
+                      <AiOutlineDatabase className={`h-6 ${ open ? "w-6" : "w-full" }`} />
+                      {open && (<span className="flex-1 ml-3 whitespace-nowrap text-left">Services</span>)}
+                  </button>
+                </li>
 
-            {dropdown ? (
-              <div>
-                <DropDown
+              <div className={`ml-2 transition duration-300 w-56 ${ dropdown ? "translate-x-32" : "-translate-x-64"}`}>
+                <SideBarOptions
+                  onMouseOver={handleMouseOver}
                   href="/console/Transfer"
-                  icon={BsArrowLeftRight}
-                  name="Transfer"
-                />
-                <DropDown
-                  href="/console/Deposit"
                   icon={AiOutlineFall}
-                  name="Deposit"
+                  name="Transfer"
+                  isHovering={open}
                 />
-                <DropDown
+              </div>
+              <div className={`ml-2 transition duration-200 w-56 ${ dropdown ? "translate-x-32" : "-translate-x-64"}`}>
+                <SideBarOptions
+                  onMouseOver={handleMouseOver}
+                  href="/console/Deposit"
+                  icon={BsArrowLeftRight}
+                  name="Deposit"
+                  isHovering={open}
+                />
+              </div>
+              <div className={`ml-2 transition duration-100 w-56 ${ dropdown ? "translate-x-32" : "-translate-x-64"}`}>
+                <SideBarOptions
+                  onMouseOver={handleMouseOver}
                   href="/console/Buy"
                   icon={BsCurrencyDollar}
                   name="Buy"
+                  isHovering={open}
                 />
               </div>
-            ) : null}
+
           </ul>
 
           <div className="absolute bottom-0 right-0 p-6">

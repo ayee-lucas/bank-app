@@ -8,7 +8,7 @@ export default async function RootLayout({
   return (
     <section >
         <Sidebar/>
-        <div className="bg-violet-50 w-screen p-2 pl-28">{children}</div>
+        <div className="bg-violet-50 w-screen h-screen p-2 pl-28">{children}</div>
     </section>
   );
 }

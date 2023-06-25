@@ -18,14 +18,14 @@ export const SideBarOptions: FC<Props> = ({
   isHovering,
 }) => {
   return (
-    <li className="bg-violet-200 rounded-xl text-violet-500 ">
+    <li className="bg-violet-200 rounded-xl text-violet-500 mb-2">
       <Link
         href={href}
         className="relative flex items-center justify-center py-4 px-2 rounded-lg hover:underline hover:underline-offset-8 "
         onMouseOver={onMouseOver}
       >
           <Icon className="w-6 h-6" />
-          {isHovering && (<span className="flex-1 ml-3 whitespace-nowrap">{name}</span>)}
+          {isHovering && (<span className="flex-1 ml-3 whitespace-nowrap w-fit">{name}</span>)}
       </Link>
     </li>
   );

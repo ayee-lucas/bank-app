@@ -3,7 +3,7 @@
 import React, { useTransition, useState, useEffect } from "react";
 import Image from "next/image";
 import SideBarOptions from "@/app/Home/components/SideBarOptions";
-import DropDown from "@/app/Home/components/DropDown";
+import {RiSmartphoneLine} from "react-icons/ri"
 import { signOut, useSession } from "next-auth/react";
 
 import {
@@ -15,7 +15,7 @@ import {
   AiOutlineLogout,
 } from "react-icons/ai";
 
-import { BsArrowLeftRight, BsCurrencyDollar } from "react-icons/bs";
+import { BsArrowLeftRight, BsCurrencyDollar, BsFillBuildingFill } from "react-icons/bs";
 import { getUserById } from "../actions";
 import Link from "next/link";
 
@@ -24,6 +24,7 @@ interface IUserclient {
   username: string;
   phone: string;
   work: string;
+  email: string;
 }
 
 const Sidebar = () => {
@@ -112,17 +113,32 @@ const Sidebar = () => {
               </div>
             </div>
             {hoveringProfile && !open && (
-              <div className="absolute w-72 flex flex-col bg-violet-100 px-5 py-2 text-gray-800 left-[110%] rounded-lg border border-violet-500">
-                <div className="w-full flex items-center gap-3">
-                  <h1 className="text-3xl font-semibold ">{user?.name}</h1>
-                  <span className="text-sm text-violet-600">
-                    @{user?.username}
-                  </span>
-                </div>
-                <p className="text-lg font-semibold text-gray-700">
+              <div
+                className="absolute w-72 flex flex-col justify-center items-center bg-violet-100/40 px-5 py-2 text-gray-800 left-[110%] top-2 rounded-lg border shadow-xl
+              backdrop-blur-lg backdrop-saturate-150 gap-4
+              "
+              >
+                <Image
+                  src={
+                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
+                  }
+                  className="rounded-full"
+                  width={60}
+                  height={60}
+                  alt="user photo"
+                />
+                <h1 className="text-3xl font-semibold pt-5">{user?.name}</h1>
+                <span className="text-xs bg-white py-1 px-2 rounded-full text-gray-500">
+                  @{user?.username}
+                </span>
+                <span className="text-lg text-violet-600">{user?.email}</span>
+                <p className="text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <BsFillBuildingFill />
                   {user?.work}
                 </p>
-                <p className="text-lg text-gray-700">{user?.phone}</p>
+                <p className="text-lg text-gray-700 flex items-center gap-2">
+                  <RiSmartphoneLine />
+                  {user?.phone}</p>
               </div>
             )}
           </div>
@@ -215,14 +231,14 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="absolute inset-x-0 bottom-0 grid place-items-center bg-violet-200 hover:bg-red-600 transition-all ">
-          <button className="w-full text-xl py-4 px-5 text-violet-600 hover:text-white flex items-center justify-center
+          <button
+            className="w-full text-xl py-4 px-5 text-violet-600 hover:text-white flex items-center justify-center
           hover:before:content-['Logout'] hover:before:absolute hover:before:px-2 hover:before:py-1 hover:before:bg-violet-200 hover:before:text-violet-600
           hover:before:text-center hover:before:text-sm hover:before:rounded-full hover:before:-translate-y-14 hover:before:duration-150 hover:before:transition-all
           "
-          onClick={() => signOut()}
+            onClick={() => signOut()}
           >
             <AiOutlineLogout />
-
           </button>
         </div>
       </div>

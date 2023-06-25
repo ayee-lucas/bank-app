@@ -14,6 +14,7 @@ export const getUserById = async (id: any) => {
         name: user?.name,
         username: user?.username,
         phone: user?.phone,
+        email: user?.email,
         work: user?.work,
     }
     return data as any;

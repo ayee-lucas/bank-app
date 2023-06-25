@@ -3,7 +3,7 @@
 import React, { useTransition, useState, useEffect } from "react";
 import Image from "next/image";
 import SideBarOptions from "@/app/Home/components/SideBarOptions";
-import {RiSmartphoneLine} from "react-icons/ri"
+import { RiSmartphoneLine } from "react-icons/ri";
 import { signOut, useSession } from "next-auth/react";
 
 import {
@@ -15,7 +15,11 @@ import {
   AiOutlineLogout,
 } from "react-icons/ai";
 
-import { BsArrowLeftRight, BsCurrencyDollar, BsFillBuildingFill } from "react-icons/bs";
+import {
+  BsArrowLeftRight,
+  BsCurrencyDollar,
+  BsFillBuildingFill,
+} from "react-icons/bs";
 import { getUserById } from "../actions";
 import Link from "next/link";
 
@@ -112,11 +116,10 @@ const Sidebar = () => {
                 <p>{session?.user.email}</p>
               </div>
             </div>
-            {hoveringProfile && !open && (
               <div
-                className="absolute w-72 flex flex-col justify-center items-center bg-violet-100/40 px-5 py-2 text-gray-800 left-[110%] top-2 rounded-lg border shadow-xl
-              backdrop-blur-lg backdrop-saturate-150 gap-4
-              "
+                className={`absolute transition-all duration-300 w-72 flex flex-col justify-center items-center bg-violet-100/40 px-5 py-2 text-gray-800  top-2 rounded-lg 
+                shadow-xl backdrop-blur-lg backdrop-saturate-150 gap-4 ${hoveringProfile && !open ? 'left-[110%]' : 'left-[-250%]'} 
+              `}
               >
                 <Image
                   src={
@@ -138,9 +141,12 @@ const Sidebar = () => {
                 </p>
                 <p className="text-lg text-gray-700 flex items-center gap-2">
                   <RiSmartphoneLine />
-                  {user?.phone}</p>
+                  {user?.phone}
+                </p>
+                <button className="w-full transition-all bg-violet-300 hover:bg-violet-500 text-violet-800 hover:text-white py-2 rounded-lg text-center font-semibold">
+                  View Profile
+                </button>
               </div>
-            )}
           </div>
 
           <ul className="space-y-2 mx-5 mt-28 font-medium">

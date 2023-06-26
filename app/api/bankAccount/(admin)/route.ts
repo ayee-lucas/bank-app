@@ -11,12 +11,6 @@ dbConnect();
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    // Verify if the user is authenticated and is an admin
-    if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
-    }
 
     const users = await User.find();
     const accountTypes = await AccountType.find();

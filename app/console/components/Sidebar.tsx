@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 
 import {
   AiOutlineHome,
+  AiOutlineTeam,
   AiOutlineUser,
   AiOutlineDatabase,
   AiOutlinePhone,
@@ -21,7 +22,6 @@ import {
   BsFillBuildingFill,
 } from "react-icons/bs";
 import { getUserById } from "../actions";
-import Link from "next/link";
 
 interface IUserclient {
   name: string;
@@ -155,6 +155,13 @@ const Sidebar = () => {
               href="/console"
               icon={AiOutlineHome}
               name="Dashboard"
+              isHovering={open}
+            />
+            <SideBarOptions
+              onMouseOver={handleMouseOver}
+              href="/console/Users"
+              icon={AiOutlineTeam}
+              name="Users"
               isHovering={open}
             />
             <SideBarOptions

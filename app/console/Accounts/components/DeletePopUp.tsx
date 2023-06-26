@@ -2,7 +2,6 @@
 
 import React, { useTransition } from "react";
 import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai";
-import { deleteAccountType } from "../action";
 
 const DeletePopUp = ({
   isOpen,
@@ -48,7 +47,7 @@ const DeletePopUp = ({
               type="button"
               onClick={() =>
                 startTransition(() => {
-                  deleteAccountType(id);
+                  //deleteAccountType(id);
                   setIsOpen(false);
                 })
               }

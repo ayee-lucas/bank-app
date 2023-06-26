@@ -46,6 +46,8 @@ const Sidebar = () => {
 
   const [hoveringProfile, setHoveringProfile] = useState<boolean>(false);
 
+  const [hoveringCard, setHoveringCard] = useState<boolean>(false);
+
   const [shadow, setShadow] = useState<string>("opacity-0 hidden");
 
   const handleMouseOver = () => {
@@ -62,10 +64,13 @@ const Sidebar = () => {
 
   useEffect(() => {
     const getUser = () => {
+      if(open) return
+
       startTransition(async () => {
         const user = await getUserById(userId);
         setUser(user);
       });
+
     };
 
     getUser();
@@ -90,11 +95,7 @@ const Sidebar = () => {
         <div
           className={`text-white h-full pt-6 bg-violet-100 dark:bg-violet-950 z-50`}
         >
-          <div
-            className="flex flex-col w-full items-center justify-center cursor-pointer relative"
-            onMouseOver={() => setHoveringProfile(true)}
-            onMouseOut={() => setHoveringProfile(false)}
-          >
+          <div className="flex flex-col w-full items-center justify-center cursor-pointer relative">
             <Image
               src={
                 "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
@@ -103,6 +104,10 @@ const Sidebar = () => {
               width={60}
               height={60}
               alt="user photo"
+              onMouseOver={() => setHoveringProfile(true)}
+              onMouseOut={() =>
+                setTimeout(() => setHoveringProfile(false), 1000)
+              }
             />
             <div
               className={`text-sm text-violet-700 font-semibold relative w-full ${
@@ -116,11 +121,12 @@ const Sidebar = () => {
                 <p>{session?.user.email}</p>
               </div>
             </div>
-              <div
-                className={`absolute transition-all duration-300 w-72 flex flex-col justify-center items-center bg-violet-100/40 px-5 py-2 text-gray-800  top-2 rounded-lg 
-                shadow-xl backdrop-blur-lg backdrop-saturate-150 gap-4 ${hoveringProfile && !open ? 'left-[110%]' : 'left-[-250%]'} 
+            <div
+              className={`absolute transition-all duration-300 w-96 left-[120%]  text-gray-800  top-2 rounded-lg 
+                 ${hoveringProfile && !open ? "top-0" : "top-[-540%]"} 
               `}
-              >
+            >
+              <div className="bg-violet-100/40 flex flex-col justify-center items-center shadow-xl backdrop-blur-lg backdrop-saturate-150 gap-4 ">
                 <Image
                   src={
                     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
@@ -147,6 +153,7 @@ const Sidebar = () => {
                   View Profile
                 </button>
               </div>
+            </div>
           </div>
 
           <ul className="space-y-2 mx-5 mt-28 font-medium">
@@ -237,7 +244,10 @@ const Sidebar = () => {
             </div>
           </ul>
 
-          <div className="absolute bottom-0 right-0 p-6">
+          <div
+            className="absolute bottom-0 right-0 p-6"
+            onMouseOver={() => setHoveringCard(true)}
+          >
             <div className="flex justify-center">
               <div className="my-4 w-[90%] border-t border-gray-200 dark:border-zinc-700 lg:hidden" />
             </div>

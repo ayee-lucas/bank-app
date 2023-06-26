@@ -204,8 +204,8 @@ const Sidebar = () => {
             </li>
 
             <div
-              className={`ml-2 transition duration-300 w-56 ${
-                dropdown ? "translate-x-32" : "-translate-x-64"
+              className={`ml-2 transition duration-100 w-64 ${
+                dropdown ? "translate-x-24" : "-translate-x-72"
               }`}
             >
               <SideBarOptions
@@ -217,8 +217,8 @@ const Sidebar = () => {
               />
             </div>
             <div
-              className={`ml-2 transition duration-200 w-56 ${
-                dropdown ? "translate-x-32" : "-translate-x-64"
+              className={`ml-2 transition duration-200 w-64 ${
+                dropdown ? "translate-x-24" : "-translate-x-72"
               }`}
             >
               <SideBarOptions
@@ -230,8 +230,8 @@ const Sidebar = () => {
               />
             </div>
             <div
-              className={`ml-2 transition duration-100 w-56 ${
-                dropdown ? "translate-x-32" : "-translate-x-64"
+              className={`ml-2 transition duration-300 w-64 ${
+                dropdown ? "translate-x-24" : "-translate-x-72"
               }`}
             >
               <SideBarOptions

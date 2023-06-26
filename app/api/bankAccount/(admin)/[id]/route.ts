@@ -18,13 +18,6 @@ export async function GET(request: NextRequest, params: params) {
   const id = params.params.id;
 
   try {
-    const session = await getServerSession(authOptions);
-    // Verify if the user is authenticated and is an admin
-    if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
-    }
 
     const users = await User.find();
     const accountType = await AccountType.find();

@@ -3,6 +3,7 @@ import dbConnect from "@/app/db/connection";
 import AccountType, { IAccountType } from "@/app/models/AccountType";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { revalidatePath } from "next/cache";
 
 dbConnect();
 
@@ -40,11 +41,11 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
-    /* if (!session?.user || session.user.role !== "admin") {
+    /*if (!session?.user || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
-    } */
+    }*/
 
     // Parse the request body as JSON
     const json = await request.json();
@@ -71,6 +72,7 @@ export async function POST(request: NextRequest) {
     // Save the account type object to the database
     const savedAccountType = await newAccountType.save();
 
+    revalidatePath('/console/AccountType')
     // Return a NextResponse object with the saved account type data and a 200 status code
     return new NextResponse(JSON.stringify(savedAccountType), {
       status: 200,

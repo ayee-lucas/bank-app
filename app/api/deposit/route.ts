@@ -1,7 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
+import { getServerSession } from "next-auth";
 import Deposit from "@/app/models/Deposit";
 import User from "@/app/models/User";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 dbConnect();
 

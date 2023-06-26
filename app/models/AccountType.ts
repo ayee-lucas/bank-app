@@ -8,6 +8,12 @@ export interface IAccountType extends Document {
   updatedAt: Date;
 }
 
+export interface IAccountTypePOST {
+  _id?: any;
+  name: string;
+  description: string;
+}
+
 // Mongoose schema for AccountType
 const accountTypeSchema = new Schema<IAccountType>(
   {

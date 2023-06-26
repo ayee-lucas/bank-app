@@ -3,6 +3,7 @@ import dbConnect from "@/app/db/connection";
 import AccountType from "@/app/models/AccountType";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { revalidateTag } from "next/cache";
 
 dbConnect();
 
@@ -44,7 +45,7 @@ export async function GET(request: NextRequest, params: Params) {
   }
 }
 
-export async function PUT(request: Request, params: Params) {
+export async function PUT(request: NextRequest, params: Params) {
   const id = params.params.id;
   const data = await request.json();
 
@@ -75,6 +76,9 @@ export async function PUT(request: Request, params: Params) {
       });
     }
 
+    const tag = request.nextUrl.searchParams.get('AccountType')
+    revalidateTag(tag as string)
+
     return new NextResponse(JSON.stringify(accountType), {
       status: 200,
     });
@@ -92,11 +96,11 @@ export async function DELETE(request: Request, params: Params) {
   try {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
-    if (!session?.user || session.user.role !== "admin") {
+    /*if (!session?.user || session.user.role !== "admin") {
       return new NextResponse("Unauthorized", {
         status: 401,
       });
-    }
+    }*/
 
     const accountType = await AccountType.findByIdAndDelete(id);
 

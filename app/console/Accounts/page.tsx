@@ -5,7 +5,7 @@ import { getBankAccounts } from "./action";
 
 export default async function Accounts() {
 
-  const bankAccounts:any = await getBankAccounts();
+  const bankAccounts:IBankAccount[] = await getBankAccounts();
 
   return (
     <div className="w-full h-full">
@@ -14,7 +14,7 @@ export default async function Accounts() {
 
       <Link href="/console/Accounts/Add" className="mx-6 px-4 py-2 text-md font-semibold text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-600">Add Account Type</Link>
 
-      <TableView bankAccounts={bankAccounts.bankAccounts}/>
+      <TableView bankAccounts={bankAccounts}/>
 
     </div>
   );

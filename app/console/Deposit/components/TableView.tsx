@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import DeletePopUp from "./DeletePopUp";
 import { IDeposit } from "@/app/models/Deposit";
 import TableRow from "./TableRow";
 
@@ -10,6 +11,8 @@ const TableView = ({ deposits }: { deposits: IDeposit[] }) => {
 
   return (
     <div className="flex items-center overflow-y lg:overflow-x-hidden table-auto overflow-scroll rounded-lg border border-gray-200 shadow-md m-5 max-h-[490px]">
+      <DeletePopUp isOpen={isOpen} setIsOpen={setIsOpen} _id={id} />
+
       <table className="relative w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
         <thead className=" bg-gray-50">
           <tr>
@@ -21,6 +24,12 @@ const TableView = ({ deposits }: { deposits: IDeposit[] }) => {
             </th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">
               Created At
+            </th>
+            <th
+              scope="col"
+              className="px-5 py-4 font-medium text-gray-900 text-center"
+            >
+              Options
             </th>
           </tr>
         </thead>

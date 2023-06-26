@@ -9,6 +9,8 @@ interface Prop {
   accNumber: string;
   currency: string;
   balance: number;
+  client: string;
+  accountType: string;
   setId: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -17,6 +19,8 @@ const TableRow: React.FC<Prop> = ({
   accNumber,
   currency,
   balance,
+  client,
+  accountType,
   setId
 }) => {
 
@@ -30,6 +34,8 @@ const TableRow: React.FC<Prop> = ({
       </th>
       <td className="px-6 py-4">{currency}</td>
       <td className="px-6 py-4">{balance}</td>
+      <td className="px-6 py-4">{client}</td>
+      <td className="px-6 py-4">{accountType}</td>
       <td className="px-6 py-4 w-10">
         <div className="flex justify-evenly gap-4">
           <Link

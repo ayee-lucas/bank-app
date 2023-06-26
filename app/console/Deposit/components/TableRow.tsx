@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { formatDate } from "@/app/tools/datesFormatter";
+import { AiOutlineUser, AiOutlineDelete } from "react-icons/ai";
+import { formatDate, updatedDate } from "@/app/tools/datesFormatter";
 
 interface Prop {
   _id: string;
@@ -21,6 +21,11 @@ const TableRow: React.FC<Prop> = ({
   setIsOpen,
   setId,
 }) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setId(_id);
+    setIsOpen(true);
+  };
 
   const formattedCreatedAt = formatDate(createdAt);
 
@@ -34,6 +39,16 @@ const TableRow: React.FC<Prop> = ({
       </th>
       <td className="px-6 py-4">{`Q${amount}`}</td>
       <td className="px-6 py-4">{`${formattedCreatedAt.formatedTime} ${formattedCreatedAt.formatedDate}`}</td>
+      <td className="px-6 py-4 w-10">
+        <div className="flex justify-center gap-4">
+          <button
+            className="flex justify-center items-center w-7 h-7"
+            onClick={(e) => handleClick(e)}
+          >
+            <AiOutlineDelete className="w-6 h-6 transition duration-500 hover:w-7 hover:h-7 hover:text-red-500 " />
+          </button>
+        </div>
+      </td>
     </tr>
   );
 };

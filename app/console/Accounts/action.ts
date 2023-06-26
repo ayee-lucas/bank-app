@@ -31,11 +31,11 @@ export async function getBankAccounts() {
 
   if (!res.ok) throw new Error(res.statusText);
 
-  const bankAccount: IBankAccount[] = await res.json();
+  const bankAccounts: IBankAccount[] = await res.json();
 
-  console.log(bankAccount)
+  console.log(bankAccounts)
 
-  return bankAccount;
+  return bankAccounts;
 }
 
 export async function getBankAccountById(_id: any) {

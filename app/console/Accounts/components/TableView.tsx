@@ -4,8 +4,13 @@ import React, { useState } from "react";
 import TableRow from "./TableRow"
 import DeletePopUp from "./DeletePopUp";
 import { IBankAccount } from "@/app/models/BankAccount";
+import { IAccountType } from "@/app/models/AccountType";
 
-const TableView = ({bankAccounts}: {bankAccounts: IBankAccount[]}) => {
+interface Props{
+  bankAccounts: IBankAccount[]
+}
+
+const TableView: React.FC<Props> = ({bankAccounts}) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
@@ -18,10 +23,9 @@ const TableView = ({bankAccounts}: {bankAccounts: IBankAccount[]}) => {
       <table className="relative w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
         <thead className=" bg-gray-50">
           <tr>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Name</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Description</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Created At</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Updated At</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Account Number</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Currency</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Balance</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900 text-center">Options</th>
           </tr>
         </thead>
@@ -29,9 +33,9 @@ const TableView = ({bankAccounts}: {bankAccounts: IBankAccount[]}) => {
           {bankAccounts.map((bankAccount: IBankAccount, key) => (
             <TableRow 
               _id={bankAccount._id}
-              name={bankAccount.currency}
-              description={bankAccount.currency}
-              setIsOpen={setIsOpen}
+              accNumber={bankAccount.accNumber}
+              currency={bankAccount.currency}
+              balance={bankAccount.balance}
               key={key} 
               setId={setId} />
           ))}

@@ -57,3 +57,23 @@ export async function getBankAccountById(_id: any) {
     return err;
   }
 }
+
+export async function getAccountById(_id: any) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/accountType/${_id}`, {
+      method: 'GET',
+      next: { revalidate: 100 },
+    });
+
+    if (!res.ok) {
+      throw new Error('Something went wrong');
+    }
+
+    const account = await res.json();
+
+    return account.createdAt;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}

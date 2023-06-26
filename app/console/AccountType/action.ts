@@ -40,7 +40,7 @@ export async function getAccountTypes() {
 
 export async function getAccountById(_id: any) {
   try {
-    const res = await fetch(`http://localhost:3000/api/Posts/post/${_id}`, {
+    const res = await fetch(`http://localhost:3000/api/accountType/${_id}`, {
       method: 'GET',
       next: { revalidate: 100 },
     });

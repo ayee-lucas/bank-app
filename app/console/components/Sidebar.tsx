@@ -11,7 +11,7 @@ import {
   AiOutlineTeam,
   AiOutlineUser,
   AiOutlineDatabase,
-  AiOutlinePhone,
+  AiOutlineBank,
   AiOutlineFall,
   AiOutlineLogout,
 } from "react-icons/ai";
@@ -168,14 +168,14 @@ const Sidebar = () => {
               onMouseOver={handleMouseOver}
               href="/console/AccountType"
               icon={AiOutlineUser}
-              name="AccountType"
+              name="Account Types"
               isHovering={open}
             />
             <SideBarOptions
               onMouseOver={handleMouseOver}
-              href="/console/Contact"
-              icon={AiOutlinePhone}
-              name="Contact"
+              href="/console/Accounts"
+              icon={AiOutlineBank}
+              name="Bank Accounts"
               isHovering={open}
             />
 

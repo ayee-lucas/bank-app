@@ -18,9 +18,11 @@ const TableView = ({users}: {users: IUser[]}) => {
       <table className="relative w-full border-collapse bg-white text-left text-sm text-gray-500 h-full ">
         <thead className=" bg-gray-50">
           <tr>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Name</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Username</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Adress</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Name & DPI</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Username & Email</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Phone</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Work & Salary</th>
+            <th scope="col" className="px-5 py-4 font-medium text-gray-900">Role</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900 text-center">Options</th>
           </tr>
         </thead>
@@ -30,7 +32,12 @@ const TableView = ({users}: {users: IUser[]}) => {
               _id={users._id}
               name={users.name}
               username={users.username}
-              description={users.address}
+              email={users.email}
+              dpi={users.dpi}
+              phone={users.phone}
+              work={users.work}
+              salary={users.salary}
+              role={users.role}
               setIsOpen={setIsOpen}
               key={key} 
               setId={setId} />

@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     console.log({ DataRequest: json });
 
     // Validate the request body
-    const { name, username, email, password, dpi, phone, work, salary, role } = json;
+    const { name, username, email, password, dpi, address, phone, work, salary, role } = json;
     if (!username || !password) {
       return new NextResponse(
         JSON.stringify({ message: "Username and password are required" }),
@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
       email,
       password,
       dpi,
+      address,
       phone,
       work,
       salary,

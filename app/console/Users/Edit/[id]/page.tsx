@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Form from "@/app/console/components/Form";
 import { updatedDate } from "@/app/tools/datesFormatter";
+import { AiOutlineDown } from "react-icons/ai";
 
 interface User {
   name: string;
@@ -34,7 +35,10 @@ export default function Page({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User>();
 
+  const [dropDown, setDropDown] = useState(false);
+
   useEffect(() => {
+
     async function getUser() {
       const res = await fetch(`/api/user/${params.id}`, {
         next: { revalidate: 100 },
@@ -46,6 +50,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
       const user: User = await res.json();
       setUser(user);
+      setRole(user?.role)
       setLoading(false);
     }
 
@@ -121,7 +126,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
             <form>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-2">
-                <Form
+              <Form
                   name={"Name"}
                   type={"text"}
                   placeholder={"Insert Name"}
@@ -137,7 +142,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 />
                 <Form
                   name={"Email"}
-                  type={"text"}
+                  type={"email"}
                   placeholder={"Insert Email"}
                   defaultValue={user?.email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -157,6 +162,13 @@ export default function Page({ params }: { params: { id: string } }) {
                   onChange={(e) => setDpi(e.target.value)}
                 />
                 <Form
+                  name={"Address"}
+                  type={"text"}
+                  placeholder={"Insert Address"}
+                  defaultValue={user?.dpi}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+                <Form
                   name={"Phone"}
                   type={"text"}
                   placeholder={"Insert Phone"}
@@ -170,19 +182,46 @@ export default function Page({ params }: { params: { id: string } }) {
                   defaultValue={user?.work}
                   onChange={(e) => setWork(e.target.value)}
                 />
+                <div className="">
+                    <label className="text-gray-700 dark:text-gray-300">Role</label>
+                    <button
+                      className="bg-gray-100 border w-full h-9 px-2 py-1 rounded-md focus:border-indigo-600 text-gray-400 text-left"
+                      onClick={(e)=> { 
+                        e.preventDefault()
+                        setDropDown(!dropDown)
+                      }}
+                    >
+                      <div className="flex justify-between ">
+                        <span className="text-black">{role}</span>
+                        <div className="flex items-center">
+                          <AiOutlineDown className="w-5 h-4"/>
+                        </div>
+                      </div>
+                    </button>
+
+                    {
+                      dropDown ?
+                      <div className="flex justify-end">
+                        <div className="fixed justify-end w-44 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700">
+                          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                              <span className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"  onClick={(e) => {setDropDown(!dropDown); setRole("admin")}}>admin</span>
+                            </li>
+                            <li>
+                              <span className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"  onClick={(e) => {setDropDown(!dropDown); setRole("user")}}>user</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      : null
+                    }
+                 </div>
                 <Form
                   name={"Salary"}
                   type={"text"}
                   placeholder={"Insert Salary"}
                   defaultValue={user?.salary}
                   onChange={(e) => setSalary(e.target.value)}
-                />
-                <Form
-                  name={"Role"}
-                  type={"text"}
-                  placeholder={"Insert Role"}
-                  defaultValue={user?.role}
-                  onChange={(e) => setRole(e.target.value)}
                 />
               </div>
               <div className="flex justify-between mt-5">

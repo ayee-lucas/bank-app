@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Form from "../../components/Form";
 import { useRouter } from "next/navigation";
+import { AiOutlineDown } from "react-icons/ai";
 
 interface IUser {
   name: string;
@@ -30,6 +31,8 @@ const AddUser = () => {
   const [role, setRole] = useState("");
   const router = useRouter();
 
+  const [dropDown, setDropDown] = useState(false);
+
   const handleSave = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -46,6 +49,8 @@ const AddUser = () => {
       salary,
       role
     };
+    
+    console.log(newUser)
 
     try {
       const res = await fetch("/api/user", {
@@ -94,7 +99,7 @@ const AddUser = () => {
                 />
                 <Form
                   name={"Email"}
-                  type={"text"}
+                  type={"email"}
                   placeholder={"Insert Email"}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -128,21 +133,57 @@ const AddUser = () => {
                   placeholder={"Insert Work"}
                   onChange={(e) => setWork(e.target.value)}
                 />
-                <Form
+
+                <div className="">
+                    <label className="text-gray-700 dark:text-gray-300">Role</label>
+                    <button
+                      className="bg-gray-100 border w-full h-9 px-2 py-1 rounded-md focus:border-indigo-600 text-gray-400 text-left"
+                      onClick={(e)=> { 
+                        e.preventDefault()
+                        setDropDown(!dropDown)
+                      }}
+                    >
+                      <div className="flex justify-between">
+                        {
+                          role == "" ?
+                          <span className="text-gray-400">Choose Role</span>
+                          : 
+                          <span className="text-black">{role}</span>
+                        }
+                        <div className="flex items-center">
+                          <AiOutlineDown className="w-5 h-4"/>
+                        </div>
+                      </div>
+                    </button>
+
+                    {
+                      dropDown ?
+                      <div className="flex justify-end">
+                        <div className="fixed justify-end w-44 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700">
+                          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li>
+                              <span className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"  onClick={(e) => {setDropDown(!dropDown); setRole("admin")}}>admin</span>
+                            </li>
+                            <li>
+                              <span className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"  onClick={(e) => {setDropDown(!dropDown); setRole("user")}}>user</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      : null
+                    }
+                 </div>
+
+                 <Form
                   name={"Salary"}
                   type={"text"}
                   placeholder={"Insert Salary"}
                   onChange={(e) => setSalary(e.target.value)}
                 />
-                <Form
-                  name={"Role"}
-                  type={"text"}
-                  placeholder={"Insert Role"}
-                  onChange={(e) => setRole(e.target.value)}
-                />
+
               </div>
 
-              <div className="flex justify-between mt-5">
+              <div className="flex justify-between mt-10">
                 <a
                   href="/console/Users"
                   className=" px-4 py-2 text-md font-normal text-white-900 bg-red-600 text-white rounded-xl max-w-fit hover:bg-red-500"

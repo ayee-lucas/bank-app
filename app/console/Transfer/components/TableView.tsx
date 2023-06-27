@@ -22,20 +22,17 @@ const TableView = ({transfers}: {transfers: ITransfer[]}) => {
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Sender</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Amount</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Created Add</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900 text-center">Options</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
           {transfers.map((transfers: ITransfer, key) => (
             <TableRow 
-              _id={transfers._id}
               receiver={transfers.receiverAccount}
               sender={transfers.senderAccount}
               amount={transfers.amount}
               createdAt={transfers.createdAt}
-              setIsOpen={setIsOpen}
-              key={key} 
-              setId={setId} />
+              key={key}
+            />
           ))}
         </tbody>
       </table>

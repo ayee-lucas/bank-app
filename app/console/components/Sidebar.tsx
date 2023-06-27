@@ -211,7 +211,7 @@ const Sidebar = () => {
               <SideBarOptions
                 onMouseOver={handleMouseOver}
                 href="/console/Transfer"
-                icon={AiOutlineFall}
+                icon={BsArrowLeftRight}
                 name="Transfer"
                 isHovering={open}
               />
@@ -224,7 +224,7 @@ const Sidebar = () => {
               <SideBarOptions
                 onMouseOver={handleMouseOver}
                 href="/console/Deposit"
-                icon={BsArrowLeftRight}
+                icon={AiOutlineFall}
                 name="Deposit"
                 isHovering={open}
               />

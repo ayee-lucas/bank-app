@@ -23,21 +23,18 @@ const TableView = ({buys}: {buys: IBuy[]}) => {
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Amount</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Description</th>
             <th scope="col" className="px-5 py-4 font-medium text-gray-900">Created At</th>
-            <th scope="col" className="px-5 py-4 font-medium text-gray-900 text-center">Options</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
           {buys.map((buys: IBuy, key) => (
             <TableRow 
-              _id={buys._id}
               receiver={buys.senderAccount}
               sender={buys.recipient}
               description={buys.description}
               amount={buys.amount}
               createdAt={buys.createdAt}
-              setIsOpen={setIsOpen}
               key={key} 
-              setId={setId} />
+            />
           ))}
         </tbody>
       </table>

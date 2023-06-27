@@ -33,71 +33,17 @@ export const NavBar = () => {
 
             <ul className="text-white flex flex-row font-medium bg-violet-800 dark:bg-violet-900 space-x-2 dark:border-gray-700 max-sm:hidden z-10">
               <li>
-                <a href="/Home" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Home</a>
+                <Link href="/Home" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Home</Link>
               </li>
               <li>
-                <a href="/Home/About" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+                <Link href="/Home/Transfer" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Transfer</Link>
               </li>
               <li>
-                <a href="/Home/Contact" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+                <Link href="/Home/Deposit" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Deposit</Link>
               </li>
-              <div>
-                <li>
-                  <button
-                    className="flex p-2 rounded-lg"
-                    onClick={() => setDropdown(!dropdown)}
-                  >
-                    <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                      Services
-                    </span>
-                    <svg
-                      className="w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-
-                </li>
-
-                <div className={`absolute justify-center ml-1 transition bg-violet-800 rounded-lg top-[80px] w-[100px] -z-10
-                    ${dropdown ? "translate-y-0" : "-translate-y-44"}`}>
-                    <div>
-                      <li>
-                        <Link
-                          href="/Home/Transfer"
-                          className="flex rounded-lg py-2 pl-3"
-                        >
-                          <span className="flex whitespace-nowrap">Transfer</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/Home/Deposit"
-                          className="flex rounded-lg pl-3"
-                        >
-                          <span className="flex whitespace-nowrap">Deposit</span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/Home/Buy"
-                          className="flex rounded-lg py-2 pl-3"
-                        >
-                          <span className="flex whitespace-nowrap">Buy</span>
-                        </Link>
-                      </li>
-                    </div>
-                    
-                </div>
-              </div>
-
+              <li>
+                <Link href="/Home/Buy" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Buy</Link>
+              </li>
               
             </ul>
 

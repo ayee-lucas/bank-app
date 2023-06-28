@@ -18,7 +18,7 @@ export const SideBarOptions: FC<Props> = ({
   isHovering,
 }) => {
   return (
-    <li className="bg-violet-200 rounded-xl text-violet-500 mb-2">
+    <li className="bg-violet-200 dark:bg-zinc-900 rounded-xl text-violet-500 mb-2">
       <Link
         href={href}
         className="relative flex items-center justify-center py-4 px-2 rounded-lg hover:underline hover:underline-offset-8 "

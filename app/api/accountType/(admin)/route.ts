@@ -53,9 +53,21 @@ export async function POST(request: NextRequest) {
 
     // Validate the request body
     const { name, description } = json;
+
     if (!name || !description) {
       return new NextResponse(
         JSON.stringify({ message: "Name and description are required" }),
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const accountTypeExists = await AccountType.findOne({ name });
+
+    if(accountTypeExists) {
+      return new NextResponse(
+        JSON.stringify({ message: "Account Type already exists" }),
         {
           status: 400,
         }

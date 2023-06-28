@@ -9,7 +9,7 @@ export default async function Home() {
   console.log(session?.user);
   
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full dark:bg-zinc-900">
     <Dashboard></Dashboard>
     </div>
   );

@@ -90,10 +90,10 @@ const Sidebar = () => {
       <div
         className={`fixed z-20 ${
           open ? "w-[25rem]" : "w-28"
-        } transition-all h-screen border-r border-violet-200 dark:border-zinc-800`}
+        } transition-all h-screen border-r border-violet-200 dark:border-zinc-800 overflow-y-auto overflow-x-hidden`}
       >
         <div
-          className={`text-white h-full pt-6 bg-violet-100 dark:bg-violet-950 z-50`}
+          className={`text-white h-full pt-6 bg-violet-100 dark:bg-zinc-950 z-50`}
         >
           <div className="flex flex-col w-full items-center justify-center cursor-pointer relative">
             <Image
@@ -122,11 +122,11 @@ const Sidebar = () => {
               </div>
             </div>
             <div
-              className={`absolute transition-all duration-300 w-96 left-[120%]  text-gray-800  top-2 rounded-lg 
+              className={`absolute transition-all duration-300 w-96 left-[120%]  text-gray-800  top-2 rounded-lg  
                  ${hoveringProfile && !open ? "top-0" : "top-[-540%]"} 
               `}
             >
-              <div className="bg-violet-100/40 flex flex-col justify-center items-center shadow-xl backdrop-blur-lg backdrop-saturate-150 gap-4 ">
+              <div className="bg-violet-100/40 flex flex-col justify-center items-center shadow-xl backdrop-blur-lg backdrop-saturate-150 gap-4 overflow-y-auto">
                 <Image
                   src={
                     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
@@ -156,7 +156,7 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <ul className="space-y-2 mx-5 mt-28 font-medium">
+          <ul className="space-y-2 mx-5 mt-28 font-medium ">
             <SideBarOptions
               onMouseOver={handleMouseOver}
               href="/console"
@@ -186,7 +186,7 @@ const Sidebar = () => {
               isHovering={open}
             />
 
-            <li className="bg-violet-200 rounded-xl text-violet-500 mb-2">
+            <li className="bg-violet-200 dark:bg-zinc-900 rounded-xl text-violet-500 mb-2">
               <button
                 onMouseOver={handleMouseOver}
                 onClick={() => setDropdown(!dropdown)}
@@ -204,8 +204,8 @@ const Sidebar = () => {
             </li>
 
             <div
-              className={`ml-2 transition duration-100 w-64 ${
-                dropdown ? "translate-x-24" : "-translate-x-72"
+              className={`ml-2 transition duration-300 w-56 ${
+                dropdown ? "translate-x-0" : "-translate-x-64"
               }`}
             >
               <SideBarOptions
@@ -217,8 +217,8 @@ const Sidebar = () => {
               />
             </div>
             <div
-              className={`ml-2 transition duration-200 w-64 ${
-                dropdown ? "translate-x-24" : "-translate-x-72"
+              className={`ml-2 transition duration-200 w-56 ${
+                dropdown ? "translate-x-5" : "-translate-x-64"
               }`}
             >
               <SideBarOptions
@@ -230,8 +230,8 @@ const Sidebar = () => {
               />
             </div>
             <div
-              className={`ml-2 transition duration-300 w-64 ${
-                dropdown ? "translate-x-24" : "-translate-x-72"
+              className={`ml-2 transition duration-100 w-56 ${
+                dropdown ? "translate-x-10" : "-translate-x-64"
               }`}
             >
               <SideBarOptions
@@ -255,8 +255,8 @@ const Sidebar = () => {
         </div>
         <div className="absolute inset-x-0 bottom-0 grid place-items-center bg-violet-200 hover:bg-red-600 transition-all ">
           <button
-            className="w-full text-xl py-4 px-5 text-violet-600 hover:text-white flex items-center justify-center
-          hover:before:content-['Logout'] hover:before:absolute hover:before:px-2 hover:before:py-1 hover:before:bg-violet-200 hover:before:text-violet-600
+            className="w-full text-xl py-4 px-5 text-violet-600 dark:bg-zinc-900 hover:text-white flex items-center justify-center
+          hover:before:content-['Logout'] hover:before:absolute hover:before:px-2 hover:before:py-1 hover:before:bg-violet-200 hover:before:dark:bg-zinc-900  hover:before:text-violet-600
           hover:before:text-center hover:before:text-sm hover:before:rounded-full hover:before:-translate-y-14 hover:before:duration-150 hover:before:transition-all
           "
             onClick={() => signOut()}

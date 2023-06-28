@@ -33,25 +33,26 @@ export async function getAccountTypes() {
 
   const accounts: IAccountType[] = await res.json();
 
-  console.log(accounts)
 
   return accounts;
 }
 
 export async function getAccountById(_id: any) {
   try {
-    const res = await fetch(`http://localhost:3000/api/Posts/post/${_id}`, {
+    // Change to enviroment url for production
+    const res = await fetch(`http://localhost:3000/api/accountType/${_id}`, {
       method: 'GET',
-      next: { revalidate: 100 },
+      cache: 'no-store',
     });
 
     if (!res.ok) {
-      throw new Error('Something went wrong');
+      return null
     }
 
     const account = await res.json();
 
-    return account.createdAt;
+    return account as IAccountType;
+
   } catch (err) {
     console.log(err);
     return err;

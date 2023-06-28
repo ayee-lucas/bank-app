@@ -23,9 +23,9 @@ export default async function HomeLayout({
   }
 
   return (
-    <section>
+    <section >
       <NavBar/>
-      <div className="bg-violet-50 h-screen">{children}</div>
+      <div className="bg-violet-50 dark:bg-black h-screen">{children}</div>
     </section>
   );
 }

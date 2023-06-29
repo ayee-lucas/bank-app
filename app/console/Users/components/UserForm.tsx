@@ -40,7 +40,7 @@ export default function UserForm() {
     },
   });
 
- async function sumbit(values: UserFType) {
+ async function onSubmit(values: UserFType) {
     console.log(values);
 
      const res = await fetch("/api/user", {
@@ -83,7 +83,7 @@ export default function UserForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(sumbit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="w-full flex items-center gap-4">
           <FormField
             control={form.control}

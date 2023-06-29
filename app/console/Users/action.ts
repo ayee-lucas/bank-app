@@ -42,7 +42,7 @@ export async function getUserById(_id: any) {
   try {
     const res = await fetch(`http://localhost:3000/api/user/${_id}`, {
       method: 'GET',
-      next: { revalidate: 100 },
+      cache: 'no-store'
     });
 
     if (!res.ok) {

@@ -1,22 +1,51 @@
-
-import Link from "next/link";
-import TableView from "./components/TableView";
+import EditModal from "../../FormComponents/EditModal";
 import { IUser } from "@/app/models/User";
-import { getUsers } from "./action";
+import { getUserById, getUsers } from "./action";
+import Delete from "./components/Delete";
+import UserEdit from "./components/EditForm";
+import NewModal from "./components/NewModal";
+import { DataTable } from "./components/data-table";
+import { columns } from "./components/columns-tsx";
 
-export default async function AccountType() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const users: IUser[] = await getUsers();
 
-  const users:IUser[] = await getUsers();
+  let userExists = null;
+
+  console.log(searchParams?.edit);
+
+  if (searchParams?.edit) {
+    userExists = await getUserById(searchParams?.edit);
+    console.log(userExists);
+
+    if (!userExists) {
+      return <div>User not found</div>;
+    }
+  }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full min-h-screen flex flex-col gap-3 p-10 overflow-y-auto">
+      <div className="text-2xl lg:text-4xl xl:text-7xl font-bold text-violet-600">
+        Users
+      </div>
+      <Delete />
 
-      <div className="p-6 text-3xl font-semibold text-violet-900 underline underline-offset-8">Users</div>
+      {searchParams?.edit && searchParams?.edit !== "" && (
+        <EditModal
+          title="Edit Account type"
+          description="This action will edit the account type and save it to the system."
+          redirectOnClose="/console/AccountType"
+          formFunction={<UserEdit defaultValues={{ ...userExists }} />}
+        />
+      )}
 
-      <Link href="/console/Users/Add" className="mx-6 px-4 py-2 text-md font-semibold text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-600">Add AUser</Link>
-      
-      <TableView users={users}/>
+      {searchParams?.new && searchParams?.new == "true" && <NewModal />}
 
+      <DataTable columns={columns} data={users} />
     </div>
   );
 }

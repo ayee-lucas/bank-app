@@ -1,5 +1,3 @@
-
-import Link from "next/link";
 import { getAccountById, getAccountTypes } from "./action";
 import { IAccountType } from "@/app/models/AccountType";
 import { DataTable } from "./components/data-table";

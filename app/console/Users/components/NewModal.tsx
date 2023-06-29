@@ -1,0 +1,35 @@
+"use client";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import ProfileForm from "./ProfileForm";
+import { useRouter } from "next/navigation";
+
+const NewModal = () => {
+  const router = useRouter();
+
+  return (
+    <Sheet
+      defaultOpen={true}
+      onOpenChange={() => router.push("/console/Users")}
+    >
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle className="text-violet-700">Add new user</SheetTitle>
+          <SheetDescription>
+            This action will add a user to the system.
+          </SheetDescription>
+        </SheetHeader>
+        <ProfileForm />
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default NewModal;

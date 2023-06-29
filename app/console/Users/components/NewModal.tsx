@@ -8,7 +8,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import ProfileForm from "./ProfileForm";
+import ProfileForm from "./UserForm";
 import { useRouter } from "next/navigation";
 
 const NewModal = () => {
@@ -19,7 +19,7 @@ const NewModal = () => {
       defaultOpen={true}
       onOpenChange={() => router.push("/console/Users")}
     >
-      <SheetContent>
+      <SheetContent side={'bottom'} className="">
         <SheetHeader>
           <SheetTitle className="text-violet-700">Add new user</SheetTitle>
           <SheetDescription>

@@ -1,6 +1,10 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+const roleEnum = z.enum(["admin", "user"]);
+
+type RoleType = typeof roleEnum;
+
 const userSchema = z.object({
   name: z
     .string()
@@ -11,7 +15,9 @@ const userSchema = z.object({
     .min(2, { message: "Username is too short" })
     .max(25, { message: "Username is too long" }),
   email: z
-    .string(),
+    .string()
+    .email({ message: "Email is invalid" })
+    .min(2, { message: "Email is too short" }),
   password: z
     .string()
     .min(8, { message: "Password is too short" })
@@ -33,10 +39,15 @@ const userSchema = z.object({
     .min(8, { message: "Work is too short" })
     .max(64, { message: "Work is too long" }),
   salary: z
-    .string()
-    .max(10, { message: "Salary is too long" }),
-  role: z
-    .string()
+    .string({ required_error: "Invalid Amount" })
+    .regex(/^\d+$/)
+    .transform(Number),
+
+  role: z.enum(["admin", "user"], {
+    errorMap: (issue, ctx) => {
+      return { message: "Must be admin or user" };
+    },
+  }),
 });
 
 export const UserFResolver = zodResolver(userSchema);

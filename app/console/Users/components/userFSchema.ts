@@ -1,10 +1,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const roleEnum = z.enum(["admin", "user"]);
-
-type RoleType = typeof roleEnum;
-
 const userSchema = z.object({
   name: z
     .string()
@@ -16,7 +12,7 @@ const userSchema = z.object({
     .max(25, { message: "Username is too long" }),
   email: z
     .string()
-    .email({ message: "Email is invalid" })
+    .email({ message: "invalid Email" })
     .min(2, { message: "Email is too short" }),
   password: z
     .string()
@@ -24,30 +20,28 @@ const userSchema = z.object({
     .max(64, { message: "Password is too long" }),
   dpi: z
     .string()
-    .min(14, { message: "DPI is too short" })
-    .max(14, { message: "DPI is too long" }),
+    .length(13, { message: "DPI must be 13 digits long" }),
   address: z
     .string()
     .min(8, { message: "Address is too short" })
-    .max(64, { message: "Address is too long" }),
+    .max(128, { message: "Address is too long" }),
   phone: z
     .string()
-    .min(7, { message: "Phone is too short" })
-    .max(15, { message: "Phone is too long" }),
+    .min(7, { message: "Phone number is too short" })
+    .max(15, { message: "Phone number is too long" }),
   work: z
     .string()
-    .min(8, { message: "Work is too short" })
-    .max(64, { message: "Work is too long" }),
+    .min(8, { message: "Work description is too short" })
+    .max(64, { message: "Work description is too long" }),
   salary: z
     .string({ required_error: "Invalid Amount" })
-    .regex(/^\d+$/)
-    .transform(Number),
-
-  role: z.enum(["admin", "user"], {
+    .regex(/^\d+$/),
+  role: z
+    .enum(["admin", "user"], {
     errorMap: (issue, ctx) => {
       return { message: "Must be admin or user" };
     },
-  }),
+  }).transform(String),
 });
 
 export const UserFResolver = zodResolver(userSchema);

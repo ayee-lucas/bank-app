@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { UserFResolver, UserFType } from "./userSchema";
+import { UserFResolver, UserFType } from "./userFSchema";
 
 export default function UserForm() {
   const router = useRouter();
@@ -35,18 +35,15 @@ export default function UserForm() {
       address: "",
       phone: "",
       work: "",
-      salary: 0,
+      salary: "0",
       role: "user",
     },
   });
 
-
-// change function name 
-
- async function hola(values: UserFType) {
+ async function sumbit(values: UserFType) {
     console.log(values);
 
-/*     const res = await fetch("/api/user", {
+     const res = await fetch("/api/user", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -80,13 +77,13 @@ export default function UserForm() {
     });
 
     router.replace("/console/Users");
-    router.refresh(); */
+    router.refresh(); 
     return
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(hola)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(sumbit)} className="space-y-8">
         <div className="w-full flex items-center gap-4">
           <FormField
             control={form.control}
@@ -154,7 +151,7 @@ export default function UserForm() {
                 <FormControl>
                   <Input placeholder="DPI" {...field} />
                 </FormControl>
-                <FormDescription>This is the DPI.</FormDescription>
+                <FormDescription>This is the DPI number.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

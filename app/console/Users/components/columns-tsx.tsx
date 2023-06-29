@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,25 +22,16 @@ export const columns: ColumnDef<IUser>[] = [
     header: "ID",
   },
   {
-    accessorFn: (row) => `${row.name} ${row.username}`,
-    accessorKey: "name & username",
-    header: "Name & Username",
+    accessorKey: "username",
+    header: "Username",
   },
   {
-    accessorFn: (row) => `${row.email} ${row.dpi}`,
-    header: "Email & DPI",
+    accessorKey: "dpi",
+    header: "DPI",
   },
   {
-    accessorKey: "address",
-    header: "Address",
-  },
-  {
-    accessorKey: "phone",
-    header: "Phone",
-  },
-  {
-    accessorFn: (row) => `${row.work} $${row.salary}`,
-    header: "Work & Salary",
+    accessorKey: "email",
+    header: "Email",
   },
   {
     accessorKey: "role",
@@ -124,7 +114,6 @@ export const columns: ColumnDef<IUser>[] = [
     cell: ({ row }) => {
       const user = row.original;
       const router = useRouter();
-      const [isOpen, setIsOpen] = useState<boolean>(false);
 
       return (
         <DropdownMenu>

@@ -36,9 +36,9 @@ export default async function Page({
 
       {searchParams?.edit && searchParams?.edit !== "" && (
         <EditModal
-          title="Edit Account type"
-          description="This action will edit the account type and save it to the system."
-          redirectOnClose="/console/AccountType"
+          title="Edit User"
+          description="This action will edit the user and save it to the system."
+          redirectOnClose="/console/Users"
           formFunction={<UserEdit defaultValues={{ ...userExists }} />}
         />
       )}

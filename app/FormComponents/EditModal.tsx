@@ -7,7 +7,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
-import AccTypeFEdit from "../console/AccountType/components/EditForm";
 
 interface Props {
   formFunction: JSX.Element;
@@ -20,14 +19,14 @@ const EditModal = ({ formFunction, title, description, redirectOnClose }: Props)
   const router = useRouter();
   return (
     <Sheet
-      defaultOpen={true}
-      onOpenChange={() => router.replace(redirectOnClose)}
+    defaultOpen={true}
+    onOpenChange={() => router.replace(redirectOnClose)}
     >
-      <SheetContent>
+      <SheetContent side={'bottom'} className="">
         <SheetHeader>
           <SheetTitle className="text-violet-700">{title}</SheetTitle>
           <SheetDescription>
-            {description}
+          {description}
           </SheetDescription>
         </SheetHeader>
         {formFunction}

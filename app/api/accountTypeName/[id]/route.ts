@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
-import User from "@/app/models/User";
+import AccountType from "@/app/models/AccountType";
 
 dbConnect();
 
@@ -14,10 +14,10 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
   console.log(`Username: ${id}`);
 
   try {
-    const user = await User.findOne({ username: id });
+    const user = await AccountType.findOne({ name: id });
 
     if (!user) {
-      return new NextResponse("User not found", {
+      return new NextResponse("Account Type not found", {
         status: 404,
       });
     }

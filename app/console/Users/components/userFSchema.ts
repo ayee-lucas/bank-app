@@ -16,8 +16,8 @@ const userSchema = z.object({
     .min(2, { message: "Email is too short" }),
   password: z
     .string()
-    .min(8, { message: "Password is too short" })
-    .max(64, { message: "Password is too long" }),
+    .min(6, { message: "Password is too short" })
+    .max(24, { message: "Password is too long" }),
   dpi: z
     .string()
     .length(13, { message: "DPI must be 13 digits long" }),

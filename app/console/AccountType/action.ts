@@ -24,7 +24,8 @@ export async function deleteAccountType(_id: any) {
 }
 
 export async function getAccountTypes() {
-  const res = await fetch(`http://localhost:3000/api/accountType`, {
+
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/accountType`, {
     method: "GET",
     cache: 'no-store',
   });
@@ -40,7 +41,7 @@ export async function getAccountTypes() {
 export async function getAccountById(_id: any) {
   try {
     // Change to enviroment url for production
-    const res = await fetch(`http://localhost:3000/api/accountType/${_id}`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/accountType/${_id}`, {
       method: 'GET',
       cache: 'no-store',
     });

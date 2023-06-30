@@ -2,6 +2,7 @@ import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns-tsx";
 import { ITransfer } from "@/app/models/Transfer";
 import { getTransferById, getTransfers } from "./action";
+import Delete from "./components/Delete";
 
 export default async function Page({
   searchParams,
@@ -28,6 +29,7 @@ export default async function Page({
       <div className="text-2xl lg:text-4xl xl:text-7xl font-bold text-violet-600">
         Transfers
       </div>
+      <Delete />
 
       <DataTable columns={columns} data={transfers} />
     </div>

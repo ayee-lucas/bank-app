@@ -26,7 +26,7 @@ export const columns: ColumnDef<ITransfer>[] = [
     header: "Sender Account",
   },
   {
-    accessorKey: "recieverAccount",
+    accessorKey: "receiverAccount",
     header: "Reciever Account",
   },
   {
@@ -137,6 +137,15 @@ export const columns: ColumnDef<ITransfer>[] = [
               onClick={() => navigator.clipboard.writeText(transfer.receiverAccount)}
             >
               <BsClipboardPlus className="mr-2" /> Copy Receiver Account
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() =>
+                router.replace(`/console/Transfer?delete=${transfer._id}`)
+              }
+              className="text-red-500"
+            >
+              <BsTrash2 className="mr-2" /> Delete Transfer
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

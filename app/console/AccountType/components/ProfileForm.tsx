@@ -79,7 +79,9 @@ export default function ProfileForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-violet-800 font-semibold">Name</FormLabel>
+              <FormLabel className="text-violet-800 font-semibold">
+                Name
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Name" {...field} />
               </FormControl>
@@ -95,7 +97,9 @@ export default function ProfileForm() {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-violet-800 font-semibold">Description</FormLabel>
+              <FormLabel className="text-violet-800 font-semibold">
+                Description
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Description" {...field} />
               </FormControl>
@@ -104,7 +108,12 @@ export default function ProfileForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white">Submit</Button>
+        <Button
+          type="submit"
+          className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white"
+        >
+          Submit
+        </Button>
       </form>
     </Form>
   );

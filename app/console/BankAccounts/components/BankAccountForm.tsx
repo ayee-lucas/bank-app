@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { bankAccFResolver, bankAccFType } from "./bankAccountFSchema";
+import { getAccountById } from "../action";
+import { AiOutlineSearch } from "react-icons/ai";
 
 export default function UserForm() {
   const router = useRouter();
@@ -23,17 +25,23 @@ export default function UserForm() {
   const { toast } = useToast();
 
   const [error, setError] = useState<boolean>(false);
+  const [accountType, setAccountType] = useState("");
 
   const form = useForm<bankAccFType>({
     resolver: bankAccFResolver,
     defaultValues: {
-      accNumber: "",
       client: {_id: ""},
       currency: "",
       balance: "",
       accountType: {_id: ""}
     },
   });
+
+  const searchAccountType = async(id: string) =>{
+    console.log({ID: id })
+    const account = await getAccountById(id)
+    console.log({ACCOUNT: account} )
+  }
 
  async function onSubmit(values: bankAccFType) {
     console.log(values);
@@ -91,7 +99,7 @@ export default function UserForm() {
                 <FormControl>
                   <Input placeholder="Account Type" {...field} />
                 </FormControl>
-                <FormDescription>This is the account type.</FormDescription>
+                <FormDescription>This is the Account Type.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -105,7 +113,7 @@ export default function UserForm() {
                   Client
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Client" {...field} />
+                  <Input placeholder="Client" {...field}/>
                 </FormControl>
                 <FormDescription>
                   This is the owner user.
@@ -114,6 +122,27 @@ export default function UserForm() {
               </FormItem>
             )}
           />
+        </div>
+        <div className="w-full flex items-center gap-4">
+          <div className="flex w-full">
+            <Input
+              onChange={(e)=>setAccountType(e.target.value)}
+              placeholder="Search AccountType..."
+              className=" bg-violet-100 text-violet-700 transition-all rounded-r-none focus-visible:ring-violet-700 focus-visible:ring-offset-0 "
+            />
+            <button onClick={(e)=>searchAccountType(accountType)} className="bg-violet-700 text-white flex items-center rounded-r-lg px-2">
+              <AiOutlineSearch className="w-4 h-4"/>
+            </button>
+          </div>
+          <div className="flex w-full">
+            <Input
+              placeholder="Search Client..."
+              className=" bg-violet-100 text-violet-700 transition-all rounded-r-none focus-visible:ring-violet-700 focus-visible:ring-offset-0 "
+            />
+            <button className="bg-violet-700 text-white flex items-center rounded-r-lg px-2">
+              <AiOutlineSearch className="w-4 h-4"/>
+            </button>
+          </div>
         </div>
 
         <div className="w-full flex items-center gap-4">
@@ -150,33 +179,12 @@ export default function UserForm() {
             )}
           />
         </div>
-
-        <div className="w-full flex items-center justify-between gap-4">
-          <FormField
-            control={form.control}
-            name="accNumber"
-            render={({ field }) => (
-              <FormItem className="max-w-lg w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Account Number
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Account Number" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is the account number.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
-        </div>
       </form>
     </Form>
   );

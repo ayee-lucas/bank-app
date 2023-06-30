@@ -2,10 +2,6 @@ import * as z from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const bankAccFSchema = z.object({
-  accNumber: z
-    .string()
-    .min(8, { message: "Name is too short" })
-    .max(30, { message: "Name is too long" }),
   client: z
     .object({
       _id: z.string()

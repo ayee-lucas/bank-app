@@ -17,7 +17,7 @@ const NewModal = () => {
       defaultOpen={true}
       onOpenChange={() => router.push("/console/Users")}
     >
-      <SheetContent side={'bottom'} className="">
+      <SheetContent side={'bottom'} className="overflow-y-auto h-full">
         <SheetHeader>
           <SheetTitle className="text-violet-700">Add new user</SheetTitle>
           <SheetDescription>

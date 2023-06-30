@@ -1,4 +1,4 @@
-import { getAccountById, getAccountTypes } from "./action";
+import { getAccountTypes, getBankAccountById } from "./action";
 import { IAccountType } from "@/app/models/AccountType";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns-tsx";
@@ -19,7 +19,7 @@ export default async function Page({
   console.log(searchParams?.edit);
 
   if (searchParams?.edit) {
-    accountExists = await getAccountById(searchParams?.edit);
+    accountExists = await getBankAccountById(searchParams?.edit);
     console.log(accountExists);
 
     if (!accountExists) {

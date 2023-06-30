@@ -180,7 +180,7 @@ const Sidebar = () => {
             />
             <SideBarOptions
               onMouseOver={handleMouseOver}
-              href="/console/Accounts"
+              href="/console/BankAccounts"
               icon={AiOutlineBank}
               name="Bank Accounts"
               isHovering={open}

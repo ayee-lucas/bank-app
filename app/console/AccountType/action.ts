@@ -50,8 +50,8 @@ export async function getAccountById(_id: any) {
     }
 
     const account = await res.json();
-
-    return account as IAccountType;
+    console.log({ACCOUNT: account})
+    return account._id
 
   } catch (err) {
     console.log(err);

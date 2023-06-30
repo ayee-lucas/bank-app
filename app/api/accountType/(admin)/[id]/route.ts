@@ -25,7 +25,7 @@ export async function GET(
 
     // Validate if the account type is not found
     if (!accountType) {
-      return new NextResponse("Account Type not found", {
+      return new NextResponse(JSON.stringify({message: "Account Type not found"}), {
         status: 404,
       });
     }

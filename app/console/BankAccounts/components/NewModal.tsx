@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import ProfileForm from "./UserForm";
+import ProfileForm from "./BankAccountForm";
 import { useRouter } from "next/navigation";
 
 const NewModal = () => {
@@ -15,13 +15,13 @@ const NewModal = () => {
   return (
     <Sheet
       defaultOpen={true}
-      onOpenChange={() => router.push("/console/Users")}
+      onOpenChange={() => router.push("/console/BankAccounts")}
     >
-      <SheetContent side={'bottom'} className="overflow-y-auto h-full">
+      <SheetContent side={'bottom'} className="">
         <SheetHeader>
-          <SheetTitle className="text-violet-700">Add new user</SheetTitle>
+          <SheetTitle className="text-violet-700">Add new bank account</SheetTitle>
           <SheetDescription>
-            This action will add a user to the system.
+            This action will add a bank account to the system.
           </SheetDescription>
         </SheetHeader>
         <ProfileForm />

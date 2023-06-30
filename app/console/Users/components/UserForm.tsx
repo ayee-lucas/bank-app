@@ -40,7 +40,7 @@ export default function UserForm() {
     },
   });
 
- async function sumbit(values: UserFType) {
+ async function onSubmit(values: UserFType) {
     console.log(values);
 
      const res = await fetch("/api/user", {
@@ -83,7 +83,7 @@ export default function UserForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(sumbit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="w-full flex items-center gap-4">
           <FormField
             control={form.control}
@@ -142,16 +142,16 @@ export default function UserForm() {
           />
           <FormField
             control={form.control}
-            name="dpi"
+            name="password"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className="text-violet-800 font-semibold">
-                  DPI
+                  Password
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="DPI" {...field} />
+                  <Input placeholder="Password" {...field} />
                 </FormControl>
-                <FormDescription>This is the DPI number.</FormDescription>
+                <FormDescription>This is your profile password</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -159,6 +159,22 @@ export default function UserForm() {
         </div>
 
         <div className="w-full flex items-center gap-4">
+          <FormField
+              control={form.control}
+              name="dpi"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    DPI
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="DPI" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the DPI number.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           <FormField
             control={form.control}
             name="address"
@@ -175,83 +191,85 @@ export default function UserForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Phone
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Phone" {...field} />
-                </FormControl>
-                <FormDescription>This is the phone number.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
 
         <div className="w-full flex items-center gap-4">
           <FormField
-            control={form.control}
-            name="work"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Work
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Work" {...field} />
-                </FormControl>
-                <FormDescription>This is the work description.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="salary"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Salary
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Salary" {...field} />
-                </FormControl>
-                <FormDescription>This is the salary amount.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    Phone
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Phone" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the phone number.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="work"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    Work
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Work" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the work description.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
         </div>
 
-        <div className="w-full flex items-center justify-between gap-4">
+        <div className="w-full flex items-center gap-4">
           <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem className="max-w-lg w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Role
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Role" {...field} />
-                </FormControl>
-                <FormDescription>This is the user role.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              control={form.control}
+              name="salary"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    Salary
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Salary" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the salary amount.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    Role
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Role" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the user role.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
-        </div>
+        
       </form>
     </Form>
   );

@@ -1,18 +1,35 @@
-import TableView from "./components/TableView";
+import { DataTable } from "./components/data-table";
+import { columns } from "./components/columns-tsx";
 import { ITransfer } from "@/app/models/Transfer";
-import { getTransfers } from "./action";
+import { getTransferById, getTransfers } from "./action";
 
-export default async function Transfer() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const transfers: ITransfer[] = await getTransfers();
 
-  const transfers:ITransfer[] = await getTransfers();
+  let transferExists = null;
+
+  console.log(searchParams?.edit);
+
+  if (searchParams?.edit) {
+    transferExists = await getTransferById(searchParams?.edit);
+    console.log(transferExists);
+
+    if (!transferExists) {
+      return <div>Transfer not found</div>;
+    }
+  }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full min-h-screen flex flex-col gap-3 p-10 overflow-y-auto">
+      <div className="text-2xl lg:text-4xl xl:text-7xl font-bold text-violet-600">
+        Transfers
+      </div>
 
-      <div className="text-3xl p-6 font-semibold text-violet-900 underline underline-offset-8">Transfers</div>
-      
-      <TableView transfers={transfers}/>
-
+      <DataTable columns={columns} data={transfers} />
     </div>
   );
 }

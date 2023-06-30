@@ -15,13 +15,13 @@ const NewModal = () => {
   return (
     <Sheet
       defaultOpen={true}
-      onOpenChange={() => router.push("/console/Users")}
+      onOpenChange={() => router.push("/console/Deposit")}
     >
-      <SheetContent side={'bottom'} className="overflow-y-auto h-full">
+      <SheetContent side={'bottom'} className="">
         <SheetHeader>
-          <SheetTitle className="text-violet-700">Add new user</SheetTitle>
+          <SheetTitle className="text-violet-700">Add new deposit</SheetTitle>
           <SheetDescription>
-            This action will add a user to the system.
+            This action will add a deposit to the system.
           </SheetDescription>
         </SheetHeader>
         <ProfileForm />

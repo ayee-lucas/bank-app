@@ -42,7 +42,7 @@ export async function getBankAccountById(_id: any) {
   try {
     const res = await fetch(`http://localhost:3000/api/bankAccount/${_id}`, {
       method: 'GET',
-      next: { revalidate: 100 },
+      cache: 'no-store',
     });
 
     if (!res.ok) {
@@ -62,7 +62,7 @@ export async function getAccountById(_id: any) {
   try {
     const res = await fetch(`http://localhost:3000/api/accountType/${_id}`, {
       method: 'GET',
-      next: { revalidate: 100 },
+      cache: 'no-store',
     });
 
     if (!res.ok) {
@@ -71,7 +71,7 @@ export async function getAccountById(_id: any) {
 
     const account = await res.json();
 
-    return account.createdAt;
+    return account
   } catch (err) {
     console.log(err);
     return err;

@@ -16,11 +16,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import accTypeFSchema, {
+import {
   AccTypeFType,
   AccTypeFResolver,
 } from "./accTypeFSchema";
-import { IAccountType } from "@/app/models/AccountType";
 
 type Props = {
   defaultValues: { [key: string]: string | undefined };

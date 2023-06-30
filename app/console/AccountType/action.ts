@@ -50,8 +50,30 @@ export async function getAccountById(_id: any) {
     }
 
     const account = await res.json();
+    console.log({ACCOUNT: account})
+    return account._id
 
-    return account as IAccountType;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+export async function getBankAccountById(_id: any) {
+  try {
+    // Change to enviroment url for production
+    const res = await fetch(`http://localhost:3000/api/accountType/${_id}`, {
+      method: 'GET',
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      return null
+    }
+
+    const account = await res.json();
+    
+    return account
 
   } catch (err) {
     console.log(err);

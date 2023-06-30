@@ -1,27 +1,35 @@
-import Link from "next/link";
-import TableView from "./components/TableView";
+import { DataTable } from "./components/data-table";
+import { columns } from "./components/columns-tsx";
 import { IDeposit } from "@/app/models/Deposit";
-import { getDeposits } from "./action";
+import { getDepositById, getDeposits } from "./action";
 
-export default async function DepositPage() {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  const deposits: IDeposit[] = await getDeposits();
 
-  const deposits:IDeposit[] = await getDeposits();
+  let depositExists = null;
+
+  console.log(searchParams?.edit);
+
+  if (searchParams?.edit) {
+    depositExists = await getDepositById(searchParams?.edit);
+    console.log(depositExists);
+
+    if (!depositExists) {
+      return <div>Deposit not found</div>;
+    }
+  }
 
   return (
-    <section className="dark:dark:bg-[#14062b] dark:text-white z-0 p-8 h-full w-full">
-
-      <div className="flex justify-between w-full mt-6 px-5">
-        <div className="text-3xl "> Deposits: </div>
-        <Link
-          href="/console/Deposit/Add"
-          className="px-4 py-2 text-md font-semibold text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-600"
-        >
-          New Deposit
-        </Link>
+    <div className="w-full h-full min-h-screen flex flex-col gap-3 p-10 overflow-y-auto">
+      <div className="text-2xl lg:text-4xl xl:text-7xl font-bold text-violet-600">
+        Deposits
       </div>
 
-      <TableView deposits={deposits}/>
-
-    </section>
+      <DataTable columns={columns} data={deposits} />
+    </div>
   );
 }

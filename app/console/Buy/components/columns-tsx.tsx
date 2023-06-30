@@ -29,6 +29,10 @@ export const columns: ColumnDef<IBuy>[] = [
     header: "Recipient",
   },
   {
+    accessorKey: "amount",
+    header: "Amount",
+  },
+  {
     accessorKey: "description",
     header: "Description",
   },

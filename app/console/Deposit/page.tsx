@@ -1,3 +1,5 @@
+import Delete from "./components/Delete";
+import NewModal from "./components/NewModal";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns-tsx";
 import { IDeposit } from "@/app/models/Deposit";
@@ -28,6 +30,9 @@ export default async function Page({
       <div className="text-2xl lg:text-4xl xl:text-7xl font-bold text-violet-600">
         Deposits
       </div>
+      <Delete />
+
+      {searchParams?.new && searchParams?.new == "true" && <NewModal />}
 
       <DataTable columns={columns} data={deposits} />
     </div>

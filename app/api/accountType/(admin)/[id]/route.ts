@@ -25,9 +25,12 @@ export async function GET(
 
     // Validate if the account type is not found
     if (!accountType) {
-      return new NextResponse(JSON.stringify({message: "Account Type not found"}), {
-        status: 404,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "Account Type not found" }),
+        {
+          status: 404,
+        }
+      );
     }
 
     return new NextResponse(JSON.stringify(accountType), {
@@ -49,23 +52,28 @@ export async function PUT(request: NextRequest, params: Params) {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
     if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "Unauthorized" }),
+        {
+          status: 401,
+        }
+      );
     }
 
     console.log(session);
 
     // Validate if the request body is empty
     if (Object.keys(data).length === 0) {
-      return new NextResponse("Empty request body", {
-        status: 400,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "Body Request Empty" }),
+        {
+          status: 400,
+        }
+      );
     }
 
     //Validate if there's an AccountType with the same name
     const nameAlreadyExists = await AccountType.findOne({ name: data.name });
-    
 
     //Validate if the name is the one of the account type updating
     if (nameAlreadyExists) {
@@ -83,7 +91,7 @@ export async function PUT(request: NextRequest, params: Params) {
 
     // Validate if the account type is not found
     if (!accountType) {
-      return new NextResponse("Account Type not found", {
+      return new NextResponse(JSON.stringify({ message: "Account Type Not Found" }), {
         status: 404,
       });
     }
@@ -118,7 +126,7 @@ export async function DELETE(request: Request, params: Params) {
 
     // Validate if the account type is not found
     if (!accountType) {
-      return new NextResponse("Account Type not found", {
+      return new NextResponse(JSON.stringify({ message: "Account Type Not Found" }), {
         status: 404,
       });
     }

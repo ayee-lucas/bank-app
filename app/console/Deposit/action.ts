@@ -1,24 +1,5 @@
 "use server"
 import { IDeposit } from "@/app/models/Deposit";
-import { revalidatePath } from "next/cache";
-
-export async function deleteDeposit(_id: any) {
-  try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/deposit/${_id}`, {
-      method: 'DELETE',
-      next: { revalidate: 100 },
-    });
-
-    if (!res.ok) {
-      throw new Error('Something went wrong');
-    }
-
-    revalidatePath("/console/Deposit");
-  } catch (err) {
-    console.log(err);
-    return err;
-  }
-}
 
 export async function getDeposits() {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/deposit`, {
@@ -39,7 +20,7 @@ export async function getDepositById(_id: any) {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/deposit/${_id}`, {
       method: 'GET',
-      next: { revalidate: 100 },
+      cache: 'no-store',
     });
 
     if (!res.ok) {

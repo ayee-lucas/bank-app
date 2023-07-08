@@ -27,7 +27,7 @@ export default function UserForm() {
   const form = useForm<depositFType>({
     resolver: depositFResolver,
     defaultValues: {
-      amount: "0",
+      amount: "",
       account: ""
     },
   });
@@ -100,24 +100,26 @@ export default function UserForm() {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className="text-violet-800 font-semibold">
-                  Account
+                Account
                 </FormLabel>
                 <FormControl>
                   <Input placeholder="Account" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is the receiver account.
+                  This is athe account that will receive the deposit.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
+        
       </form>
     </Form>
   );

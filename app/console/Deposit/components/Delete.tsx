@@ -16,7 +16,7 @@ import {
 import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteDeposit } from "../action";
+import { revalidatePath } from "next/cache";
 
 type Props = {};
 
@@ -35,6 +35,21 @@ const Delete = (props: Props) => {
 
   if (!id) return null;
 
+  const deleteDeposit = async (_id: any) =>{
+    try {
+      const res = await fetch(`/api/deposit/${_id}`, {
+        method: 'DELETE',
+        cache: 'no-store',
+      });
+  
+      console.log({RES: res})
+      return res
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
   return (
     <AlertDialog open={true}>
       <AlertDialogContent>
@@ -49,22 +64,30 @@ const Delete = (props: Props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            onClick={() => router.push("/console/Users")}
+            onClick={() => router.push("/console/Deposit")}
           >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-violet-200 text-violet-600 hover:bg-red-700 hover:text-white"
-            onClick={() =>
-              startTransition(() => {
-                deleteDeposit(id);
-                toast({
-                  title: "Deleted",
-                  description: "Deposit has been successfully deleted",
-                })
+            onClick={async() =>{
+                const status:any = await deleteDeposit(id)
+                if (status.status == 400) {
+                  toast({
+                    title: "Uh oh! Something went wrong",
+                    description: "Cannot delete a Deposit after 1 minute",
+                    variant: "destructive"
+                  });
+                }else{
+                  toast({
+                    title: "Deleted",
+                    description: "Deposit has been succesfully deleted"
+                  });
+                }
+
                 router.replace("/console/Deposit");
                 router.refresh();
-              })
+            }
             }
           >
             Continue

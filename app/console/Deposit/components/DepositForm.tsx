@@ -17,7 +17,7 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { depositFResolver, depositFType } from "./depositFSchema";
 
-export default function UserForm() {
+export default function DepositForm() {
   const router = useRouter();
 
   const { toast } = useToast();
@@ -41,6 +41,9 @@ export default function UserForm() {
       body: JSON.stringify(values),
     });
 
+    const obj = await res.json();
+    console.log({RES: obj})
+
     if (res.status === 404) {
       setError(true);
       toast({
@@ -49,9 +52,7 @@ export default function UserForm() {
         variant: "destructive",
       });
       return;
-    }
-
-    const obj = await res.json();
+    } 
 
     if (!res.ok) {
       setError(true);

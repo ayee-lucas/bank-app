@@ -8,7 +8,6 @@ import { ITransfer } from "./Transfer";
 export interface IBankAccount extends Document {
   accNumber: string;
   client: IUser["_id"];
-  currency: string;
   balance: number;
   accountType: IAccountType["_id"];
   buys?: IBuy[];
@@ -29,10 +28,6 @@ const bankAccountSchema = new Schema<IBankAccount>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Usuario es requerido."],
-    },
-    currency: {
-      type: String,
-      required: true,
     },
     balance: {
       type: Number,

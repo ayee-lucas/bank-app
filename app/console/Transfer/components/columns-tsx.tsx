@@ -4,8 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { BsTrash2, BsClipboardPlus } from "react-icons/bs";
-import { HiOutlinePencil } from "react-icons/hi";
+import { BsClipboardPlus } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +25,7 @@ export const columns: ColumnDef<ITransfer>[] = [
     header: "Sender Account",
   },
   {
-    accessorKey: "recieverAccount",
+    accessorKey: "receiverAccount",
     header: "Reciever Account",
   },
   {

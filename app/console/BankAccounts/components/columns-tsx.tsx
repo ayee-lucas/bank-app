@@ -30,10 +30,6 @@ export const columns: ColumnDef<IBankAccount>[] = [
     header: "client",
   },
   {
-    accessorKey: "currency",
-    header: "currency",
-  },
-  {
     accessorKey: "balance",
     header: "balance",
   },

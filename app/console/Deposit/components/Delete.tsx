@@ -35,6 +35,33 @@ const Delete = (props: Props) => {
 
   if (!id) return null;
 
+  async function depositDelete(id: string) {
+    const status = await deleteDeposit(id);
+
+    console.log({STATUS: status})
+                  
+    if (status != 400){
+      toast({
+        title: "Deleted",
+        description: "Deposit has been successfully deleted",
+      })
+      router.replace("/console/Deposit");
+      router.refresh()
+      return
+    }
+
+    toast({
+      title: "Deposit not deleted",
+      description: "Deposits cannot be deleted after 1 minute",
+      variant: "destructive"
+    })
+
+    router.replace("/console/Deposit");
+    router.refresh();
+  }
+
+    
+
   return (
     <AlertDialog open={true}>
       <AlertDialogContent>
@@ -49,23 +76,13 @@ const Delete = (props: Props) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            onClick={() => router.push("/console/Users")}
+            onClick={() => router.push("/console/Deposit")}
           >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-violet-200 text-violet-600 hover:bg-red-700 hover:text-white"
-            onClick={() =>
-              startTransition(() => {
-                deleteDeposit(id);
-                toast({
-                  title: "Deleted",
-                  description: "Deposit has been successfully deleted",
-                })
-                router.replace("/console/Deposit");
-                router.refresh();
-              })
-            }
+            onClick={() => depositDelete(id) }
           >
             Continue
           </AlertDialogAction>

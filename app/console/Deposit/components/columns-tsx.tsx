@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BsClipboardPlus } from "react-icons/bs";
+import { BsClipboardPlus, BsTrash2 } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { IDeposit } from "@/app/models/Deposit";
+import { useRouter } from "next/navigation";
 
 export const columns: ColumnDef<IDeposit>[] = [
   {
@@ -103,6 +104,7 @@ export const columns: ColumnDef<IDeposit>[] = [
     id: "actions",
     cell: ({ row }) => {
       const account = row.original;
+      const router = useRouter();
 
       return (
         <DropdownMenu>
@@ -122,6 +124,15 @@ export const columns: ColumnDef<IDeposit>[] = [
               onClick={() => navigator.clipboard.writeText(account._id)}
             >
               <BsClipboardPlus className="mr-2" /> Copy ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() =>
+                router.replace(`/console/Deposit?delete=${account._id}`)
+              }
+              className="text-red-500"
+            >
+              <BsTrash2 className="mr-2" /> Delete Deposit
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

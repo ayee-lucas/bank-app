@@ -9,11 +9,14 @@ export async function deleteDeposit(_id: any) {
       next: { revalidate: 100 },
     });
 
+    if(res.status == 400){
+      return res.status
+    }
+
     if (!res.ok) {
       throw new Error('Something went wrong');
     }
-
-    revalidatePath("/console/Deposit");
+    
   } catch (err) {
     console.log(err);
     return err;

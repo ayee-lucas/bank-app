@@ -1,9 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
-import { getServerSession } from "next-auth";
 import Deposit from "@/app/models/Deposit";
-import User from "@/app/models/User";
-import { authOptions } from "../auth/[...nextauth]/route";
 
 dbConnect();
 
@@ -30,7 +27,7 @@ export async function POST(request: NextRequest) {
 
     // Si hay algún otro error, devolver un objeto NextResponse con un mensaje de error y un código de estado 500
     const error = {
-      message: "Error al ejecutar la transferencia.",
+      message: "Error al ejecutar el deposito.",
       error: err,
     };
     return new NextResponse(JSON.stringify(error), { status: 500 });
@@ -39,13 +36,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    //const session = await getServerSession(authOptions);
-    // Verify if the user is authenticated and is an admin
-    /*if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
-    }*/
 
     // Get all account types with related data
     const deposit = await Deposit.find();

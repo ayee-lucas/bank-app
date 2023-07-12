@@ -41,10 +41,10 @@ export default function BankAccountEdit(defaultValues: Props) {
     resolver: bankAccFResolver,
     defaultValues: {
       //@ts-expect-error
-      client: {_id: bankAccount.defaultValues.client?._id},
+      client: {_id: bankAccount.defaultValues.client?.name},
       balance: bankAccount.defaultValues.balance?.toString(),
       //@ts-expect-error
-      accountType: {_id: bankAccount.defaultValues.accountType?._id},
+      accountType: {_id: bankAccount.defaultValues.accountType?.name},
     },
   });
 
@@ -133,8 +133,6 @@ export default function BankAccountEdit(defaultValues: Props) {
     });
 
     const obj = await res.json();
-
-    console.log(res);
 
     if (!res.ok) {
       toast({

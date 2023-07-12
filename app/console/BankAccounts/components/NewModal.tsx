@@ -17,7 +17,7 @@ const NewModal = () => {
       defaultOpen={true}
       onOpenChange={() => router.push("/console/BankAccounts")}
     >
-      <SheetContent side={'bottom'} className="">
+      <SheetContent>
         <SheetHeader>
           <SheetTitle className="text-violet-700">Add new bank account</SheetTitle>
           <SheetDescription>

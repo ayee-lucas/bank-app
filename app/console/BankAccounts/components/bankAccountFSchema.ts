@@ -6,12 +6,6 @@ const bankAccFSchema = z.object({
     .object({
       _id: z.string()
     }),
-  currency: z
-    .enum(["USD", "GTQ", "EUR"], {
-    errorMap: (issue, ctx) => {
-      return { message: "Must be USD, GTQ or EUR" };
-    },
-  }).transform(String),
   balance: z
     .string({ required_error: "Invalid Amount" })
     .regex(/^\d+$/),

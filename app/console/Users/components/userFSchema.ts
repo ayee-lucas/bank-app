@@ -8,15 +8,15 @@ const userSchema = z.object({
     .max(50, { message: "Name is too long" }),
   username: z
     .string()
-    .min(2, { message: "Username is too short" })
-    .max(25, { message: "Username is too long" }),
+    .min(3, { message: "Username is too short" })
+    .max(20, { message: "Username is too long" }),
   email: z
     .string()
     .email({ message: "invalid Email" })
     .min(2, { message: "Email is too short" }),
   password: z
     .string()
-    .min(8, { message: "Password is too short" })
+    .min(6, { message: "Password is too short" })
     .max(64, { message: "Password is too long" }),
   dpi: z
     .string()
@@ -31,7 +31,7 @@ const userSchema = z.object({
     .max(15, { message: "Phone number is too long" }),
   work: z
     .string()
-    .min(8, { message: "Work description is too short" })
+    .min(6, { message: "Work description is too short" })
     .max(64, { message: "Work description is too long" }),
   salary: z
     .string({ required_error: "Invalid Amount" })

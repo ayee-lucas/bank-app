@@ -22,6 +22,8 @@ const LoginClient = () => {
       redirect: true,
       callbackUrl: "/Home",
     });
+
+    console.log({result: result})
   };
   return (
     <div className="bg-violet-100 dark:bg-violet-950 h-screen w-full login-bg z-0">

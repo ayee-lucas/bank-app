@@ -2,6 +2,7 @@ import EditModal from "../../FormComponents/EditModal";
 import { IUser } from "@/app/models/User";
 import { getUserById, getUsers } from "./action";
 import Delete from "./components/Delete";
+import UserEditPassword from "./components/PasswordEditForm"
 import UserEdit from "./components/EditForm";
 import NewModal from "./components/NewModal";
 import { DataTable } from "./components/data-table";
@@ -16,10 +17,17 @@ export default async function Page({
 
   let userExists = null;
 
-  console.log(searchParams?.edit);
-
   if (searchParams?.edit) {
     userExists = await getUserById(searchParams?.edit);
+    console.log(userExists);
+
+    if (!userExists) {
+      return <div>User not found</div>;
+    }
+  }
+
+  if (searchParams?.editPassword) {
+    userExists = await getUserById(searchParams?.editPassword);
     console.log(userExists);
 
     if (!userExists) {
@@ -40,6 +48,15 @@ export default async function Page({
           description="This action will edit the user and save it to the system."
           redirectOnClose="/console/Users"
           formFunction={<UserEdit defaultValues={{ ...userExists }} />}
+        />
+      )}
+
+      {searchParams?.editPassword && searchParams?.editPassword !== "" && (
+        <EditModal
+          title="Edit Password"
+          description="This action will edit the user password and save it to the system."
+          redirectOnClose="/console/Users"
+          formFunction={<UserEditPassword defaultValues={{ ...userExists }} />}
         />
       )}
 

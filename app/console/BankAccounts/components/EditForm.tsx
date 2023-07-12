@@ -41,7 +41,7 @@ export default function BankAccountEdit(defaultValues: Props) {
     resolver: bankAccFResolver,
     defaultValues: {
       //@ts-expect-error
-      client: {_id: bankAccount.defaultValues.client?.name},
+      client: {_id: bankAccount.defaultValues.client?.username},
       balance: bankAccount.defaultValues.balance?.toString(),
       //@ts-expect-error
       accountType: {_id: bankAccount.defaultValues.accountType?.name},
@@ -97,7 +97,7 @@ export default function BankAccountEdit(defaultValues: Props) {
   }
 
   const onSubmit = async (values: bankAccFType) => {
-    console.log(values);
+    console.log({VALUES: values});
 
     const account = await searchAccountType(values.accountType._id)
     if(account.status == 404){
@@ -111,7 +111,6 @@ export default function BankAccountEdit(defaultValues: Props) {
     }
 
     values.accountType._id = account._id
-    
 
     const client = await searchClient(values.client._id)
     if(client.status == 404){

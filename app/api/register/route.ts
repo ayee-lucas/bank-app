@@ -19,9 +19,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (json.password.length < 8) {
+    if (json.password.length < 6) {
       return new NextResponse(
-        JSON.stringify({ message: "Password should be at least 8 characters long" }),
+        JSON.stringify({
+          message: "Password should be at least 8 characters long",
+        }),
         {
           status: 400,
           headers: { "Content-Type": "application/json" },
@@ -61,9 +63,9 @@ export async function POST(req: NextRequest) {
 
     await user.save();
 
-    console.log({userSaved: user})
+    console.log({ userSaved: user });
 
-    return new NextResponse(JSON.stringify({message: 'success', user}), {
+    return new NextResponse(JSON.stringify({ message: "success", user }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });

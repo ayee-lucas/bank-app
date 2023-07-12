@@ -1,15 +1,21 @@
 import { Document, Schema, model, models } from "mongoose";
+import { IBankAccount } from "./BankAccount";
 
 // Interface for User document
 export interface IUser extends Document {
   name: string;
+  username: string;
   email: string;
   password: string;
-  username: string;
+  dpi: string;
+  address: string;
+  phone: string;
+  work: string;
+  salary: string;
+  role: string;
+  accounts?: IBankAccount[];
   createdAt: Date;
   updatedAt: Date;
-  role: String;
-  profilePicture?: string;
 }
 
 // Mongoose schema for User
@@ -17,6 +23,7 @@ const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
+      required: true,
     },
     username: {
       type: String,
@@ -39,14 +46,39 @@ const userSchema = new Schema<IUser>(
       required: true,
       minlength: 6,
     },
-    role: {
+    dpi: {
       type: String,
       required: true,
-      default: "user"
+      minlength: 13,
+      maxlength: 13,
     },
-    profilePicture: {
+    address: {
       type: String,
+      required: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
+    work: {
+      type: String,
+      required: true,
+    },
+    salary: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    accounts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "BankAccount",
+      },
+    ],
     createdAt: {
       type: Date,
       default: Date.now,

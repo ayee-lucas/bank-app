@@ -1,5 +1,6 @@
 import { Document, Schema, model, models } from "mongoose";
 import { BankAccount, IBankAccount } from "./BankAccount";
+import { NextResponse } from "next/server";
 
 export interface ITransfer extends Document {
   amount: number;
@@ -60,6 +61,16 @@ TransferSchema.pre<ITransfer>("save", async function (next: Function) {
 
     // Subtract and add the transfer amount from the sender's and receiver's account balance
     if (senderAccount && receiverAccount) {
+      if (amount > senderAccount.balance) {
+        throw new NextResponse(
+          JSON.stringify({
+            message: "Insufficient balance in the sender account",
+          }),
+          {
+            status: 400,
+          }
+        );
+      }
       senderAccount.balance -= amount;
       receiverAccount.balance += amount;
       senderAccount.transfers.push(this._id);

@@ -46,10 +46,25 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-
     // Parse the request body as JSON
     const json = await request.json();
     console.log({ DataRequest: json });
+
+    // Check if the user already has a bank account of the same type
+    const existingAccount = await BankAccount.findOne({
+      client: json.client,
+      accountType: json.accountType,
+    });
+
+    if (existingAccount) {
+      // User already has a bank account of the same type
+      return new NextResponse(
+        JSON.stringify({
+          message: "User already has a bank account of the same type",
+        }),
+        { status: 400 }
+      );
+    }
 
     // Create a new bank account object with the parsed data
     const bankAccount = new BankAccount(json);
@@ -57,6 +72,13 @@ export async function POST(request: NextRequest) {
 
     // Save the bank account object to the database
     const savedBankAccount = await bankAccount.save();
+
+    // Update the user's accounts array
+    const user = await User.findById(json.client);
+    if (user) {
+      user.accounts.push(savedBankAccount._id);
+      await user.save();
+    }
 
     // Return a NextResponse object with the saved bank account data and a status code of 200
     return new NextResponse(JSON.stringify(savedBankAccount), {

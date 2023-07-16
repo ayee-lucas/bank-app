@@ -5,6 +5,9 @@ import User from "@/app/models/User";
 import AccountType from "@/app/models/AccountType";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Buy from "@/app/models/Buy";
+import Deposit from "@/app/models/Deposit";
+import Transfer from "@/app/models/Transfer";
 
 dbConnect();
 
@@ -21,10 +24,16 @@ export async function GET(request: NextRequest, params: params) {
 
     const users = await User.find();
     const accountType = await AccountType.find();
+    const buys = await Buy.find();
+    const deposits = await Deposit.find();
+    const transfer = await Transfer.find();
 
     const bankAccount = await BankAccount.findById(id)
       .populate("client", "name username email dpi address phone work")
-      .populate("accountType", "name description");
+      .populate("accountType", "name description")
+      .populate("buys", "amount recipient description")
+      .populate("deposits", "amount account createdAt updatedAt")
+      .populate("transfers", "amount senderAccount receiverAccount");
 
     // Validate if the bank account was not found
     if (!bankAccount) {

@@ -37,13 +37,6 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    //const session = await getServerSession(authOptions);
-    // Verify if the user is authenticated and is an admin
-    /*if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
-    }*/
 
     // Get all account types with related data
     const transfer = await Transfer.find();

@@ -1,12 +1,10 @@
 "use client"; 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import ProfileForm from "./ProfileForm";
 import { useRouter } from "next/navigation";

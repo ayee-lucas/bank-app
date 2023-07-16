@@ -1,10 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
-import User, { IUser } from "@/app/models/User";
-import { getServerSession } from "next-auth";
-import AccountType from "@/app/models/AccountType";
+import User from "@/app/models/User";
 import { revalidateTag } from "next/cache";
-import { authOptions } from "../../auth/[...nextauth]/route";
 
 dbConnect();
 
@@ -43,7 +40,6 @@ export async function PUT(request: NextRequest, params: Params) {
   const data = await request.json();
 
   try {
-
     // Validate if the request body is empty
     if (Object.keys(data).length === 0) {
       return new NextResponse("Empty request body", {

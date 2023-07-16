@@ -43,7 +43,6 @@ export default function UserEdit(defaultValues: Props) {
       name: user.defaultValues.name,
       username: user.defaultValues.username,
       email: user.defaultValues.email,
-      password: user.defaultValues.password,
       dpi: user.defaultValues.dpi,
       address: user.defaultValues.address,
       phone: user.defaultValues.phone,
@@ -144,16 +143,16 @@ export default function UserEdit(defaultValues: Props) {
           />
           <FormField
             control={form.control}
-            name="dpi"
+            name="password"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className="text-violet-800 font-semibold">
-                  DPI
+                  Password
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="DPI" {...field} />
+                  <Input placeholder="Password" {...field} />
                 </FormControl>
-                <FormDescription>This is the DPI number.</FormDescription>
+                <FormDescription>This is the password.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -161,6 +160,22 @@ export default function UserEdit(defaultValues: Props) {
         </div>
 
         <div className="w-full flex items-center gap-4">
+          <FormField
+              control={form.control}
+              name="dpi"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    DPI
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="DPI" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the DPI number.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           <FormField
             control={form.control}
             name="address"
@@ -177,25 +192,25 @@ export default function UserEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Phone
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Phone" {...field} />
-                </FormControl>
-                <FormDescription>This is the phone number.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
 
         <div className="w-full flex items-center gap-4">
+          <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    Phone
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Phone" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the phone number.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           <FormField
             control={form.control}
             name="work"
@@ -212,25 +227,25 @@ export default function UserEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="salary"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Salary
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Salary" {...field} />
-                </FormControl>
-                <FormDescription>This is the salary amount.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
 
         <div className="w-full flex items-center justify-between gap-4">
+          <FormField
+              control={form.control}
+              name="salary"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className="text-violet-800 font-semibold">
+                    Salary
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Salary" {...field} />
+                  </FormControl>
+                  <FormDescription>This is the salary amount.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           <FormField
             control={form.control}
             name="role"
@@ -247,13 +262,13 @@ export default function UserEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-          <Button
+        </div>
+        <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
-        </div>
       </form>
     </Form>
   );

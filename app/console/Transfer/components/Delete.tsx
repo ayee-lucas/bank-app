@@ -16,7 +16,7 @@ import {
 import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteDeposit } from "../action";
+import { deleteTransfer } from "../action";
 
 type Props = {};
 
@@ -35,31 +35,6 @@ const Delete = (props: Props) => {
 
   if (!id) return null;
 
-  async function depositDelete(id: string) {
-    const status = await deleteDeposit(id);
-
-    console.log({STATUS: status})
-                  
-    if (status != 400){
-      toast({
-        title: "Deleted",
-        description: "Deposit has been successfully deleted",
-      })
-      router.replace("/console/Deposit");
-      router.refresh()
-      return
-    }
-
-    toast({
-      title: "Deposit not deleted",
-      description: "Deposits cannot be deleted after 1 minute",
-      variant: "destructive"
-    })
-
-    router.replace("/console/Deposit");
-    router.refresh();
-  }
-
   return (
     <AlertDialog open={true}>
       <AlertDialogContent>
@@ -69,18 +44,28 @@ const Delete = (props: Props) => {
           </AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete this
-            deposit and remove the data from our servers.
+            Transfer and remove the data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            onClick={() => router.push("/console/Deposit")}
+            onClick={() => router.push("/console/Transfer")}
           >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-violet-200 text-violet-600 hover:bg-red-700 hover:text-white"
-            onClick={() => depositDelete(id) }
+            onClick={() =>
+              startTransition(() => {
+                deleteTransfer(id);
+                toast({
+                  title: "Deleted",
+                  description: "Transfer has been successfully deleted",
+                })
+                router.replace("/console/Transfer");
+                router.refresh();
+              })
+            }
           >
             Continue
           </AlertDialogAction>

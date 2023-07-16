@@ -10,7 +10,7 @@ const depositFSchema = z.object({
   account: z
     .string()
     .min(2, { message: "Account is too short" })
-    .max(30, { message: "Account is too long" }),
+    .max(20, { message: "Account is too long" }),
 });
 
 export const depositFResolver = zodResolver(depositFSchema);

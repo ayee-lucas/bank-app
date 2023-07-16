@@ -6,7 +6,7 @@ export async function deleteTransfer(_id: any) {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/transfer/${_id}`, {
       method: 'DELETE',
-      next: { revalidate: 100 },
+      cache: 'no-store',
     });
 
     if (!res.ok) {
@@ -39,7 +39,7 @@ export async function getTransferById(_id: any) {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/transfer/${_id}`, {
       method: 'GET',
-      next: { revalidate: 100 },
+      cache: 'no-store',
     });
 
     if (!res.ok) {

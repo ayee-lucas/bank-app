@@ -9,10 +9,12 @@ const transferSchema = z.object({
     .string()
     .min(2, { message: "Sender Account is too short" })
     .max(25, { message: "Sender Account is too long" }),
-  recieverAccount: z
+  receiverAccount: z
     .string()
     .min(2, { message: "Sender Account is too short" })
-    .max(25, { message: "Sender Account is too long" })
+    .max(25, { message: "Sender Account is too long" }),
+  status: z
+    .boolean()
 });
 
 export const TransferFResolver = zodResolver(transferSchema);

@@ -29,6 +29,10 @@ export const columns: ColumnDef<ITransfer>[] = [
     header: "Reciever Account",
   },
   {
+    accessorKey: "amount",
+    header: "Transfer Amount",
+  },
+  {
     accessorKey: "createdAt",
     header: ({ column }) => {
       return (

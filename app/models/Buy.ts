@@ -1,5 +1,6 @@
 import { Document, Schema, model, models } from "mongoose";
 import { BankAccount, IBankAccount } from "./BankAccount";
+import { NextResponse } from "next/server";
 
 export interface IBuy extends Document {
   amount: number;
@@ -59,8 +60,20 @@ BuySchema.pre<IBuy>("save", async function (next: Function) {
       accNumber: senderAccountNumber,
     });
 
-    // Subtract the purchase amount from the sender's account balance
+    // Check if the sender account exists and has sufficient balance
     if (senderAccount) {
+      if (amount > senderAccount.balance) {
+        throw new NextResponse(
+          JSON.stringify({
+            message: "Insufficient balance in the sender account",
+          }),
+          {
+            status: 400,
+          }
+        );
+      }
+
+      // Subtract the purchase amount from the sender's account balance
       senderAccount.balance -= amount;
       senderAccount.buys.push(this._id); // Add the buy to the buys array
       await senderAccount.save();

@@ -20,7 +20,7 @@ export default async function Page({
 
   if (searchParams?.edit) {
     bankAccountExists = await getBankAccountById(searchParams?.edit);
-    console.log(bankAccountExists);
+    console.log({BANK_ACCOUNT_EXISTS: bankAccountExists});
 
     if (!bankAccountExists) {
       return <div>Bank Account not found</div>;

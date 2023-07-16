@@ -54,7 +54,7 @@ export async function DELETE(request: Request, params: Params) {
 
     // Check if the time difference is greater than 1 minute (60000 milliseconds)
     if (timeDifference > 60000) {
-      return new NextResponse("Cannot delete deposit after 1 minute", {
+      return new NextResponse(JSON.stringify("Cannot delete deposit after 1 minute"), {
         status: 400,
       });
     }

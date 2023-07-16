@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 const depositFSchema = z.object({
   amount: z
     .string({ required_error: "Invalid Amount" })
+    .min(0, { message: "Amount is too short" })
+    .max(5, { message: "The max amount is 10000" })
     .regex(/^\d+$/),
   account: z
     .string()

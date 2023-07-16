@@ -1,31 +1,40 @@
-import Link from "next/link";
-import TableView from "./components/TableView";
-import { IDeposit } from "@/app/models/Deposit";
-import { getDeposits } from "./action";
+import { DataTable } from "./components/data-table";
+import { columns } from "./components/columns-tsx";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getClientDeposits } from "./action";
 
-export default async function DepositPage() {
+export default async function Page() {
 
-  //const session = await getServerSession(authOptions);
+  const user = await getServerSession(authOptions);
+  console.log({USER: user})
 
-  const deposits:IDeposit[] = await getDeposits(/*session?.user.id*/);
+  const allDeposits:any = [];
+  const accounts = await getClientDeposits(user?.user.username);
+  console.log({ACCOUNTS: accounts})
+
+  //Nivelar los depositos de las cuentas a un nivel de array de objetos
+  accounts.forEach((account: { deposits: any[]; }) => {
+    account.deposits.forEach((deposit: { _id: string; amount: number; account: string; createdAt: Date; updatedAt: Date; }) => {
+      allDeposits.push({
+        _id: deposit._id,
+        amount: deposit.amount,
+        account: deposit.account,
+        createdAt: deposit.createdAt,
+        updatedAt: deposit.updatedAt,
+      });
+    });
+  });
+
+  console.log({ DEPOSITS: allDeposits });
 
   return (
-    <section className="fixed top-[70px] dark:dark:bg-[#14062b] dark:text-white z-0 p-8 h-full w-full">
-
-      <div className="flex justify-between w-full mt-6 px-5">
-        <div className="text-3xl "> Deposits: </div>
-        <Link
-          href="/Home/Deposit/Add"
-          className="px-4 py-2 text-md font-semibold text-white-900 bg-violet-800 text-white rounded-xl max-w-fit hover:bg-violet-600"
-        >
-          New Deposit
-        </Link>
+    <div className="w-full h-full min-h-screen flex flex-col gap-3 p-10 overflow-y-auto">
+      <div className="text-xl lg:text-3xl xl:text-5xl font-bold text-violet-600">
+        Your Deposits:
       </div>
 
-      <TableView deposits={deposits}/>
-
-    </section>
+      <DataTable columns={columns} data={allDeposits} />
+    </div>
   );
 }

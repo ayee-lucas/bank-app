@@ -43,6 +43,7 @@ export default function UserEdit(defaultValues: Props) {
       name: user.defaultValues.name,
       username: user.defaultValues.username,
       email: user.defaultValues.email,
+      password: user.defaultValues.password,
       dpi: user.defaultValues.dpi,
       address: user.defaultValues.address,
       phone: user.defaultValues.phone,
@@ -53,7 +54,7 @@ export default function UserEdit(defaultValues: Props) {
   });
 
   const onSubmit = async (values: UserFType) => {
-    console.log(values);
+    console.log({EDIT_VALUES: values});
     const res = await fetch(`/api/user/${id}`, {
       method: "PUT",
       body: JSON.stringify(values),
@@ -142,25 +143,6 @@ export default function UserEdit(defaultValues: Props) {
             )}
           />
           <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Password
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Password" {...field} />
-                </FormControl>
-                <FormDescription>This is the password.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="w-full flex items-center gap-4">
-          <FormField
               control={form.control}
               name="dpi"
               render={({ field }) => (
@@ -176,6 +158,10 @@ export default function UserEdit(defaultValues: Props) {
                 </FormItem>
               )}
             />
+        </div>
+
+        <div className="w-full flex items-center gap-4">
+          
           <FormField
             control={form.control}
             name="address"
@@ -192,9 +178,6 @@ export default function UserEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-        </div>
-
-        <div className="w-full flex items-center gap-4">
           <FormField
               control={form.control}
               name="phone"
@@ -211,6 +194,10 @@ export default function UserEdit(defaultValues: Props) {
                 </FormItem>
               )}
             />
+        </div>
+
+        <div className="w-full flex items-center gap-4">
+          
           <FormField
             control={form.control}
             name="work"
@@ -227,9 +214,6 @@ export default function UserEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-        </div>
-
-        <div className="w-full flex items-center justify-between gap-4">
           <FormField
               control={form.control}
               name="salary"
@@ -246,6 +230,10 @@ export default function UserEdit(defaultValues: Props) {
                 </FormItem>
               )}
             />
+        </div>
+
+        <div className="w-full flex items-center justify-between gap-4">
+          
           <FormField
             control={form.control}
             name="role"
@@ -262,13 +250,14 @@ export default function UserEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-        </div>
-        <Button
+          <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
+        </div>
+        
       </form>
     </Form>
   );

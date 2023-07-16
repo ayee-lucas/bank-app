@@ -16,7 +16,7 @@ import {
 import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteDeposit } from "../action";
+import { deleteTransfer } from "../action";
 
 type Props = {};
 
@@ -35,30 +35,32 @@ const Delete = (props: Props) => {
 
   if (!id) return null;
 
-  async function depositDelete(id: string) {
-    const status = await deleteDeposit(id);
+  async function transferDelete(id: string) {
+    const status = await deleteTransfer(id);
 
     console.log({STATUS: status})
                   
     if (status != 400){
       toast({
         title: "Deleted",
-        description: "Deposit has been successfully deleted",
+        description: "Transfer has been successfully deleted",
       })
-      router.replace("/console/Deposit");
+      router.replace("/console/Transfer");
       router.refresh()
       return
     }
 
     toast({
-      title: "Deposit not deleted",
-      description: "Deposits cannot be deleted after 1 minute",
+      title: "Transfer not deleted",
+      description: "Transfers cannot be deleted after 1 minute",
       variant: "destructive"
     })
 
-    router.replace("/console/Deposit");
+    router.replace("/console/Transfer");
     router.refresh();
   }
+
+    
 
   return (
     <AlertDialog open={true}>
@@ -68,19 +70,18 @@ const Delete = (props: Props) => {
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            deposit and remove the data from our servers.
+            This will undo the transfer made and return the transferred amount to the sender.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            onClick={() => router.push("/console/Deposit")}
+            onClick={() => router.push("/console/Transfer")}
           >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-violet-200 text-violet-600 hover:bg-red-700 hover:text-white"
-            onClick={() => depositDelete(id) }
+            onClick={() => transferDelete(id) }
           >
             Continue
           </AlertDialogAction>

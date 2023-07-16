@@ -8,12 +8,12 @@ import { ITransfer } from "./Transfer";
 export interface IBankAccount extends Document {
   accNumber: string;
   client: IUser["_id"];
-  currency: string;
   balance: number;
   accountType: IAccountType["_id"];
   buys?: IBuy[];
   deposits?: IDeposit[];
   transfers?: ITransfer[];
+  isSaved?: boolean;
   // Otros campos específicos de la cuenta bancaria
 }
 
@@ -29,10 +29,6 @@ const bankAccountSchema = new Schema<IBankAccount>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Usuario es requerido."],
-    },
-    currency: {
-      type: String,
-      required: true,
     },
     balance: {
       type: Number,
@@ -61,6 +57,9 @@ const bankAccountSchema = new Schema<IBankAccount>(
         ref: "Transfer",
       },
     ],
+    isSaved: {
+      type: Boolean,
+    },
     // Otros campos específicos de la cuenta bancaria
   },
   {
@@ -91,12 +90,24 @@ async function generateUniqueAccountNumber(): Promise<string> {
 }
 
 bankAccountSchema.pre<IBankAccount>("save", async function (next) {
+  // Verificar si el documento ya ha sido guardado
+  if (this.isSaved) {
+    return next();
+  }
+
   const user = await User.findById(this.client);
 
   if (user) {
-    user.accounts.push(this._id);
-    await user.save();
+    // Verificar si la cuenta ya existe en el usuario
+    const existingAccount = user.accounts.includes(this._id);
+    if (!existingAccount) {
+      user.accounts.push(this._id);
+      await user.save();
+    }
   }
+
+  // Marcar el documento como guardado
+  this.isSaved = true;
 
   next();
 });

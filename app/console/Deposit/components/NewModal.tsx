@@ -17,7 +17,7 @@ const NewModal = () => {
       defaultOpen={true}
       onOpenChange={() => router.push("/console/Deposit")}
     >
-      <SheetContent className="">
+      <SheetContent>
         <SheetHeader>
           <SheetTitle className="text-violet-700">Add new deposit</SheetTitle>
           <SheetDescription>

@@ -13,24 +13,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ITransfer } from "@/app/models/Transfer";
+import { IDeposit } from "@/app/models/Deposit";
 
-export const columns: ColumnDef<ITransfer>[] = [
+export const columns: ColumnDef<IDeposit>[] = [
   {
     accessorKey: "_id",
     header: "ID",
   },
   {
-    accessorKey: "senderAccount",
-    header: "Sender Account",
-  },
-  {
-    accessorKey: "receiverAccount",
-    header: "Reciever Account",
+    accessorKey: "account",
+    header: "Account Number",
   },
   {
     accessorKey: "amount",
-    header: "Transfer Amount",
+    header: "Deposit Amount",
   },
   {
     accessorKey: "createdAt",
@@ -46,9 +42,9 @@ export const columns: ColumnDef<ITransfer>[] = [
       );
     },
     cell: ({ cell: { row } }) => {
-      const transfer = row.original;
+      const deposit = row.original;
 
-      const date = new Date(transfer.createdAt);
+      const date = new Date(deposit.createdAt);
 
       const hour = date.getHours();
       const minu = date.getMinutes();
@@ -66,7 +62,7 @@ export const columns: ColumnDef<ITransfer>[] = [
 
       const newDate = `${formatedDate} ${formatedTime}`;
 
-      return <div className="font-medium text-center">{newDate}</div>;
+      return <div className="font-medium">{newDate}</div>;
     },
   },
   {
@@ -101,13 +97,13 @@ export const columns: ColumnDef<ITransfer>[] = [
 
       const newDate = `${formatedDate} ${formatedTime}`;
 
-      return <div className="font-medium text-center">{newDate}</div>;
+      return <div className="font-medium">{newDate}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const transfer = row.original;
+      const deposit = row.original;
       const router = useRouter();
 
       return (
@@ -125,21 +121,9 @@ export const columns: ColumnDef<ITransfer>[] = [
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(transfer._id)}
+              onClick={() => navigator.clipboard.writeText(deposit._id)}
             >
               <BsClipboardPlus className="mr-2" /> Copy ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(transfer.senderAccount)}
-            >
-              <BsClipboardPlus className="mr-2" /> Copy Sender Account
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(transfer.receiverAccount)}
-            >
-              <BsClipboardPlus className="mr-2" /> Copy Receiver Account
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

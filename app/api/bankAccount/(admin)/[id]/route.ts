@@ -5,6 +5,9 @@ import User from "@/app/models/User";
 import AccountType from "@/app/models/AccountType";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Buy from "@/app/models/Buy";
+import Deposit from "@/app/models/Deposit";
+import Transfer from "@/app/models/Transfer";
 
 dbConnect();
 
@@ -21,14 +24,20 @@ export async function GET(request: NextRequest, params: params) {
 
     const users = await User.find();
     const accountType = await AccountType.find();
+    const buys = await Buy.find();
+    const deposits = await Deposit.find();
+    const transfer = await Transfer.find();
 
     const bankAccount = await BankAccount.findById(id)
       .populate("client", "name username email dpi address phone work")
-      .populate("accountType", "name description");
+      .populate("accountType", "name description")
+      .populate("buys", "amount recipient description")
+      .populate("deposits", "amount account createdAt updatedAt")
+      .populate("transfers", "amount senderAccount receiverAccount");
 
     // Validate if the bank account was not found
     if (!bankAccount) {
-      return new NextResponse("Account not found", {
+      return new NextResponse(JSON.stringify({ message: "Account not found" }), {
         status: 404,
       });
     }
@@ -52,7 +61,7 @@ export async function PUT(request: Request, params: params) {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
     if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
+      return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
         status: 401,
       });
     }
@@ -63,7 +72,7 @@ export async function PUT(request: Request, params: params) {
 
     // Validate if the bank account was not found
     if (!bankAccount) {
-      return new NextResponse("Account not found", {
+      return new NextResponse(JSON.stringify({ message: "Account not found" }), {
         status: 404,
       });
     }
@@ -87,7 +96,7 @@ export async function DELETE(request: Request, params: params) {
     const session = await getServerSession(authOptions);
     // Verify if the user is authenticated and is an admin
     if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
+      return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
         status: 401,
       });
     }
@@ -96,7 +105,7 @@ export async function DELETE(request: Request, params: params) {
 
     // Validate if the bank account was not found
     if (!bankAccount) {
-      return new NextResponse("Account not found", {
+      return new NextResponse(JSON.stringify({ message: "Account not found" }), {
         status: 404,
       });
     }

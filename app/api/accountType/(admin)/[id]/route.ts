@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
-import AccountType from "@/app/models/AccountType";
+import AccountType, { IAccountType } from "@/app/models/AccountType";
 import { revalidateTag } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -25,9 +25,12 @@ export async function GET(
 
     // Validate if the account type is not found
     if (!accountType) {
-      return new NextResponse(JSON.stringify({message: "Account Type not found"}), {
-        status: 404,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "Account Type not found" }),
+        {
+          status: 404,
+        }
+      );
     }
 
     return new NextResponse(JSON.stringify(accountType), {
@@ -46,29 +49,36 @@ export async function PUT(request: NextRequest, params: Params) {
   const data = await request.json();
 
   try {
-    const session = await getServerSession(authOptions);
-    // Verify if the user is authenticated and is an admin
-    if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
-    }
-
-    console.log(session);
+    
 
     // Validate if the request body is empty
     if (Object.keys(data).length === 0) {
-      return new NextResponse("Empty request body", {
-        status: 400,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "Body Request Empty" }),
+        {
+          status: 400,
+        }
+      );
     }
 
-    //Validate if there's an AccountType with the same name
-    const nameAlreadyExists = await AccountType.findOne({ name: data.name });
-    
+    // Find the existing account type
+    const existingAccountType = await AccountType.findById(id);
 
-    //Validate if the name is the one of the account type updating
-    if (nameAlreadyExists) {
+    // Validate if the account type is not found
+    if (!existingAccountType) {
+      return new NextResponse(
+        JSON.stringify({ message: "Account Type Not Found" }),
+        {
+          status: 404,
+        }
+      );
+    }
+
+    // Validate if there's an AccountType with the same name
+    const nameAlreadyExists = await AccountType.findOne({ name: data.name });
+
+    // Validate if the name is already taken by a different account type
+    if (nameAlreadyExists && nameAlreadyExists._id.toString() !== id) {
       return new NextResponse(
         JSON.stringify({ message: "This name is already taken" }),
         {
@@ -77,16 +87,10 @@ export async function PUT(request: NextRequest, params: Params) {
       );
     }
 
+
     const accountType = await AccountType.findByIdAndUpdate(id, data, {
       new: true,
     });
-
-    // Validate if the account type is not found
-    if (!accountType) {
-      return new NextResponse("Account Type not found", {
-        status: 404,
-      });
-    }
 
     const tag = request.nextUrl.searchParams.get("AccountType");
     revalidateTag(tag as string);
@@ -118,9 +122,12 @@ export async function DELETE(request: Request, params: Params) {
 
     // Validate if the account type is not found
     if (!accountType) {
-      return new NextResponse("Account Type not found", {
-        status: 404,
-      });
+      return new NextResponse(
+        JSON.stringify({ message: "Account Type Not Found" }),
+        {
+          status: 404,
+        }
+      );
     }
 
     return new NextResponse(JSON.stringify(accountType), {

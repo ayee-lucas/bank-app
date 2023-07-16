@@ -17,8 +17,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { bankAccFResolver, bankAccFType } from "./bankAccountFSchema";
-import { getAccountById } from "../../AccountType/action";
-import { AiOutlineSearch } from "react-icons/ai";
 
 type Props = {
   defaultValues: { [key: string]: string | undefined };
@@ -34,7 +32,6 @@ export default function BankAccountEdit(defaultValues: Props) {
   const bankAccount = defaultValues;
 
   const [error, setError] = useState<boolean>(false);
-  const [accountType, setAccountType] = useState("");
 
   const id = params.get("edit");
 
@@ -43,24 +40,91 @@ export default function BankAccountEdit(defaultValues: Props) {
   const form = useForm<bankAccFType>({
     resolver: bankAccFResolver,
     defaultValues: {
-      accNumber: bankAccount.defaultValues.accNumber,
       //@ts-expect-error
-      client: {_id: bankAccount.defaultValues.client?._id},
-      currency: bankAccount.defaultValues.currency,
-      balance: bankAccount.defaultValues.balance,
+      client: {_id: bankAccount.defaultValues.client?.username},
+      balance: bankAccount.defaultValues.balance?.toString(),
       //@ts-expect-error
-      accountType: {_id: bankAccount.defaultValues.accountType?._id},
+      accountType: {_id: bankAccount.defaultValues.accountType?.name},
     },
   });
 
-  const searchAccountType = async(id: string) =>{
-    console.log({ID: id })
-    const account = await getAccountById(id)
-    console.log({ACCOUNT: account} )
+  async function searchAccountType(_id: any) {
+    try {
+      const res = await fetch(`http://localhost:3000/api/accountTypeName/${_id}`, {
+        method: 'GET',
+        cache: 'no-store',
+      });
+
+      if (res.status === 404) {
+        return res
+      }
+  
+      if (!res.ok) {
+        throw new Error('Something went wrong');
+      }
+  
+      const account = await res.json();
+  
+      return account
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
+  async function searchClient(_id: any) {
+    try {
+      const res = await fetch(`http://localhost:3000/api/username/${_id}`, {
+        method: 'GET',
+        cache: 'no-store',
+      });
+
+      if (res.status === 404) {
+        return res
+      }
+  
+      if (!res.ok) {
+        throw new Error('Something went wrong');
+      }
+  
+      const client = await res.json();
+  
+      return client
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   }
 
   const onSubmit = async (values: bankAccFType) => {
-    console.log(values);
+    console.log({VALUES: values});
+
+    const account = await searchAccountType(values.accountType._id)
+    if(account.status == 404){
+      setError(true);
+      toast({
+        title: "Uh oh! Something went wrong",
+        description: "Account Type not found",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    values.accountType._id = account._id
+
+    const client = await searchClient(values.client._id)
+    if(client.status == 404){
+      setError(true);
+      toast({
+        title: "Uh oh! Something went wrong",
+        description: "Client not found",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    values.client._id = client._id
+
     const res = await fetch(`/api/bankAccount/${id}`, {
       method: "PUT",
       body: JSON.stringify(values),
@@ -68,8 +132,6 @@ export default function BankAccountEdit(defaultValues: Props) {
     });
 
     const obj = await res.json();
-
-    console.log(res);
 
     if (!res.ok) {
       toast({
@@ -92,7 +154,6 @@ export default function BankAccountEdit(defaultValues: Props) {
   return (
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-      <div className="w-full flex items-center gap-4">
         <FormField
             control={form.control}
             name="accountType._id"
@@ -127,46 +188,6 @@ export default function BankAccountEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-        </div>
-        <div className="w-full flex items-center gap-4">
-          <div className="flex w-full">
-            <Input
-              onChange={(e)=>setAccountType(e.target.value)}
-              placeholder="Search AccountType..."
-              className=" bg-violet-100 text-violet-700 transition-all rounded-r-none focus-visible:ring-violet-700 focus-visible:ring-offset-0 "
-            />
-            <button onClick={(e)=>searchAccountType(accountType)} className="bg-violet-700 text-white flex items-center rounded-r-lg px-2">
-              <AiOutlineSearch className="w-4 h-4"/>
-            </button>
-          </div>
-          <div className="flex w-full">
-            <Input
-              placeholder="Search Client..."
-              className=" bg-violet-100 text-violet-700 transition-all rounded-r-none focus-visible:ring-violet-700 focus-visible:ring-offset-0 "
-            />
-            <button className="bg-violet-700 text-white flex items-center rounded-r-lg px-2">
-              <AiOutlineSearch className="w-4 h-4"/>
-            </button>
-          </div>
-        </div>
-
-        <div className="w-full flex items-center gap-4">
-          <FormField
-            control={form.control}
-            name="currency"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Currency
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Currency" {...field} />
-                </FormControl>
-                <FormDescription>This is the currency.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <FormField
             control={form.control}
             name="balance"
@@ -183,34 +204,12 @@ export default function BankAccountEdit(defaultValues: Props) {
               </FormItem>
             )}
           />
-        </div>
-
-        <div className="w-full flex items-center justify-between gap-4">
-          <FormField
-            control={form.control}
-            name="accNumber"
-            render={({ field }) => (
-              <FormItem className="max-w-lg w-full">
-                <FormLabel className="text-violet-800 font-semibold">
-                  Account Number
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder="Account Number" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is the account number.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
-        </div>
       </form>
     </Form>
   );

@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import {
   Sheet,
   SheetContent,
@@ -6,19 +6,22 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import ProfileForm from "./ProfileForm";
+import ProfileForm from "./TransferForm";
 import { useRouter } from "next/navigation";
 
 const NewModal = () => {
   const router = useRouter();
 
   return (
-    <Sheet defaultOpen={true} onOpenChange={() => router.push("/console/AccountType")}>
+    <Sheet
+      defaultOpen={true}
+      onOpenChange={() => router.push("/console/Transfer")}
+    >
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className="text-violet-700">Add new account type</SheetTitle>
+          <SheetTitle className="text-violet-700">Do a Transfer</SheetTitle>
           <SheetDescription>
-            This action will add a new account type to the system.
+            This action will transfer the specified amount to a receiver account.
           </SheetDescription>
         </SheetHeader>
         <ProfileForm />

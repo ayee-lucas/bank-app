@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { depositFResolver, depositFType } from "./depositFSchema";
+import { TransferFResolver, TransferFType } from "./TransferFSchema";
 
 export default function DepositForm() {
   const router = useRouter();
@@ -24,18 +24,19 @@ export default function DepositForm() {
 
   const [error, setError] = useState<boolean>(false);
 
-  const form = useForm<depositFType>({
-    resolver: depositFResolver,
+  const form = useForm<TransferFType>({
+    resolver: TransferFResolver,
     defaultValues: {
-      amount: "",
-      account: ""
+      amount: "0",
+      senderAccount: "",
+      receiverAccount: ""
     },
   });
 
- async function onSubmit(values: depositFType) {
+ async function onSubmit(values: TransferFType) {
     console.log(values);
 
-     const res = await fetch("/api/deposit", {
+     const res = await fetch("/api/transfer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -65,11 +66,11 @@ export default function DepositForm() {
     }
 
     toast({
-      title: "Deposit saved",
-      description: "Your deposit has been saved.",
+      title: "Transfer saved",
+      description: "Your transfer has been saved.",
     });
 
-    router.replace("/console/Deposit");
+    router.replace("/console/Transfer");
     router.refresh(); 
     return
   }
@@ -97,30 +98,46 @@ export default function DepositForm() {
           />
           <FormField
             control={form.control}
-            name="account"
+            name="senderAccount"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className="text-violet-800 font-semibold">
-                Account
+                  Sender Account
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Account" {...field} />
+                  <Input placeholder="Sender account" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is athe account that will receive the deposit.
+                  This is the sender account number.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="receiverAccount"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="text-violet-800 font-semibold">
+                  Receiver Account
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="Receiver account" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is the receiver account number.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button
             type="submit"
             className="bg-violet-200 text-violet-700 hover:bg-violet-700 hover:text-white max-w-lg w-full"
           >
             Submit
           </Button>
-        
       </form>
     </Form>
   );

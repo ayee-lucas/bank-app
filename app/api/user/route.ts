@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
 import User, { IUser } from "@/app/models/User";
 import { revalidatePath } from "next/cache";
+import { hashPassword } from "@/app/tools/encrypt";
 
 dbConnect();
 
@@ -32,9 +33,9 @@ export async function POST(request: NextRequest) {
 
     // Validate the request body
     const { name, username, email, password, dpi, address, phone, work, salary, role } = json;
-    if (!username || !password) {
+    if (!name || !username || !email || !password || !dpi || !address || !phone || !work || !salary || !role) {
       return new NextResponse(
-        JSON.stringify({ message: "Username and password are required" }),
+        JSON.stringify({ message: "All items are required" }),
         {
           status: 400,
         }
@@ -55,6 +56,11 @@ export async function POST(request: NextRequest) {
       role,
     });
     console.log({ UserCreated: newUser });
+
+    // Encrypt the user password
+    const hashedPassword = await hashPassword(newUser.password);
+    newUser.password = hashedPassword as string;
+    console.log({PASSWORD_ENCRYPTED: hashedPassword})
 
     // Save the account type object to the database
     const savedUser = await newUser.save();

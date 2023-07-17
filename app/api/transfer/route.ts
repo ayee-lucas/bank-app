@@ -17,13 +17,18 @@ export async function POST(request: NextRequest) {
     console.log({ TransferCreated: transfer });
 
     const bankAccount = await BankAccount.findOne({
-      accNumber: transfer.senderAccount
+      accNumber: transfer.senderAccount,
     });
 
-    if(transfer.amount > bankAccount.balance){
-      return new NextResponse(JSON.stringify({ message: "Insufficient balance to make the transfer" }), {
-        status: 400,
-      });
+    if (transfer.amount > bankAccount.balance) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Insufficient balance to make the transfer",
+        }),
+        {
+          status: 400,
+        }
+      );
     }
 
     // Guardar el objeto de cuenta bancaria en la base de datos
@@ -48,13 +53,12 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-
     // Get all account types with related data
     const transfer = await Transfer.find();
     const data = transfer;
 
     if (transfer.length === 0) {
-      return new NextResponse(JSON.stringify({ message: "No Buys Yet" }), {
+      return new NextResponse(JSON.stringify({ message: "No Transfers Yet" }), {
         status: 200,
       });
     }
@@ -62,6 +66,6 @@ export async function GET(request: NextRequest) {
     return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (err) {
     console.error(err);
-    return new NextResponse(JSON.stringify(err), { status: 500 });
+    return new NextResponse(JSON.stringify({ error: err }), { status: 500 });
   }
 }

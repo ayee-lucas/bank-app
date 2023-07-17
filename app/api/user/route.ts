@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (err) {
     console.error(err);
-    return new NextResponse(JSON.stringify(err), { status: 500 });
+    return new NextResponse(JSON.stringify({ error: err }), { status: 500 });
   }
 }
 
@@ -32,8 +32,30 @@ export async function POST(request: NextRequest) {
     console.log({ DataRequest: json });
 
     // Validate the request body
-    const { name, username, email, password, dpi, address, phone, work, salary, role } = json;
-    if (!name || !username || !email || !password || !dpi || !address || !phone || !work || !salary || !role) {
+    const {
+      name,
+      username,
+      email,
+      password,
+      dpi,
+      address,
+      phone,
+      work,
+      salary,
+      role,
+    } = json;
+    if (
+      !name ||
+      !username ||
+      !email ||
+      !password ||
+      !dpi ||
+      !address ||
+      !phone ||
+      !work ||
+      !salary ||
+      !role
+    ) {
       return new NextResponse(
         JSON.stringify({ message: "All items are required" }),
         {
@@ -60,12 +82,12 @@ export async function POST(request: NextRequest) {
     // Encrypt the user password
     const hashedPassword = await hashPassword(newUser.password);
     newUser.password = hashedPassword as string;
-    console.log({PASSWORD_ENCRYPTED: hashedPassword})
+    console.log({ PASSWORD_ENCRYPTED: hashedPassword });
 
     // Save the account type object to the database
     const savedUser = await newUser.save();
 
-    revalidatePath('/console/Users')
+    revalidatePath("/console/Users");
     // Return a NextResponse object with the saved account type data and a 200 status code
     return new NextResponse(JSON.stringify(savedUser), {
       status: 200,

@@ -17,13 +17,18 @@ export async function POST(request: NextRequest) {
     console.log({ BuyCreated: buy });
 
     const bankAccount = await BankAccount.findOne({
-      accNumber: buy.senderAccount
+      accNumber: buy.senderAccount,
     });
 
-    if(buy.amount > bankAccount.balance){
-      return new NextResponse(JSON.stringify({ message: "Insufficient balance to make the purchase" }), {
-        status: 400,
-      });
+    if (buy.amount > bankAccount.balance) {
+      return new NextResponse(
+        JSON.stringify({
+          message: "Insufficient balance to make the purchase",
+        }),
+        {
+          status: 400,
+        }
+      );
     }
 
     // Guardar el objeto de cuenta bancaria en la base de datos
@@ -47,8 +52,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  try { 
-
+  try {
     // Get all buys with related data
     const buy = await Buy.find();
     const data = buy;
@@ -62,6 +66,6 @@ export async function GET(request: NextRequest) {
     return new NextResponse(JSON.stringify(data), { status: 200 });
   } catch (err) {
     console.error(err);
-    return new NextResponse(JSON.stringify(err), { status: 500 });
+    return new NextResponse(JSON.stringify({ error: err }), { status: 500 });
   }
 }

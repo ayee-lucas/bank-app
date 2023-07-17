@@ -1,9 +1,10 @@
 import Provider from "@/Provider";
 import "./globals.css";
-import { Mukta } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "./ThemeProvider";
 
-const mukta = Mukta({ weight:["400"], subsets: ["latin"]});
+const mukta = Inter({ weight: ["400"], subsets: ["latin"] });
 
 export const metadata = {
   title: "Novaris",
@@ -18,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark:dark overflow-x-hidden">
       <body className={mukta.className}>
-        <Provider>{children}</Provider>
+        <Provider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+          </ThemeProvider>
+        </Provider>
         <Toaster />
       </body>
     </html>

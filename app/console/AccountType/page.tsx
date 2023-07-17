@@ -6,6 +6,7 @@ import Delete from "./components/Delete";
 import NewModal from "./components/NewModal";
 import EditModal from "../../FormComponents/EditModal";
 import AccTypeFEdit from "./components/EditForm";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   searchParams,
@@ -23,7 +24,7 @@ export default async function Page({
     console.log(accountExists);
 
     if (!accountExists) {
-      return <div>Account not found</div>;
+      return notFound();
     }
   }
 

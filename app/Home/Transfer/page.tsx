@@ -19,7 +19,7 @@ export default async function Page({
   const accounts = await getClientAccounts(user?.user.username);
   console.log({ACCOUNTS: accounts})
 
-  //Nivelar los depositos de las cuentas a un nivel de array de objetos
+  //Level out the user's bank account transfers to a single level so that they can be mapped
   accounts.forEach((account: { transfers: any[]; }) => {
     account.transfers.forEach((transfer: { _id: string; amount: number; senderAccount: string; receiverAccount:string; createdAt: Date; updatedAt: Date; }) => {
       allTransfers.push({
@@ -50,7 +50,7 @@ export default async function Page({
 
   return (
     <div className="w-full h-full min-h-screen flex flex-col gap-3 p-10 overflow-y-auto">
-      <div className="text-xl lg:text-3xl xl:text-5xl font-bold text-violet-600">
+      <div className="text-xl lg:text-3xl xl:text-6xl font-bold text-violet-600">
         Your Transfers:
       </div>
 

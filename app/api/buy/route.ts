@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import dbConnect from "@/app/db/connection";
 import Buy from "@/app/models/Buy";
 import User from "@/app/models/User";
+import { BankAccount } from "@/app/models/BankAccount";
 
 dbConnect();
 
@@ -14,6 +15,16 @@ export async function POST(request: NextRequest) {
     // Crear un nuevo objeto de cuenta bancaria con los datos parseados
     const buy = new Buy(json);
     console.log({ BuyCreated: buy });
+
+    const bankAccount = await BankAccount.findOne({
+      accNumber: buy.senderAccount
+    });
+
+    if(buy.amount > bankAccount.balance){
+      return new NextResponse(JSON.stringify({ message: "Insufficient balance to make the purchase" }), {
+        status: 400,
+      });
+    }
 
     // Guardar el objeto de cuenta bancaria en la base de datos
     const savedBuy = await buy.save();
@@ -36,14 +47,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  try {
-    //const session = await getServerSession(authOptions);
-    // Verify if the user is authenticated and is an admin
-    /*if (!session?.user || session.user.role !== "admin") {
-      return new NextResponse("Unauthorized", {
-        status: 401,
-      });
-    }*/
+  try { 
 
     // Get all buys with related data
     const buy = await Buy.find();

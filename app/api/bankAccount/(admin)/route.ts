@@ -73,13 +73,6 @@ export async function POST(request: NextRequest) {
     // Save the bank account object to the database
     const savedBankAccount = await bankAccount.save();
 
-    // Update the user's accounts array
-    const user = await User.findById(json.client);
-    if (user) {
-      user.accounts.push(savedBankAccount._id);
-      await user.save();
-    }
-
     // Return a NextResponse object with the saved bank account data and a status code of 200
     return new NextResponse(JSON.stringify(savedBankAccount), {
       status: 200,

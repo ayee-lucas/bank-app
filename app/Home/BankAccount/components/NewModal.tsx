@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import ProfileForm from "./TransferForm";
+import ProfileForm from "./BankAccountForm";
 import { useRouter } from "next/navigation";
 
 const NewModal = () => {
@@ -15,13 +15,13 @@ const NewModal = () => {
   return (
     <Sheet
       defaultOpen={true}
-      onOpenChange={() => router.push("/Home/Transfer")}
+      onOpenChange={() => router.push("/Home/BankAccount")}
     >
       <SheetContent>
         <SheetHeader>
-          <SheetTitle className="text-violet-700">Do a Transfer</SheetTitle>
+          <SheetTitle className="text-violet-700">Add new bank account</SheetTitle>
           <SheetDescription>
-            This action will transfer the specified amount to a receiver account.
+            This action will add a bank account to the system.
           </SheetDescription>
         </SheetHeader>
         <ProfileForm />

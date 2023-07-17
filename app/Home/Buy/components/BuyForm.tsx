@@ -15,28 +15,29 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { TransferFResolver, TransferFType } from "./TransferFSchema";
+import { BuyFResolver, BuyFType } from "./TransferFSchema";
 
-export default function DepositForm() {
+export default function BuyForm() {
   const router = useRouter();
 
   const { toast } = useToast();
 
   const [error, setError] = useState<boolean>(false);
 
-  const form = useForm<TransferFType>({
-    resolver: TransferFResolver,
+  const form = useForm<BuyFType>({
+    resolver: BuyFResolver,
     defaultValues: {
       amount: "0",
       senderAccount: "",
-      receiverAccount: ""
+      recipient: "",
+      description: ""
     },
   });
 
- async function onSubmit(values: TransferFType) {
+ async function onSubmit(values: BuyFType) {
     console.log(values);
 
-     const res = await fetch("/api/transfer", {
+     const res = await fetch("/api/buy", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -50,7 +51,7 @@ export default function DepositForm() {
       toast({
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request.",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     } 
@@ -60,17 +61,17 @@ export default function DepositForm() {
       toast({
         title: "Uh oh! Something went wrong",
         description: obj.message,
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
 
     toast({
-      title: "Transfer saved",
-      description: "Your transfer has been saved.",
+      title: "Buy saved",
+      description: "Your purchase has been completed."
     });
 
-    router.replace("/Home/Transfer");
+    router.replace("/Home/Buy");
     router.refresh(); 
     return
   }
@@ -116,17 +117,35 @@ export default function DepositForm() {
           />
           <FormField
             control={form.control}
-            name="receiverAccount"
+            name="recipient"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className="text-violet-800 font-semibold">
-                  Receiver Account
+                  Recipient Account
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Receiver account" {...field} />
+                  <Input placeholder="Recipient name" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is the receiver account number.
+                  This is the recipient account name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="text-violet-800 font-semibold">
+                  Description
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="Description" {...field} />
+                </FormControl>
+                <FormDescription>
+                  This is the buy description.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

@@ -65,23 +65,23 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="w-full flex items-center justify-between py-4">
         <Input
-          placeholder="Filter Sender Account..."
-          value={(table.getColumn("senderAccount")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter Amount..."
+          value={(table.getColumn("amount")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("senderAccount")?.setFilterValue(event.target.value)
+            table.getColumn("amount")?.setFilterValue(event.target.value)
           }
           className="max-w-sm bg-violet-100 text-violet-700 transition-all  focus-visible:ring-violet-700 focus-visible:ring-offset-0 "
         />
         <button
           onClick={(e) => {
             e.preventDefault();
-            router.replace("/Home/Transfer?new=true");
+            router.replace("/Home/Buy?new=true");
           }}
           className="px-4 py-2 text-md transition-all text-violet-700 bg-violet-200 font-semibold text-white-900 hover:bg-violet-800 hover:text-white 
 
           "
         >
-          Do a Transfer
+          Do a Buy
         </button>
       </div>
       <div className="rounded-md border dark:text-white ">

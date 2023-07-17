@@ -13,9 +13,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ITransfer } from "@/app/models/Transfer";
+import { IBuy } from "@/app/models/Buy";
 
-export const columns: ColumnDef<ITransfer>[] = [
+export const columns: ColumnDef<IBuy>[] = [
   {
     accessorKey: "_id",
     header: "ID",
@@ -25,12 +25,16 @@ export const columns: ColumnDef<ITransfer>[] = [
     header: "Sender Account",
   },
   {
-    accessorKey: "receiverAccount",
-    header: "Receiver Account",
+    accessorKey: "recipient",
+    header: "Recipient Account",
   },
   {
     accessorKey: "amount",
     header: "Deposit Amount",
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
   },
   {
     accessorKey: "createdAt",
@@ -46,9 +50,9 @@ export const columns: ColumnDef<ITransfer>[] = [
       );
     },
     cell: ({ cell: { row } }) => {
-      const transfer = row.original;
+      const buy = row.original;
 
-      const date = new Date(transfer.createdAt);
+      const date = new Date(buy.createdAt);
 
       const hour = date.getHours();
       const minu = date.getMinutes();
@@ -107,7 +111,7 @@ export const columns: ColumnDef<ITransfer>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const transfer = row.original;
+      const buy = row.original;
       const router = useRouter();
 
       return (
@@ -125,18 +129,18 @@ export const columns: ColumnDef<ITransfer>[] = [
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(transfer._id)}
+              onClick={() => navigator.clipboard.writeText(buy._id)}
             >
               <BsClipboardPlus className="mr-2" /> Copy ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
-                router.replace(`/Home/Transfer?delete=${transfer._id}`)
+                router.replace(`/Home/Buy?delete=${buy._id}`)
               }
               className="text-red-500"
             >
-              <BsTrash2 className="mr-2" /> Delete Transfer
+              <BsTrash2 className="mr-2" /> Delete Buy
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

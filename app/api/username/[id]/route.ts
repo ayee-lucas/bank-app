@@ -4,6 +4,7 @@ import User from "@/app/models/User";
 import Deposit from "@/app/models/Deposit";
 import Transfer from "@/app/models/Transfer";
 import Buy from "@/app/models/Buy";
+import AccountType from "@/app/models/AccountType";
 
 dbConnect();
 
@@ -19,11 +20,13 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
   try {
     const deposits = await Deposit.find();
     const transfers = await Transfer.find();
+    const accountType = await AccountType.find();
     const buys = await Buy.find();
     const user = await User.findOne({ username: id })
     .populate([ 
       { path: 'accounts', select: 'accNumber client balance accountType buys deposits transfers', 
-        populate: [ { path: 'deposits', select: 'amount account createdAt updatedAt' }, 
+        populate: [ { path: 'accountType', select: 'name' },
+                    { path: 'deposits', select: 'amount account createdAt updatedAt' }, 
                     { path: 'transfers', select: 'amount senderAccount receiverAccount createdAt updatedAt' },
                     { path: 'buys', select: 'amount senderAccount recipient description createdAt updatedAt' } ] },
     ])

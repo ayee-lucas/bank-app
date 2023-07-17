@@ -16,7 +16,7 @@ import {
 import { useTransition } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteTransfer } from "../action";
+import { deleteBuy } from "../action";
 
 type Props = {};
 
@@ -35,28 +35,28 @@ const Delete = (props: Props) => {
 
   if (!id) return null;
 
-  async function transferDelete(id: string) {
-    const status = await deleteTransfer(id);
+  async function buyDelete(id: string) {
+    const status = await deleteBuy(id);
 
     console.log({STATUS: status})
                   
     if (status != 400){
       toast({
         title: "Deleted",
-        description: "Transfer has been successfully deleted",
+        description: "Buy has been successfully deleted",
       })
-      router.replace("/Home/Transfer");
+      router.replace("/Home/Buy");
       router.refresh()
       return
     }
 
     toast({
-      title: "Transfer not deleted",
-      description: "Transfers cannot be deleted after 1 minute",
+      title: "Buy not deleted",
+      description: "Buys cannot be deleted after 1 minute",
       variant: "destructive"
     })
 
-    router.replace("/Home/Transfer");
+    router.replace("/Home/Buy");
     router.refresh();
   }
 
@@ -70,18 +70,18 @@ const Delete = (props: Props) => {
             Are you absolutely sure?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This will undo the transfer made and return the transferred amount to the sender.
+            This will undo the buy made and return the amount of the purchase to the sender account.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel
-            onClick={() => router.push("/Home/Transfer")}
+            onClick={() => router.push("/Home/Buy")}
           >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className="bg-violet-200 text-violet-600 hover:bg-red-700 hover:text-white"
-            onClick={() => transferDelete(id) }
+            onClick={() => buyDelete(id) }
           >
             Continue
           </AlertDialogAction>

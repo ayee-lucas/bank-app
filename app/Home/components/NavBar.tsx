@@ -36,6 +36,9 @@ export const NavBar = () => {
                 <Link href="/Home" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Home</Link>
               </li>
               <li>
+                <Link href="/Home/BankAccount" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300" aria-current="page">Bank Accounts</Link>
+              </li>
+              <li>
                 <Link href="/Home/Transfer" className="block py-2 pl-3 pr-4 rounded hover:text-gray-300 md:dark:hover:bg-transparent dark:border-gray-700">Transfer</Link>
               </li>
               <li>

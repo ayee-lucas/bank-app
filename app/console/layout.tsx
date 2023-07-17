@@ -8,18 +8,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-
   const session = await getServerSession(authOptions);
   if (!session?.user?.sub) {
     return redirect("/auth/Login");
   }
 
-
   return (
-    <section >
-        <Sidebar/>
-        <div className="bg-violet-50 dark:bg-black w-screen min-h-screen p-2 pl-28">{children}</div>
+    <section>
+      <Sidebar />
+      <div className="bg-violet-50 dark:bg-black w-full pl-28">{children}</div>
     </section>
   );
 }

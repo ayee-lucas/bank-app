@@ -4,7 +4,7 @@ import React, { MouseEvent, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../../../public/Images/Logos/NovarisLogo.png"
+import logo from "../../../../public/Images/Logos/NovarisLogo.png";
 
 const LoginClient = () => {
   const inputUsername = useRef("");
@@ -19,11 +19,11 @@ const LoginClient = () => {
     const result = await signIn("credentials", {
       username: inputUsername.current,
       password: inputPassword.current,
-      redirect: true,
+      redirect: false,
       callbackUrl: "/Home",
     });
 
-    console.log({result: result})
+    console.log({ result: result });
   };
   return (
     <div className="bg-violet-100 dark:bg-violet-950 h-screen w-full login-bg z-0">

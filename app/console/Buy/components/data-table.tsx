@@ -66,14 +66,16 @@ export function DataTable<TData, TValue>({
       <div className="w-full flex items-center justify-between py-4">
         <Input
           placeholder="Filter Sender Account..."
-          value={(table.getColumn("senderAccount")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("senderAccount")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
             table.getColumn("senderAccount")?.setFilterValue(event.target.value)
           }
           className="max-w-sm bg-violet-100 text-violet-700 transition-all  focus-visible:ring-violet-700 focus-visible:ring-offset-0 "
         />
       </div>
-      <div className="rounded-md border dark:text-white ">
+      <div className="rounded-md border border-zinc-600 dark:text-white ">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

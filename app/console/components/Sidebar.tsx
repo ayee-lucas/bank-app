@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useTransition, useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import SideBarOptions from "@/app/Home/components/SideBarOptions";
-import { RiSmartphoneLine } from "react-icons/ri";
 import { signOut, useSession } from "next-auth/react";
 
 import {
@@ -21,7 +20,6 @@ import {
   BsCurrencyDollar,
   BsFillBuildingFill,
 } from "react-icons/bs";
-import { getUserById } from "../actions";
 
 interface IUserclient {
   name: string;
@@ -34,19 +32,9 @@ interface IUserclient {
 const Sidebar = () => {
   const { data: session } = useSession();
 
-  const userId = session?.user?.id.toString();
-
-  const [isPending, startTransition] = useTransition();
-
   const [dropdown, setDropdown] = useState<boolean>(false);
 
   const [open, setOpen] = useState<boolean>(false);
-
-  const [user, setUser] = useState<IUserclient | null>(null);
-
-  const [hoveringProfile, setHoveringProfile] = useState<boolean>(false);
-
-  const [hoveringCard, setHoveringCard] = useState<boolean>(false);
 
   const [shadow, setShadow] = useState<string>("opacity-0 hidden");
 
@@ -62,21 +50,6 @@ const Sidebar = () => {
     setShadow("opacity-0 hidden");
   };
 
-  useEffect(() => {
-    const getUser = () => {
-      if (open) return;
-
-      startTransition(async () => {
-        const user = await getUserById(userId);
-        setUser(user);
-      });
-    };
-
-    getUser();
-  }, [hoveringProfile]);
-
-  console.log(user);
-
   return (
     <>
       {open && (
@@ -91,6 +64,13 @@ const Sidebar = () => {
           open ? "w-[25rem]" : "w-28"
         } transition-all h-screen border-r border-violet-200 dark:border-zinc-800/40   overflow-y-auto overflow-x-hidden`}
       >
+        {!open && (
+          <div
+            className="absolute inset-0 bg-none z-[999]"
+            role="button"
+            onClick={handleMouseOver}
+          />
+        )}
         <div
           className={`text-white h-full pt-6 bg-violet-100 dark:bg-zinc-950/40 backdrop-blur-lg backdrop-saturate-200 z-50`}
         >
@@ -103,10 +83,6 @@ const Sidebar = () => {
               width={60}
               height={60}
               alt="user photo"
-              onMouseOver={() => setHoveringProfile(true)}
-              onMouseOut={() =>
-                setTimeout(() => setHoveringProfile(false), 1000)
-              }
             />
             <div
               className={`text-sm text-violet-700 font-semibold relative w-full ${
@@ -120,65 +96,32 @@ const Sidebar = () => {
                 <p>{session?.user.email}</p>
               </div>
             </div>
-            <div
-              className={`absolute transition-all duration-300 w-96 left-[120%]  text-gray-800  top-2 rounded-lg  
-                 ${hoveringProfile && !open ? "top-0" : "top-[-540%]"} 
-              `}
-            >
-              <div className="bg-violet-100/40 flex flex-col justify-center items-center shadow-xl backdrop-blur-lg backdrop-saturate-150 gap-4 overflow-y-auto">
-                <Image
-                  src={
-                    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
-                  }
-                  className="rounded-full"
-                  width={60}
-                  height={60}
-                  alt="user photo"
-                />
-                <h1 className="text-3xl font-semibold pt-5">{user?.name}</h1>
-                <span className="text-xs bg-white py-1 px-2 rounded-full text-gray-500">
-                  @{user?.username}
-                </span>
-                <span className="text-lg text-violet-600">{user?.email}</span>
-                <p className="text-lg font-semibold text-gray-700 flex items-center gap-2">
-                  <BsFillBuildingFill />
-                  {user?.work}
-                </p>
-                <p className="text-lg text-gray-700 flex items-center gap-2">
-                  <RiSmartphoneLine />
-                  {user?.phone}
-                </p>
-                <button className="w-full transition-all bg-violet-300 hover:bg-violet-500 text-violet-800 hover:text-white py-2 rounded-lg text-center font-semibold">
-                  View Profile
-                </button>
-              </div>
-            </div>
           </div>
 
           <ul className="space-y-2 mx-5 mt-28 font-medium ">
             <SideBarOptions
-              onMouseOver={handleMouseOver}
+              setOpen={setOpen}
               href="/console"
               icon={AiOutlineHome}
               name="Dashboard"
               isHovering={open}
             />
             <SideBarOptions
-              onMouseOver={handleMouseOver}
+              setOpen={setOpen}
               href="/console/Users"
               icon={AiOutlineTeam}
               name="Users"
               isHovering={open}
             />
             <SideBarOptions
-              onMouseOver={handleMouseOver}
+              setOpen={setOpen}
               href="/console/AccountType"
               icon={AiOutlineUser}
               name="Account Types"
               isHovering={open}
             />
             <SideBarOptions
-              onMouseOver={handleMouseOver}
+              setOpen={setOpen}
               href="/console/BankAccounts"
               icon={AiOutlineBank}
               name="Bank Accounts"
@@ -187,7 +130,6 @@ const Sidebar = () => {
 
             <li className="bg-violet-200 dark:bg-zinc-900 rounded-xl text-violet-500 mb-2">
               <button
-                onMouseOver={handleMouseOver}
                 onClick={() => setDropdown(!dropdown)}
                 className="w-full relative flex py-4 px-2 rounded-lg hover:underline hover:underline-offset-8"
               >
@@ -204,11 +146,11 @@ const Sidebar = () => {
 
             <div
               className={`ml-2 transition duration-300 w-56 ${
-                dropdown ? "translate-x-0" : "-translate-x-64"
+                dropdown && open ? "translate-x-0" : "-translate-x-64"
               }`}
             >
               <SideBarOptions
-                onMouseOver={handleMouseOver}
+                setOpen={setOpen}
                 href="/console/Transfer"
                 icon={BsArrowLeftRight}
                 name="Transfer"
@@ -217,11 +159,11 @@ const Sidebar = () => {
             </div>
             <div
               className={`ml-2 transition duration-200 w-56 ${
-                dropdown ? "translate-x-5" : "-translate-x-64"
+                dropdown && open ? "translate-x-0" : "-translate-x-64"
               }`}
             >
               <SideBarOptions
-                onMouseOver={handleMouseOver}
+                setOpen={setOpen}
                 href="/console/Deposit"
                 icon={AiOutlineFall}
                 name="Deposit"
@@ -230,11 +172,11 @@ const Sidebar = () => {
             </div>
             <div
               className={`ml-2 transition duration-100 w-56 ${
-                dropdown ? "translate-x-10" : "-translate-x-64"
+                dropdown && open ? "translate-x-0" : "-translate-x-64"
               }`}
             >
               <SideBarOptions
-                onMouseOver={handleMouseOver}
+                setOpen={setOpen}
                 href="/console/Buy"
                 icon={BsCurrencyDollar}
                 name="Buy"
@@ -243,10 +185,7 @@ const Sidebar = () => {
             </div>
           </ul>
 
-          <div
-            className="absolute bottom-0 right-0 p-6"
-            onMouseOver={() => setHoveringCard(true)}
-          >
+          <div className="absolute bottom-0 right-0 p-6">
             <div className="flex justify-center">
               <div className="my-4 w-[90%] border-t border-gray-200 dark:border-zinc-700 lg:hidden" />
             </div>

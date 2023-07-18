@@ -2,11 +2,13 @@ import EditModal from "../../FormComponents/EditModal";
 import { IUser } from "@/app/models/User";
 import { getUserById, getUsers } from "./action";
 import Delete from "./components/Delete";
-import UserEditPassword from "./components/PasswordEditForm"
+import UserEditPassword from "./components/PasswordEditForm";
 import UserEdit from "./components/EditForm";
 import NewModal from "./components/NewModal";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns-tsx";
+import { Suspense } from "react";
+import TableSkeleton from "../components/TableSkeleton";
 
 export default async function Page({
   searchParams,
@@ -62,7 +64,9 @@ export default async function Page({
 
       {searchParams?.new && searchParams?.new == "true" && <NewModal />}
 
-      <DataTable columns={columns} data={users} />
+      <Suspense fallback={<TableSkeleton />}>
+        <DataTable columns={columns} data={users} />
+      </Suspense>
     </div>
   );
 }

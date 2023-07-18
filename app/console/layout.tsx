@@ -16,7 +16,9 @@ export default async function RootLayout({
   return (
     <section>
       <Sidebar />
-      <div className="bg-violet-50 dark:bg-black w-full pl-28">{children}</div>
+      <div className="bg-violet-50 dark:bg-zinc-950 w-full pl-28">
+        {children}
+      </div>
     </section>
   );
 }

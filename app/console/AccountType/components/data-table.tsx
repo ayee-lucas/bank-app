@@ -77,14 +77,13 @@ export function DataTable<TData, TValue>({
             e.preventDefault();
             router.replace("/console/AccountType?new=true");
           }}
-          className="px-4 py-2 text-md transition-all text-violet-700 bg-violet-200 font-semibold text-white-900 hover:bg-violet-800 hover:text-white 
-
+          className="px-4 py-2 text-md transition-all text-violet-700 bg-violet-200 dark:bg-zinc-900  dark:text-violet-500 font-semibold text-white-900 hover:bg-violet-800 hover:text-white 
           "
         >
           Add Account Type
         </button>
       </div>
-      <div className="rounded-md border dark:text-white ">
+      <div className="rounded-md border border-zinc-600 dark:text-white ">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

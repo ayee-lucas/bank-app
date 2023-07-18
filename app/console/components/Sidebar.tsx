@@ -15,11 +15,7 @@ import {
   AiOutlineLogout,
 } from "react-icons/ai";
 
-import {
-  BsArrowLeftRight,
-  BsCurrencyDollar,
-  BsFillBuildingFill,
-} from "react-icons/bs";
+import { BsArrowLeftRight, BsCurrencyDollar } from "react-icons/bs";
 
 interface IUserclient {
   name: string;

@@ -8,14 +8,14 @@ dbConnect();
 
 export async function POST(req: NextRequest) {
   try {
+    console.log(await req.json());
+
     const json: IUser = await req.json();
 
     const credentials = {
       username: json.username,
       password: json.password,
     };
-
-    console.log(credentials);
 
     if (credentials.username.length < 3) {
       return new NextResponse(

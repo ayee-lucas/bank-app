@@ -19,14 +19,22 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         console.log(credentials);
+
+        const data = {
+          username: credentials?.username,
+          password: credentials?.password,
+        };
+
+        console.log(data);
+
         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/login/`, {
           method: "POST",
-          body: JSON.stringify(credentials),
+          body: JSON.stringify(data),
+          cache: "no-store",
           headers: { "Content-Type": "application/json" },
         });
+        console.log(res);
         const user = await res.json();
-
-        console.log(user);
 
         // If no error and we have user data, return it
         if (res.ok && user) {

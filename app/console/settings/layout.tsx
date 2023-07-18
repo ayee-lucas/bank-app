@@ -12,23 +12,11 @@ export const metadata: Metadata = {
 const sidebarNavItems = [
   {
     title: "Profile",
-    href: "/examples/forms",
+    href: "/console/settings/",
   },
   {
     title: "Account",
-    href: "/examples/forms/account",
-  },
-  {
-    title: "Appearance",
-    href: "/examples/forms/appearance",
-  },
-  {
-    title: "Notifications",
-    href: "/examples/forms/notifications",
-  },
-  {
-    title: "Display",
-    href: "/examples/forms/display",
+    href: "/console/settings/account",
   },
 ];
 
@@ -55,10 +43,10 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           className="hidden dark:block"
         />
       </div>
-      <div className="hidden space-y-6 p-10 pb-16 md:block">
+      <div className="hidden min-h-screen pt-5 pl-5 md:block">
         <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-          <p className="text-muted-foreground">
+          <h2 className="text-5xl font-bold tracking-tight">Settings</h2>
+          <p className="text-muted-foreground text-zinc-400">
             Manage your account settings and set e-mail preferences.
           </p>
         </div>

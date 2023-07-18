@@ -9,7 +9,16 @@ dbConnect();
 export async function POST(req: NextRequest) {
   try {
     const json: IUser = await req.json();
-    console.log(json);
+
+    const parse = JSON.parse(JSON.stringify(json));
+
+    console.log(parse);
+
+    if (!parse) {
+      return new NextResponse(JSON.stringify({ message: "Invalid data" }), {
+        status: 400,
+      });
+    }
 
     const credentials = {
       username: json.username,

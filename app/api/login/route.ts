@@ -15,6 +15,8 @@ export async function POST(req: NextRequest) {
       password: json.password,
     };
 
+    console.log(credentials);
+
     if (credentials.username.length < 3) {
       return new NextResponse(
         JSON.stringify({ message: "Username too short" }),

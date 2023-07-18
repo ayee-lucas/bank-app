@@ -25,7 +25,7 @@ const TransfersHeaderCard: FC<CardProps> = ({ className, ...props }) => {
       const res = await getTransfers();
 
       if (res.error) {
-        setError(res.error);
+        setError(res.error == undefined ? "Fatal error" : res.error);
         setLoading(false);
         return;
       }
@@ -63,7 +63,15 @@ const TransfersHeaderCard: FC<CardProps> = ({ className, ...props }) => {
       <CardContent>
         {loading ? (
           <div className="w-full h-full grid place-items-center">
-            <span className="text-purple-700 animate-bounce text-4xl">.</span>
+            <div className="flex items-center gap-2">
+              <span className="text-purple-700 animate-bounce text-4xl">.</span>
+              <span className="text-purple-700 animate-bounce delay-75 text-4xl">
+                .
+              </span>
+              <span className="text-purple-700 animate-bounce delay-100 text-4xl">
+                .
+              </span>
+            </div>
           </div>
         ) : (
           <div className="w-full h-full grid place-items-center">

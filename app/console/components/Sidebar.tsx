@@ -64,13 +64,12 @@ const Sidebar = () => {
 
   useEffect(() => {
     const getUser = () => {
-      if(open) return
+      if (open) return;
 
       startTransition(async () => {
         const user = await getUserById(userId);
         setUser(user);
       });
-
     };
 
     getUser();
@@ -82,7 +81,7 @@ const Sidebar = () => {
     <>
       {open && (
         <div
-          className={`fixed z-10 inset-0 bg-black/70 transition-all ${shadow} cursor-pointer`}
+          className={`fixed z-10 inset-0 bg-black/70 backdrop-blur-sm transition-all ${shadow} cursor-pointer`}
           onClick={handleMouseOut}
         />
       )}
@@ -90,10 +89,10 @@ const Sidebar = () => {
       <div
         className={`fixed z-20 ${
           open ? "w-[25rem]" : "w-28"
-        } transition-all h-screen border-r border-violet-200 dark:border-zinc-800 overflow-y-auto overflow-x-hidden`}
+        } transition-all h-screen border-r border-violet-200 dark:border-zinc-800/40   overflow-y-auto overflow-x-hidden`}
       >
         <div
-          className={`text-white h-full pt-6 bg-violet-100 dark:bg-zinc-950 z-50`}
+          className={`text-white h-full pt-6 bg-violet-100 dark:bg-zinc-950/40 backdrop-blur-lg backdrop-saturate-200 z-50`}
         >
           <div className="flex flex-col w-full items-center justify-center cursor-pointer relative">
             <Image

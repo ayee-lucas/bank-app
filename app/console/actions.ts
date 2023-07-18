@@ -3,7 +3,7 @@
 import dbConnect from "../db/connection";
 import { IBankAccount } from "../models/BankAccount";
 import { IBuy } from "../models/Buy";
-import { ITransfer } from "../models/Transfer";
+import Transfer, { ITransfer } from "../models/Transfer";
 import User, { IUser } from "../models/User";
 
 let debounceTimeout: NodeJS.Timeout | null = null;
@@ -188,6 +188,64 @@ export const getBuys = async (): Promise<GetBuysRes> => {
     console.log(err);
     return {
       error: "Server error fetching buys",
+    };
+  }
+};
+
+type GetRecentUsersRes = {
+  message?: "No Recent Users Yet";
+  data?: IUser[];
+  error?: string;
+};
+
+export const getRecentUsers = async (): Promise<GetRecentUsersRes> => {
+  try {
+    await dbConnect();
+    const users = await User.find().limit(5).sort({ createdAt: "desc" });
+
+    if (users.length === 0) {
+      return {
+        message: "No Recent Users Yet",
+      };
+    }
+
+    return {
+      data: users as IUser[],
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      error: "Server error getting recent users",
+    };
+  }
+};
+
+type GetRecentTransfersRes = {
+  message?: "No Recent Transfers Yet";
+  data?: ITransfer[];
+  error?: string;
+};
+
+export const getRecentTransfers = async (): Promise<GetRecentTransfersRes> => {
+  try {
+    await dbConnect();
+    const transfers = await Transfer.find()
+      .limit(5)
+      .sort({ createdAt: "desc" });
+
+    if (transfers.length === 0) {
+      return {
+        message: "No Recent Transfers Yet",
+      };
+    }
+
+    return {
+      data: transfers as ITransfer[],
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      error: "Server error getting recent transfers",
     };
   }
 };

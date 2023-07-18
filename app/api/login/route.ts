@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     const parse = JSON.parse(JSON.stringify(json));
 
-    console.log(parse);
+    console.log({ PARSE: parse });
 
     if (!parse) {
       return new NextResponse(JSON.stringify({ message: "Invalid data" }), {

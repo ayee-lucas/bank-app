@@ -19,14 +19,11 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         console.log(credentials);
-        const res = await fetch(
-          `https://bank-app-eta-lilac.vercel.app/api/login/`,
-          {
-            method: "POST",
-            body: JSON.stringify(credentials),
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/login/`, {
+          method: "POST",
+          body: JSON.stringify(credentials),
+          headers: { "Content-Type": "application/json" },
+        });
         const user = await res.json();
 
         // If no error and we have user data, return it
